@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+
+import 'app_color.dart';
+
+ThemeData _themeLight = ThemeData.light();
+
+ThemeData themeLight = _themeLight.copyWith(
+  colorScheme: _schemeLight(_themeLight.colorScheme),
+  appBarTheme: _appBarLight(_themeLight.appBarTheme),
+  elevatedButtonTheme: ElevatedButtonThemeData(style: _elevButtonLight),
+  textButtonTheme: TextButtonThemeData(style: _textButtonLight),
+  outlinedButtonTheme: OutlinedButtonThemeData(style: _outButtonLight),
+  primaryColorDark: AppColor.mainColor,
+  textTheme: _textLight(_themeLight.textTheme),
+  scaffoldBackgroundColor: AppColor.backColor,
+  floatingActionButtonTheme:
+      _floatButtonLight(_themeLight.floatingActionButtonTheme),
+  inputDecorationTheme: _inputDecorLight(_themeLight.inputDecorationTheme),
+  progressIndicatorTheme: _progressLight(_themeLight.progressIndicatorTheme),
+);
+
+ColorScheme _schemeLight(ColorScheme base) {
+  return base.copyWith(
+    error: AppColor.greyDark,
+    primary: AppColor.mainColor,
+    // onPrimary: AppColor.mainColor,
+    // primaryContainer: AppColor.mainColor,
+  );
+}
+
+AppBarTheme _appBarLight(AppBarTheme base) {
+  return base.copyWith(
+    backgroundColor: AppColor.mainColor,
+    foregroundColor: AppColor.backColor,
+    elevation: 0.0,
+  );
+}
+
+TextTheme _textLight(TextTheme base) {
+  return base.copyWith(
+    headlineMedium: base.headlineMedium!.copyWith(
+      fontSize: 24,
+      fontWeight: FontWeight.w500,
+      color: AppColor.backColor,
+    ),
+    headlineLarge: base.headlineMedium!.copyWith(
+      fontSize: 36,
+      fontWeight: FontWeight.w700,
+      color: AppColor.backColor,
+    ),
+    bodyMedium: base.bodyMedium!.copyWith(
+      fontSize: 14,
+    ),
+    labelMedium: base.labelMedium!.copyWith(
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+      color: AppColor.mainColor,
+    ),
+  );
+}
+
+ProgressIndicatorThemeData _progressLight(ProgressIndicatorThemeData base) {
+  return base.copyWith(
+      linearTrackColor: AppColor.greyDark, color: AppColor.mainColor);
+}
+
+FloatingActionButtonThemeData _floatButtonLight(
+    FloatingActionButtonThemeData base) {
+  return base.copyWith(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    backgroundColor: AppColor.mainColorMegaLight,
+    foregroundColor: AppColor.mainColor,
+  );
+}
+
+ButtonStyle _elevButtonLight = ElevatedButton.styleFrom(
+    // shape: const StadiumBorder(),
+    backgroundColor: AppColor.mainColor,
+    foregroundColor: Colors.white,
+    padding: const EdgeInsets.all(16));
+
+ButtonStyle _textButtonLight = ElevatedButton.styleFrom(
+  foregroundColor: AppColor.mainColor,
+);
+
+ButtonStyle _outButtonLight = OutlinedButton.styleFrom(
+    foregroundColor: AppColor.greyDark,
+    textStyle: const TextStyle(fontWeight: FontWeight.w400));
+
+InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
+  return base.copyWith(
+    filled: true,
+    isDense: true,
+    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+        states.contains(MaterialState.focused)
+            ? AppColor.mainColorHyperLight
+            : Colors.white),
+    labelStyle: const TextStyle(color: AppColor.greyMedium),
+    enabledBorder: const OutlineInputBorder(
+        // borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColor.greyMedium)),
+    focusedBorder: const OutlineInputBorder(
+        // borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColor.greyMedium)),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      // borderSide: const BorderSide(color: AppColor.error),
+    ),
+    border: const OutlineInputBorder(),
+  );
+}
