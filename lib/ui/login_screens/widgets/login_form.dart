@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/response_widgets.dart';
 import '../../common/size_config.dart';
 import '../../navigation/main_navigation.dart';
 
@@ -35,13 +36,14 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
             controller: loginController,
             decoration: const InputDecoration(hintText: 'Логин'),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Введите логин';
+                return '';
               }
               return null;
             },
@@ -52,19 +54,19 @@ class _LoginFormState extends State<LoginForm> {
             decoration: const InputDecoration(hintText: 'Пароль'),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Введите пароль';
+                return '';
               }
               return null;
             },
           ),
-          const SizedBox(height: 4),
+          const Flexible(child: ResponseVerticalWidget(ratio: 2)),
           Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
                   onPressed: () {}, child: const Text('Восстановить'))),
-          const SizedBox(height: 12),
-          SizedBox(
-              width: SizeConfig.blockSizeHorizontal * 70,
+          const Flexible(child: ResponseVerticalWidget(ratio: 5)),
+          ResponseHorizontalWidget(
+              ratio: 70,
               child: ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {

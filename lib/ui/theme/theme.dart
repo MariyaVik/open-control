@@ -89,12 +89,15 @@ ButtonStyle _outButtonLight = OutlinedButton.styleFrom(
 
 InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
   return base.copyWith(
+    errorStyle: TextStyle(fontSize: 0, height: 0),
     filled: true,
     isDense: true,
-    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
-        states.contains(MaterialState.focused)
+    fillColor: MaterialStateColor.resolveWith(
+        (Set<MaterialState> states) => states.contains(MaterialState.focused)
             ? AppColor.mainColorHyperLight
-            : Colors.white),
+            : states.contains(MaterialState.error)
+                ? AppColor.mainColor.withOpacity(0.42)
+                : Colors.white),
     labelStyle: const TextStyle(color: AppColor.greyMedium),
     enabledBorder: const OutlineInputBorder(
         // borderRadius: BorderRadius.circular(8),
@@ -104,7 +107,7 @@ InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
         borderSide: BorderSide(color: AppColor.greyMedium)),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      // borderSide: const BorderSide(color: AppColor.error),
+      borderSide: const BorderSide(color: AppColor.greyMedium),
     ),
     border: const OutlineInputBorder(),
   );

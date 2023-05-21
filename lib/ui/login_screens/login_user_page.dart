@@ -20,94 +20,100 @@ class LoginUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(children: const [BackButtonWidget()]),
-                  ResponseVerticalWidget(
-                      ratio: 4,
-                      child: Image.asset('assets/images/text_cloud.png')),
-                  const ResponseHorizontalWidget(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(children: const [BackButtonWidget()]),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 1)),
+                    ResponseVerticalWidget(
+                        ratio: 4,
+                        child: Image.asset('assets/images/text_cloud.png')),
+                    const ResponseHorizontalWidget(
+                        ratio: 70,
+                        child: Text(
+                          'Доступ к информационным ресурсам города Москвы',
+                          textAlign: TextAlign.center,
+                        )),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 5)),
+                    const ResponseVerticalWidget(ratio: 6.5, child: LogoFull()),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 5)),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text('Зарегистрироваться')),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 2)),
+                    const ResponseHorizontalWidget(
+                        ratio: 70, child: LoginForm()),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 1)),
+                    ResponseHorizontalWidget(
                       ratio: 70,
-                      child: Text(
-                        'Доступ к информационным ресурсам города Москвы',
-                        textAlign: TextAlign.center,
-                      )),
-                  const SizedBox(height: 24),
-                  const ResponseVerticalWidget(ratio: 6.5, child: LogoFull()),
-                  const SizedBox(height: 8),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text('Зарегистрироваться')),
-                  const SizedBox(height: 4),
-                  const ResponseHorizontalWidget(ratio: 70, child: LoginForm()),
-                  ResponseHorizontalWidget(
-                    ratio: 70,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                            children: const [
-                              Expanded(
-                                child: Divider(color: AppColor.greyMedium),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text('или'),
-                              ),
-                              Expanded(
-                                child: Divider(color: AppColor.greyMedium),
-                              ),
-                            ],
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Row(
+                              children: const [
+                                Expanded(
+                                  child: Divider(color: AppColor.greyMedium),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text('или'),
+                                ),
+                                Expanded(
+                                  child: Divider(color: AppColor.greyMedium),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Войти через')),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              loginServiceIconButton(iconName: 'tinkoff'),
-                              loginServiceIconButton(iconName: 'sber'),
-                              loginServiceIconButton(iconName: 'gosuslugi'),
-                              loginServiceIconButton(iconName: 'vk'),
-                              loginServiceIconButton(iconName: 'yandex'),
-                              GestureDetector(
-                                  child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 10),
-                                      decoration: BoxDecoration(
-                                          color: AppColor.greyMedium,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: Row(children: [
-                                        for (int i = 0; i < 3; i++)
-                                          Container(
-                                            margin: const EdgeInsets.all(1),
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white),
-                                            padding: const EdgeInsets.all(2),
-                                          ),
-                                      ]))),
-                            ],
+                          const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Войти через')),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                loginServiceIconButton(iconName: 'tinkoff'),
+                                loginServiceIconButton(iconName: 'sber'),
+                                loginServiceIconButton(iconName: 'gosuslugi'),
+                                loginServiceIconButton(iconName: 'vk'),
+                                loginServiceIconButton(iconName: 'yandex'),
+                                GestureDetector(
+                                    child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 10),
+                                        decoration: BoxDecoration(
+                                            color: AppColor.greyMedium,
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Row(children: [
+                                          for (int i = 0; i < 3; i++)
+                                            Container(
+                                              margin: const EdgeInsets.all(1),
+                                              decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.white),
+                                              padding: const EdgeInsets.all(2),
+                                            ),
+                                        ]))),
+                              ],
+                            ),
                           ),
-                        ),
-                        ResponseHorizontalWidget(
-                            ratio: 70,
-                            child: OutlinedButton(
-                                onPressed: () {},
-                                child: const Text('Электронная подпись'))),
-                      ],
+                          ResponseHorizontalWidget(
+                              ratio: 70,
+                              child: OutlinedButton(
+                                  onPressed: () {},
+                                  child: const Text('Электронная подпись'))),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+            ),
           ),
         ),
       ),

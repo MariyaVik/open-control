@@ -12,23 +12,28 @@ class LoginKHOPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 60),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(children: const [BackButtonWidget()]),
-                  const ResponseVerticalWidget(ratio: 3),
-                  ResponseVerticalWidget(
-                      ratio: 4,
-                      child: Image.asset('assets/images/text_cloud.png')),
-                  const Text('Единая система доступа'),
-                  const ResponseVerticalWidget(ratio: 5),
-                  const ResponseVerticalWidget(ratio: 7, child: LogoFull()),
-                  const ResponseVerticalWidget(ratio: 5),
-                  const ResponseHorizontalWidget(ratio: 70, child: LoginForm()),
-                ]),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(children: const [BackButtonWidget()]),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 5)),
+                    ResponseVerticalWidget(
+                        ratio: 4,
+                        child: Image.asset('assets/images/text_cloud.png')),
+                    const Text('Единая система доступа'),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 10)),
+                    const ResponseVerticalWidget(ratio: 7, child: LogoFull()),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 10)),
+                    const ResponseHorizontalWidget(
+                        ratio: 70, child: LoginForm()),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 10)),
+                  ]),
+            ),
           ),
         ),
       ),
