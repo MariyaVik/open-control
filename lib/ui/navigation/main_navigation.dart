@@ -15,7 +15,7 @@ abstract class AppNavRouteName {
 }
 
 class AppNavigation {
-  static const initialRoute = AppNavRouteName.login;
+  static const initialRoute = AppNavRouteName.home;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {

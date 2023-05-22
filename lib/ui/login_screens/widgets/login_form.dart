@@ -71,14 +71,16 @@ class _LoginFormState extends State<LoginForm> {
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       // для проверки прямо здесь
-                      // var dio = Dio();
+                      var dio = Dio();
 
-                      // var response = await dio.post(
-                      //     'http://hack.torbeno.ru/api/v1/login',
-                      //     data: {'login': 'user', 'password': '123321'});
+                      var response = await dio.post(
+                          'http://hack.torbeno.ru/api/v1/login',
+                          options: Options(
+                              contentType: 'application/x-www-form-urlencoded'),
+                          data: {'login': 'user', 'password': '123321'});
 
-                      // print(response.statusCode);
-                      // print(response.data.toString());
+                      print(response.statusCode);
+                      print(response.data.toString());
                       Navigator.of(context).pushNamed(AppNavRouteName.home);
                     }
                   },
