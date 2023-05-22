@@ -58,14 +58,14 @@ class LoginUserPage extends StatelessWidget {
                             child: Row(
                               children: const [
                                 Expanded(
-                                  child: Divider(color: AppColor.greyMedium),
+                                  child: Divider(color: AppColor.greyLight),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Text('или'),
                                 ),
                                 Expanded(
-                                  child: Divider(color: AppColor.greyMedium),
+                                  child: Divider(color: AppColor.greyLight),
                                 ),
                               ],
                             ),
@@ -88,7 +88,7 @@ class LoginUserPage extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 10),
                                         decoration: BoxDecoration(
-                                            color: AppColor.greyMedium,
+                                            color: AppColor.greyLight,
                                             borderRadius:
                                                 BorderRadius.circular(5)),
                                         child: Row(children: [

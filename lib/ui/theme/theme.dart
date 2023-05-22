@@ -17,6 +17,8 @@ ThemeData themeLight = _themeLight.copyWith(
       _floatButtonLight(_themeLight.floatingActionButtonTheme),
   inputDecorationTheme: _inputDecorLight(_themeLight.inputDecorationTheme),
   progressIndicatorTheme: _progressLight(_themeLight.progressIndicatorTheme),
+  bottomNavigationBarTheme:
+      _botNavBarLight(_themeLight.bottomNavigationBarTheme),
 );
 
 ColorScheme _schemeLight(ColorScheme base) {
@@ -64,6 +66,18 @@ ProgressIndicatorThemeData _progressLight(ProgressIndicatorThemeData base) {
       linearTrackColor: AppColor.greyDark, color: AppColor.mainColor);
 }
 
+BottomNavigationBarThemeData _botNavBarLight(
+    BottomNavigationBarThemeData base) {
+  return base.copyWith(
+    backgroundColor: Colors.white,
+    selectedItemColor: AppColor.mainColor,
+    unselectedItemColor: AppColor.greyMedium,
+    selectedIconTheme: const IconThemeData(color: AppColor.mainColor),
+    type: BottomNavigationBarType.fixed,
+    selectedLabelStyle: const TextStyle(fontSize: 12),
+  );
+}
+
 FloatingActionButtonThemeData _floatButtonLight(
     FloatingActionButtonThemeData base) {
   return base.copyWith(
@@ -98,16 +112,16 @@ InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
             : states.contains(MaterialState.error)
                 ? AppColor.mainColor.withOpacity(0.42)
                 : Colors.white),
-    labelStyle: const TextStyle(color: AppColor.greyMedium),
+    labelStyle: const TextStyle(color: AppColor.greyLight),
     enabledBorder: const OutlineInputBorder(
         // borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColor.greyMedium)),
+        borderSide: BorderSide(color: AppColor.greyLight)),
     focusedBorder: const OutlineInputBorder(
         // borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColor.greyMedium)),
+        borderSide: BorderSide(color: AppColor.greyLight)),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: AppColor.greyMedium),
+      borderSide: const BorderSide(color: AppColor.greyLight),
     ),
     border: const OutlineInputBorder(),
   );
