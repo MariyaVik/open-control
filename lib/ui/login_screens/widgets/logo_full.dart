@@ -8,9 +8,15 @@ class LogoFull extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('assets/images/logo.png'),
+        Image.asset(
+          'assets/images/logo.png',
+          fit: BoxFit.contain,
+        ),
         const SizedBox(width: 16),
-        Image.asset('assets/images/Logotype.png'),
+        Image.asset(
+          'assets/images/Logotype.png',
+          fit: BoxFit.contain,
+        ),
       ],
     );
   }

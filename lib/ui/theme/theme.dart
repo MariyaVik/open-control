@@ -19,6 +19,7 @@ ThemeData themeLight = _themeLight.copyWith(
   progressIndicatorTheme: _progressLight(_themeLight.progressIndicatorTheme),
   bottomNavigationBarTheme:
       _botNavBarLight(_themeLight.bottomNavigationBarTheme),
+  chipTheme: _chipLight(_themeLight.chipTheme),
 );
 
 ColorScheme _schemeLight(ColorScheme base) {
@@ -32,8 +33,8 @@ ColorScheme _schemeLight(ColorScheme base) {
 
 AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
-    backgroundColor: AppColor.mainColor,
-    foregroundColor: AppColor.backColor,
+    backgroundColor: AppColor.backColor,
+    foregroundColor: AppColor.mainColor,
     elevation: 0.0,
   );
 }
@@ -124,5 +125,27 @@ InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
       borderSide: const BorderSide(color: AppColor.greyLight),
     ),
     border: const OutlineInputBorder(),
+  );
+}
+
+ChipThemeData _chipLight(ChipThemeData base) {
+  return base.copyWith(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    showCheckmark: false,
+    padding: const EdgeInsets.all(8),
+    backgroundColor: AppColor.mainColor,
+    selectedColor: AppColor.mainColor,
+    labelStyle: TextStyle(
+        color: MaterialStateColor.resolveWith(
+      (Set<MaterialState> states) => states.contains(MaterialState.selected)
+          ? AppColor.greyDark
+          : AppColor.backColor,
+    )),
+    // iconTheme: IconThemeData(
+    //   color: MaterialStateColor.resolveWith(
+    //     (Set<MaterialState> states) => states.contains(MaterialState.selected)
+    //         ? AppColor.greyDark
+    //         : AppColor.backColor,
+    //   ),
   );
 }

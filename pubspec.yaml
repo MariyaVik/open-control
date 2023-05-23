@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   dio:
+  sliding_up_panel: ^2.0.0+1
 
 
   cupertino_icons: ^1.0.2

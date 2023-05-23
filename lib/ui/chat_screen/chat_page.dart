@@ -10,7 +10,10 @@ class ChatPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: Text('Чат-бот')),
+        appBar: AppBar(
+            title: Text('Чат-бот'),
+            backgroundColor: AppColor.mainColor,
+            foregroundColor: Colors.white),
         body: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(
