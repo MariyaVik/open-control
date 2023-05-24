@@ -14,8 +14,6 @@ class KNOListWidget extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 20,
         itemBuilder: (context, index) {
-          print(' рисуем карточку события');
-
           return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: GestureDetector(

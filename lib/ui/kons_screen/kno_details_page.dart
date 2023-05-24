@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/kno.dart';
+import '../common/close_button.dart';
 import '../navigation/route_name.dart';
 import '../theme/app_color.dart';
 import 'widgets/drop_down_button.dart';
@@ -24,22 +25,7 @@ class KNODetails extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(bottom: 8),
-                    decoration: BoxDecoration(
-                        color: AppColor.mainColor, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.close,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                child: CloseButtonMy(),
               ),
               Text(kno.name.toUpperCase()),
               Text(
@@ -57,8 +43,9 @@ class KNODetails extends StatelessWidget {
                   child: Text('Посмотреть нормативные акты ')),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(AppNavRouteName.selectDateTime);
+                    Navigator.of(context).pushNamed(
+                        AppNavRouteName.selectDateTime,
+                        arguments: kno.id);
                   },
                   child: Text('Перейти к выбору даты'))
             ],
