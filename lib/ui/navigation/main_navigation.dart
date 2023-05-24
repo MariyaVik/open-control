@@ -5,14 +5,7 @@ import '../home_page.dart';
 import '../login_screens/login_kno_page.dart';
 import '../login_screens/login_page.dart';
 import '../login_screens/login_user_page.dart';
-
-abstract class AppNavRouteName {
-  static const home = 'home';
-  static const login = 'login';
-  static const loginKHO = 'login/kno';
-  static const loginUser = 'login/user';
-  static const chat = 'home/chat';
-}
+import 'route_name.dart';
 
 class AppNavigation {
   static const initialRoute = AppNavRouteName.home;

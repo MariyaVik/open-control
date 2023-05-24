@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:open_control/ui/navigation/main_navigation.dart';
 
 import 'chat_screen/chat_page.dart';
 import 'kons_screen/kons_page.dart';
 import 'main_screen/main_page.dart';
+import 'navigation/route_name.dart';
 import 'profile_screen/profile_page.dart';
 
 class HomePage extends StatefulWidget {
