@@ -9,9 +9,10 @@ part of 'control_types.dart';
 ControlTypes _$ControlTypesFromJson(Map<String, dynamic> json) => ControlTypes(
       id: json['id'] as int,
       name: json['name'] as String,
-      consultTopics: (json['consult_topics'] as List<dynamic>)
-          .map((e) => ConsultTopics.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      consultTopics: (json['consult_topics'] as List<dynamic>?)
+              ?.map((e) => ConsultTopics.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$ControlTypesToJson(ControlTypes instance) =>

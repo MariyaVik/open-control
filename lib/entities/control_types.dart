@@ -11,7 +11,7 @@ class ControlTypes {
   List<ConsultTopics> consultTopics;
 
   ControlTypes(
-      {required this.id, required this.name, required this.consultTopics});
+      {required this.id, required this.name, this.consultTopics = const []});
 
   // static ConsultTopics _fromJson(Map<String, dynamic> json) => ConsultTopics.fromJson(json);
   // static String _toJson(ConsultTopics object) => object.toString();

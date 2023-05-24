@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:open_control/entities/kno.dart';
 
+import '../../../dummy/kno_info.dart';
+import '../../../entities/kno.dart';
 import 'kno_card.dart';
 
 class KNOListWidget extends StatelessWidget {
@@ -10,9 +11,10 @@ class KNOListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+        controller: controller,
+        // physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 20,
+        itemCount: knos.length,
         itemBuilder: (context, index) {
           return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -22,11 +24,7 @@ class KNOListWidget extends StatelessWidget {
                   //     arguments: placesProvider.places[index]);
                 },
                 child: KNOCard(
-                  kno: NadzorOrgans(
-                      id: 21,
-                      name: 'Главное архивное управление города Москвы',
-                      controlTypes: []),
-                  // place: placesProvider.places[index],
+                  kno: knos[index],
                 ),
               ));
         });

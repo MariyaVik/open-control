@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:open_control/entities/kno.dart';
 
 import '../../entities/slot.dart';
 import '../common/close_button.dart';
 import 'widgets/day_card.dart';
 
 class SelectDateTimeView extends StatefulWidget {
-  final int knoId;
-  const SelectDateTimeView({super.key, required this.knoId});
+  final NadzorOrgans kno;
+  const SelectDateTimeView({super.key, required this.kno});
 
   @override
   State<SelectDateTimeView> createState() => _SelectDateTimeViewState();

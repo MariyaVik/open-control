@@ -18,11 +18,11 @@ class KonsNavigation {
         final arg = settings.arguments as NadzorOrgans;
         return MaterialPageRoute(builder: (context) => KNODetails(kno: arg));
       case AppNavRouteName.selectDateTime:
-        final arg = settings.arguments as int;
+        final arg = settings.arguments as NadzorOrgans;
         return MaterialPageRoute(
-            builder: (context) => SelectDateTimeView(knoId: arg));
+            builder: (context) => SelectDateTimeView(kno: arg));
       case AppNavRouteName.selectTheme:
-        return MaterialPageRoute(builder: (context) => const SelectThemeView());
+        return MaterialPageRoute(builder: (context) => SelectThemeView());
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

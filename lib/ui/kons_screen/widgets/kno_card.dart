@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_control/dummy/current_kons.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../../../entities/kno.dart';
@@ -12,12 +13,13 @@ class KNOCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        currentKons.knoId = kno.id;
         Navigator.of(context)
             .pushNamed(AppNavRouteName.knoDetails, arguments: kno);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
