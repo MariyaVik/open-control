@@ -142,9 +142,10 @@ class _KNODetailsState extends State<KNODetails> {
               ),
 //-----------------------------------------------------------------------------------------------------------------------------------------
               TextButton(
-                  onPressed: () {}, child: Text('Посмотреть требования')),
+                  onPressed: () {}, child: const Text('Посмотреть требования')),
               TextButton(
-                  onPressed: () {}, child: Text('Посмотреть нормативные акты')),
+                  onPressed: () {},
+                  child: const Text('Посмотреть нормативные акты')),
               ElevatedButton(
                   onPressed: () {
                     currentKons.controlTypeId = selectedValue?.id;
@@ -152,7 +153,15 @@ class _KNODetailsState extends State<KNODetails> {
                         AppNavRouteName.selectDateTime,
                         arguments: widget.kno);
                   },
-                  child: Text('Перейти к выбору даты'))
+                  child: Text('Перейти к выбору даты')),
+              Text('Обзор'),
+              CircleAvatar(),
+              Text('Онопенко Ярослав Аксентьевич'),
+              Text('Начальник Главного архивного управления города Москвы'),
+              Text('Контакты'),
+              Text('https://www.mos.ru/mosarchiv/'),
+              Text('mosarch@mos.ru'),
+              Text('Факс  +7 (495) 334-44-89'),
             ],
           ),
         ),

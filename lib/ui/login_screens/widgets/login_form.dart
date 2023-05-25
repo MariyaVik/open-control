@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../dummy/current_user.dart';
+import '../../../services/business_api.dart';
 import '../../common/response_widgets.dart';
 import '../../common/size_config.dart';
 import '../../navigation/main_navigation.dart';
@@ -21,6 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     loginController = TextEditingController();
+    loginController.text = 'user';
     passwordController = TextEditingController();
     formKey = GlobalKey<FormState>();
   }
@@ -71,18 +73,11 @@ class _LoginFormState extends State<LoginForm> {
               child: ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // для проверки прямо здесь
-                      var dio = Dio();
-
-                      var response = await dio.post(
-                          'http://hack.torbeno.ru/api/v1/login',
-                          options: Options(
-                              contentType: 'application/x-www-form-urlencoded'),
-                          data: {'login': 'user', 'password': '123321'});
-
-                      print(response.statusCode);
-                      print(response.data.toString());
-                      Navigator.of(context).pushNamed(AppNavRouteName.home);
+                      businessUser.token = await BusinessAPI.instance
+                          .authApiRequest(
+                              loginController.text, passwordController.text);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppNavRouteName.home, (route) => false);
                     }
                   },
                   child: const Text('Войти'))),

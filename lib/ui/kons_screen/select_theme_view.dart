@@ -1,10 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/navigation/route_name.dart';
 
+import '../../dummy/current_user.dart';
 import '../../dummy/kno_info.dart';
 import '../../entities/consult_topics.dart';
 import '../../entities/control_types.dart';
 import '../../entities/kno.dart';
+import '../../services/business_api.dart';
 import '../common/utils.dart';
 import '../theme/app_color.dart';
 import 'widgets/drop_down_button.dart';
@@ -195,13 +198,17 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                       style: TextStyle(color: Colors.black),
                     )),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       currentKons.consultTopicId = selectedValue!.id;
                       currentKons.question = quesController.text;
                       currentKons.isNeedLetter = isNeedLetter;
                       // print(currentKons);
                       var json = currentKons.toJson();
                       print(json);
+                      await BusinessAPI.instance
+                          .postConsultation(businessUser.token!, currentKons);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppNavRouteName.konsMain, (route) => false);
                     },
                     child: const Text('Записаться'))
               ],

@@ -41,10 +41,10 @@ class _KonsMainViewState extends State<KonsMainView> {
           onPanelSlide: (position) {
             final hightKoef = maxH - minH;
             filterHight = position * hightKoef + minH;
-            setState(() {});
+            // setState(() {});
           },
         ),
-        Positioned(bottom: filterHight, child: SelectEntityWidget()),
+        // Positioned(bottom: filterHight, child: SelectEntityWidget()),
       ],
     );
   }

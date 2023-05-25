@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'consultation.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Consultation {
   @JsonKey(name: 'nadzor_organ_id')
   int? knoId;
@@ -23,6 +23,9 @@ class Consultation {
   @JsonKey(name: 'is_need_letter')
   bool? isNeedLetter;
 
+  @JsonKey(name: 'is_confirmed')
+  bool? isConfirmed;
+
   Consultation({
     this.consultTopicId,
     this.controlTypeId,
@@ -32,6 +35,7 @@ class Consultation {
     this.time,
     this.userId,
     this.question,
+    this.isConfirmed,
   });
 
   factory Consultation.fromJson(Map<String, dynamic> json) =>
@@ -40,6 +44,6 @@ class Consultation {
 
   @override
   String toString() {
-    return 'knoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter';
+    return 'knoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter/nisConfirmed: $isConfirmed';
   }
 }

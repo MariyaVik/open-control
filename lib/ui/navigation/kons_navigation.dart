@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_control/entities/kno.dart';
 
 import '../kons_screen/kno_details_page.dart';
-import '../kons_screen/kno_main_view.dart';
+import '../kons_screen/kons_main_view.dart';
 import '../kons_screen/select_date_time_view.dart';
 import '../kons_screen/select_theme_view.dart';
 import 'route_name.dart';

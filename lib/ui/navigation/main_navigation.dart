@@ -8,7 +8,7 @@ import '../login_screens/login_user_page.dart';
 import 'route_name.dart';
 
 class AppNavigation {
-  static const initialRoute = AppNavRouteName.home;
+  static const initialRoute = AppNavRouteName.login;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {

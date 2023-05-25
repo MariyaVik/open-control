@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/entities/kno.dart';
 
+import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
+import '../../services/business_api.dart';
 import '../common/close_button.dart';
 import 'widgets/day_card.dart';
 
@@ -60,22 +61,8 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
   }
 
   Future<void> getSlots() async {
-    var dio = Dio();
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiVXNlck5hbWUiLCJleHAiOjE2ODczNzMxNzV9.sQ4BXFcyiDGtBHq4eUvSWdS7tQEF74ngIPZv0KguknE';
-    dio.options.headers["Authorization"] = "Bearer $token";
-    Response<dynamic> response =
-        await dio.get('http://hack.torbeno.ru/api/v1/slot',
-            options: Options(
-              contentType: 'application/x-www-form-urlencoded',
-            ));
+    allSlots = await BusinessAPI.instance.getSlots(businessUser.token!);
 
-    print(response.statusCode);
-    // print(response.data.toString());
-
-    // Map<String, dynamic> slots = jsonDecode(response.data);
-    // print(slots);
-    allSlots = response.data;
     dates = allSlots.keys.toList();
 
     // print(dates);

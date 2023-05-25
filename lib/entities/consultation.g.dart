@@ -15,16 +15,26 @@ Consultation _$ConsultationFromJson(Map<String, dynamic> json) => Consultation(
       time: json['time'] as String?,
       userId: json['user_id'] as int?,
       question: json['question'] as String?,
+      isConfirmed: json['is_confirmed'] as bool?,
     );
 
-Map<String, dynamic> _$ConsultationToJson(Consultation instance) =>
-    <String, dynamic>{
-      'nadzor_organ_id': instance.knoId,
-      'user_id': instance.userId,
-      'control_type_id': instance.controlTypeId,
-      'consult_topic_id': instance.consultTopicId,
-      'time': instance.time,
-      'date': instance.date,
-      'question': instance.question,
-      'is_need_letter': instance.isNeedLetter,
-    };
+Map<String, dynamic> _$ConsultationToJson(Consultation instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('nadzor_organ_id', instance.knoId);
+  writeNotNull('user_id', instance.userId);
+  writeNotNull('control_type_id', instance.controlTypeId);
+  writeNotNull('consult_topic_id', instance.consultTopicId);
+  writeNotNull('time', instance.time);
+  writeNotNull('date', instance.date);
+  writeNotNull('question', instance.question);
+  writeNotNull('is_need_letter', instance.isNeedLetter);
+  writeNotNull('is_confirmed', instance.isConfirmed);
+  return val;
+}

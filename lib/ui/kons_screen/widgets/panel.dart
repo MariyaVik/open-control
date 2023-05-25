@@ -1,9 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../dummy/current_user.dart';
 import '../../../dummy/kno_info.dart';
 import '../../../entities/info.dart';
 import '../../../entities/kno.dart';
+import '../../../services/business_api.dart';
 import '../../theme/app_color.dart';
 import 'kno_list.dart';
 
@@ -23,18 +24,8 @@ class _PanelWidgetState extends State<PanelWidget> {
   }
 
   Future<void> getData() async {
-    var dio = Dio();
-    String token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiVXNlck5hbWUiLCJleHAiOjE2ODczNzMxNzV9.sQ4BXFcyiDGtBHq4eUvSWdS7tQEF74ngIPZv0KguknE';
-    dio.options.headers["Authorization"] = "Bearer $token";
-    var response = await dio.get('http://hack.torbeno.ru/api/v1/typelist',
-        options: Options(
-          contentType: 'application/x-www-form-urlencoded',
-        ));
-
-    print(response.statusCode);
-    // print(response.data.toString());
-    final Info info = Info.fromJson(response.data);
+    final Info info =
+        await BusinessAPI.instance.getKnoInfo(businessUser.token!);
     print(info);
     knos = info.nadzorOrgans;
     setState(() {});
