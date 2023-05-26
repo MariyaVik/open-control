@@ -35,8 +35,9 @@ ColorScheme _schemeLight(ColorScheme base) {
 AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
     backgroundColor: AppColor.backColor,
-    foregroundColor: AppColor.mainColor,
+    foregroundColor: AppColor.greyDark,
     elevation: 0.0,
+    centerTitle: true,
   );
 }
 
