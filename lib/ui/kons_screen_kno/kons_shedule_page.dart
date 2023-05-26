@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
+import '../../services/business_api.dart';
 import '../kons_screen_business/widgets/day_card.dart';
 
 class KonsShedulePage extends StatefulWidget {
@@ -231,7 +233,7 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
   }
 
   Future<void> getSlots() async {
-    // allSlots = await BusinessAPI.instance.getSlots(businessUser.token!);
+    // allSlots = await BusinessAPI.instance.getSlots(user.token!);
     await Future.delayed(const Duration(seconds: 2));
 
     dates = allSlots.keys.toList();

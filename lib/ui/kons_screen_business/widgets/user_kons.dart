@@ -15,7 +15,7 @@ class UserKons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<AllConsultations>(
-        future: BusinessAPI.instance.getConsultations(businessUser.token!),
+        future: BusinessAPI.instance.getConsultations(user.token!),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

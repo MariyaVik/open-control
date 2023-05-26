@@ -1,5 +1,5 @@
 import '../entities/all_consultations.dart';
-import '../entities/business_user.dart';
+import '../entities/user_info.dart';
 
-BusinessUser businessUser = BusinessUser();
+UserInfo user = UserInfo();
 AllConsultations allConsultations = AllConsultations();

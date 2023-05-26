@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../dummy/current_user.dart';
 import '../../entities/consultation.dart';
+import '../../services/business_api.dart';
 import '../common/kno_theme_card.dart';
 import '../common/utils.dart';
 import '../common/week_day_date_time_widget.dart';
@@ -43,7 +45,11 @@ class ConsultationInfoPage extends StatelessWidget {
               const SizedBox(height: 16),
               if (!consultation.isConfirmed!)
                 ElevatedButton(
-                    onPressed: () {}, child: const Text('Подтвердить запись')),
+                    onPressed: () async {
+                      // await BusinessAPI.instance.editConsultationStatus(
+                      //     user.token!, consultation.id!, true);
+                    },
+                    child: const Text('Подтвердить запись')),
               if (isTimeBegin(consultation.date!, consultation.time!))
                 Column(
                   children: [

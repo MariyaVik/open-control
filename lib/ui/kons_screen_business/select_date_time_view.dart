@@ -61,7 +61,7 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
   }
 
   Future<void> getSlots() async {
-    allSlots = await BusinessAPI.instance.getSlots(businessUser.token!);
+    allSlots = await BusinessAPI.instance.getSlots(user.token!);
 
     dates = allSlots.keys.toList();
 

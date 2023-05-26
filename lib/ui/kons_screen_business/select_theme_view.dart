@@ -179,7 +179,7 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                       var json = currentKons.toJson();
                       print(json);
                       await BusinessAPI.instance
-                          .postConsultation(businessUser.token!, currentKons);
+                          .postConsultation(user.token!, currentKons);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           AppNavRouteName.konsMainBusiness, (route) => false);
                     },

@@ -108,6 +108,26 @@ class BusinessAPI {
       throw 'Something went wrong :(\n ${e.message}';
     }
   }
+
+  Future<void> editConsultationStatus(
+      String token, int consId, bool isApply) async {
+    String url = ApiUrls.baseUrl + ApiUrls.consultationUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+
+    Map<String, dynamic> body = {'id': consId, 'apply': isApply};
+
+    try {
+      await _dio.patch(url, options: options, data: body);
+      print('ИЗМЕНЕНО');
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
 }
 
 

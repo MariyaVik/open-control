@@ -39,7 +39,7 @@ class AboutKonsCard extends StatelessWidget {
           TextButton(
               onPressed: () async {
                 await BusinessAPI.instance
-                    .deleteConsultation(businessUser.token!, consultation.id!);
+                    .deleteConsultation(user.token!, consultation.id!);
                 print('тут обновляем страницу');
               },
               child: Text('Удалить', style: TextStyle(color: Colors.white)))

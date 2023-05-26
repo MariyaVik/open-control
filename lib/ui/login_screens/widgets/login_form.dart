@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../dummy/current_user.dart';
 import '../../../services/business_api.dart';
 import '../../common/response_widgets.dart';
-import '../../common/size_config.dart';
-import '../../navigation/main_navigation.dart';
 import '../../navigation/route_name.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key, required this.isBusiness});
-  final bool isBusiness;
+  const LoginForm({super.key, required this.isKno});
+  final bool isKno;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -23,8 +21,9 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     loginController = TextEditingController();
-    loginController.text = 'user';
+    loginController.text = widget.isKno ? 'kno' : 'user';
     passwordController = TextEditingController();
+    passwordController.text = '123321';
     formKey = GlobalKey<FormState>();
   }
 
@@ -74,13 +73,12 @@ class _LoginFormState extends State<LoginForm> {
               child: ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      businessUser.token = await BusinessAPI.instance
-                          .authApiRequest(
-                              loginController.text, passwordController.text);
+                      user.token = await BusinessAPI.instance.authApiRequest(
+                          loginController.text, passwordController.text);
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          widget.isBusiness
-                              ? AppNavRouteName.homeBusiness
-                              : AppNavRouteName.homeKNO,
+                          widget.isKno
+                              ? AppNavRouteName.homeKNO
+                              : AppNavRouteName.homeBusiness,
                           (route) => false);
                     }
                   },

@@ -30,7 +30,7 @@ class LoginKHOPage extends StatelessWidget {
                     const ResponseVerticalWidget(ratio: 7, child: LogoFull()),
                     const Flexible(child: ResponseVerticalWidget(ratio: 10)),
                     const ResponseHorizontalWidget(
-                        ratio: 70, child: LoginForm(isBusiness: false)),
+                        ratio: 70, child: LoginForm(isKno: true)),
                     const Flexible(child: ResponseVerticalWidget(ratio: 10)),
                   ]),
             ),

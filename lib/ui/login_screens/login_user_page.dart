@@ -47,7 +47,7 @@ class LoginUserPage extends StatelessWidget {
                         child: const Text('Зарегистрироваться')),
                     const Flexible(child: ResponseVerticalWidget(ratio: 2)),
                     const ResponseHorizontalWidget(
-                        ratio: 70, child: LoginForm(isBusiness: true)),
+                        ratio: 70, child: LoginForm(isKno: false)),
                     const Flexible(child: ResponseVerticalWidget(ratio: 1)),
                     ResponseHorizontalWidget(
                       ratio: 70,

@@ -27,8 +27,7 @@ class _PanelWidgetState extends State<PanelWidget> {
   }
 
   Future<void> getData() async {
-    final Info info =
-        await BusinessAPI.instance.getKnoInfo(businessUser.token!);
+    final Info info = await BusinessAPI.instance.getKnoInfo(user.token!);
     print(info);
     knos = info.nadzorOrgans;
     setState(() {});
