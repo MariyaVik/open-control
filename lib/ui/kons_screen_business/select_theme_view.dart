@@ -9,6 +9,7 @@ import '../../entities/control_types.dart';
 import '../../entities/kno.dart';
 import '../../services/business_api.dart';
 import '../common/utils.dart';
+import '../common/week_day_date_time_widget.dart';
 import '../theme/app_color.dart';
 import 'widgets/drop_down_button.dart';
 import '../../../dummy/current_kons.dart';
@@ -46,35 +47,7 @@ class _SelectThemeViewState extends State<SelectThemeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(kno.name),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        '${getWeekDay(getDateFromString(currentKons.date!).weekday)},'),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                              text: getDateFromString(currentKons.date!)
-                                  .day
-                                  .toString(),
-                              style: TextStyle(fontSize: 24)),
-                          TextSpan(
-                              text:
-                                  ' ${getMonthName(getDateFromString(currentKons.date!).month)}'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 16),
-                Text(currentKons.time!)
-              ],
-            ),
+            WeekDayDateTimeWidget(consultation: currentKons),
             Text('Консультирование пройдет по ВКС в приложении'),
             const Text('Тема консультирования'),
 //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -208,7 +181,7 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                       await BusinessAPI.instance
                           .postConsultation(businessUser.token!, currentKons);
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          AppNavRouteName.konsMain, (route) => false);
+                          AppNavRouteName.konsMainBusiness, (route) => false);
                     },
                     child: const Text('Записаться'))
               ],

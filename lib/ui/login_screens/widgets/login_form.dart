@@ -8,7 +8,8 @@ import '../../navigation/main_navigation.dart';
 import '../../navigation/route_name.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({super.key, required this.isBusiness});
+  final bool isBusiness;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -77,7 +78,10 @@ class _LoginFormState extends State<LoginForm> {
                           .authApiRequest(
                               loginController.text, passwordController.text);
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          AppNavRouteName.home, (route) => false);
+                          widget.isBusiness
+                              ? AppNavRouteName.homeBusiness
+                              : AppNavRouteName.homeKNO,
+                          (route) => false);
                     }
                   },
                   child: const Text('Войти'))),

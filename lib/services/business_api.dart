@@ -75,13 +75,38 @@ class BusinessAPI {
     String url = ApiUrls.baseUrl + ApiUrls.consultationUrl;
     Map<String, String> headers = {
       'Accept': 'application/json',
-      'content-type': 'aapplication/x-www-form-urlencoded',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    var cons = consultation.toJson();
+    print(cons);
+    try {
+      await _dio.post(url, options: options, data: cons);
+      print('ЗАПИСАНЫ');
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<void> deleteConsultation(String token, int consId) async {
+    String url = ApiUrls.baseUrl + ApiUrls.consultationUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer $token',
     };
     Options options = Options(headers: headers);
 
-    await _dio.post(url, options: options, data: consultation.toJson());
-    print('ЗАПИСАНЫ');
+    Map<String, int> queryParameters = {'id': consId};
+
+    try {
+      await _dio.delete(url,
+          options: options, queryParameters: queryParameters);
+      print('УДАЛЕНО');
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
   }
 }
 

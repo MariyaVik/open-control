@@ -22,6 +22,12 @@ String timeBeforeConsultation(DateTime konsTime) {
   }
 }
 
+bool isTimeBegin(String date, String time) {
+  final minutesBeforeCons =
+      getDateTime(date, time).difference(DateTime.now()).inMinutes;
+  return minutesBeforeCons < 16996; // ДЛЯ ТЕСТА
+}
+
 String getWeekDay(int num) {
   var days = [
     'Понедельник',

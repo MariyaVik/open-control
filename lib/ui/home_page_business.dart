@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'chat_screen/chat_page.dart';
-import 'kons_screen/kons_page.dart';
+import 'kons_screen_business/kons_page.dart';
 import 'main_screen/main_page.dart';
 import 'navigation/route_name.dart';
 import 'profile_screen/profile_page.dart';
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             children: [
               MainPage(),
               ChatPage(),
-              ConsultationPage(),
+              ConsultationPageBusiness(),
               ProfilePage(),
             ]),
         bottomNavigationBar: BottomNavigationBar(

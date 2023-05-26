@@ -4,6 +4,8 @@ part 'consultation.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Consultation {
+  int? id;
+
   @JsonKey(name: 'nadzor_organ_id')
   int? knoId;
 
@@ -15,6 +17,9 @@ class Consultation {
 
   @JsonKey(name: 'consult_topic_id')
   int? consultTopicId;
+
+  @JsonKey(name: 'slot_id')
+  int? slotId;
 
   String? time;
   String? date;
@@ -36,6 +41,8 @@ class Consultation {
     this.userId,
     this.question,
     this.isConfirmed,
+    this.slotId,
+    this.id,
   });
 
   factory Consultation.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +51,6 @@ class Consultation {
 
   @override
   String toString() {
-    return 'knoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter/nisConfirmed: $isConfirmed';
+    return 'id: $id\nknoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter/nisConfirmed: $isConfirmed\nslotId: $slotId';
   }
 }

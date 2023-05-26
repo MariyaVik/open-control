@@ -150,7 +150,7 @@ class _KNODetailsState extends State<KNODetails> {
                   onPressed: () {
                     currentKons.controlTypeId = selectedValue?.id;
                     Navigator.of(context).pushNamed(
-                        AppNavRouteName.selectDateTime,
+                        AppNavRouteName.selectDateTimeBusiness,
                         arguments: widget.kno);
                   },
                   child: Text('Перейти к выбору даты')),

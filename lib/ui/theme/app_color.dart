@@ -10,4 +10,6 @@ class AppColor {
   static const Color greyMedium = Color(0xFF999999);
   static const Color greyLight = Color(0xFFC8C8C8);
   static const Color greyMegaLight = Color(0xFFE1E1E1);
+  static const Color warning = Color(0xFFFFBB33);
+  static const Color pink = Color(0xFFFDD6D0);
 }

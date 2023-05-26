@@ -16,6 +16,8 @@ Consultation _$ConsultationFromJson(Map<String, dynamic> json) => Consultation(
       userId: json['user_id'] as int?,
       question: json['question'] as String?,
       isConfirmed: json['is_confirmed'] as bool?,
+      slotId: json['slot_id'] as int?,
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$ConsultationToJson(Consultation instance) {
@@ -27,10 +29,12 @@ Map<String, dynamic> _$ConsultationToJson(Consultation instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('nadzor_organ_id', instance.knoId);
   writeNotNull('user_id', instance.userId);
   writeNotNull('control_type_id', instance.controlTypeId);
   writeNotNull('consult_topic_id', instance.consultTopicId);
+  writeNotNull('slot_id', instance.slotId);
   writeNotNull('time', instance.time);
   writeNotNull('date', instance.date);
   writeNotNull('question', instance.question);

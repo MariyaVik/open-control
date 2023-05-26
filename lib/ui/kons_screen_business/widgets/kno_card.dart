@@ -15,7 +15,7 @@ class KNOCard extends StatelessWidget {
       onTap: () {
         currentKons.knoId = kno.id;
         Navigator.of(context)
-            .pushNamed(AppNavRouteName.knoDetails, arguments: kno);
+            .pushNamed(AppNavRouteName.knoDetailsBusiness, arguments: kno);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),

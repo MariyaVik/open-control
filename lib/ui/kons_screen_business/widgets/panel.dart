@@ -20,7 +20,10 @@ class _PanelWidgetState extends State<PanelWidget> {
   @override
   void initState() {
     super.initState();
-    getData();
+    if (knos.isEmpty) {
+      print('пусто');
+      getData();
+    }
   }
 
   Future<void> getData() async {

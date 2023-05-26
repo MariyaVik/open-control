@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 12),
             const SelectRoleButton(
               iconName: 'forBus',
-              routeName: AppNavRouteName.loginUser,
+              routeName: AppNavRouteName.loginBusiness,
               text: 'Войти как бизнес',
             ),
             const SizedBox(height: 16),

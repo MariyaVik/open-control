@@ -20,6 +20,7 @@ ThemeData themeLight = _themeLight.copyWith(
   bottomNavigationBarTheme:
       _botNavBarLight(_themeLight.bottomNavigationBarTheme),
   chipTheme: _chipLight(_themeLight.chipTheme),
+  checkboxTheme: _checkLight(_themeLight.checkboxTheme),
 );
 
 ColorScheme _schemeLight(ColorScheme base) {
@@ -147,5 +148,15 @@ ChipThemeData _chipLight(ChipThemeData base) {
     //         ? AppColor.greyDark
     //         : AppColor.backColor,
     //   ),
+  );
+}
+
+CheckboxThemeData _checkLight(CheckboxThemeData base) {
+  return base.copyWith(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+        states.contains(MaterialState.disabled)
+            ? AppColor.greyMedium
+            : AppColor.mainColor),
   );
 }
