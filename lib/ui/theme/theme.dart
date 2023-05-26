@@ -36,7 +36,7 @@ AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
     backgroundColor: AppColor.backColor,
     foregroundColor: AppColor.greyDark,
-    elevation: 0.0,
+    elevation: 1.0,
     centerTitle: true,
   );
 }

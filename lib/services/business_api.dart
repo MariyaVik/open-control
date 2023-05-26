@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:open_control/entities/user_info.dart';
 
 import '../entities/all_consultations.dart';
 import '../entities/consultation.dart';
@@ -127,6 +128,18 @@ class BusinessAPI {
     } on DioError catch (e) {
       throw 'Something went wrong :(\n ${e.message}';
     }
+  }
+
+  Future<UserInfo> getUserInfo(String token) async {
+    String url = ApiUrls.baseUrl + ApiUrls.userUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'aapplication/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    var response = await _dio.get(url, options: options);
+    return UserInfo.fromJson(response.data);
   }
 }
 
