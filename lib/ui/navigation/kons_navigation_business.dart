@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:open_control/entities/kno.dart';
 
+import '../../entities/consultation.dart';
+import '../../entities/kno.dart';
+import '../common/conference_page.dart';
+import '../kons_screen_business/join_kons_page.dart';
 import '../kons_screen_business/kno_details_page.dart';
 import '../kons_screen_business/kons_main_view.dart';
 import '../kons_screen_business/select_date_time_view.dart';
 import '../kons_screen_business/select_theme_view.dart';
+import '../kons_screen_business/widgets/list_kno_page.dart';
 import 'route_name.dart';
 
 class KonsNavigationBusiness {
@@ -14,6 +18,16 @@ class KonsNavigationBusiness {
     switch (settings.name) {
       case AppNavRouteName.konsMainBusiness:
         return MaterialPageRoute(builder: (context) => const KonsMainView());
+      case AppNavRouteName.joinKonsBusiness:
+        final arg = settings.arguments as Consultation;
+        return MaterialPageRoute(
+            builder: (context) => JoinKonsPage(consultation: arg));
+      case AppNavRouteName.videoBusiness:
+        final arg = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (context) => VideoConferencePage(conferenceID: arg));
+      case AppNavRouteName.listKnoBusiness:
+        return MaterialPageRoute(builder: (context) => const ListKnoPage());
       case AppNavRouteName.knoDetailsBusiness:
         final arg = settings.arguments as NadzorOrgans;
         return MaterialPageRoute(builder: (context) => KNODetails(kno: arg));

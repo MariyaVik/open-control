@@ -16,6 +16,7 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
+  zego_uikit_prebuilt_video_conference: ^2.2.8
 
 dev_dependencies:
   flutter_test:

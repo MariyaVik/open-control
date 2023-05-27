@@ -75,6 +75,12 @@ class _LoginFormState extends State<LoginForm> {
                     if (formKey.currentState!.validate()) {
                       user.token = await BusinessAPI.instance.authApiRequest(
                           loginController.text, passwordController.text);
+                      var u =
+                          await BusinessAPI.instance.getUserInfo(user.token!);
+                      user
+                        ..name = u.name
+                        ..email = u.email
+                        ..id = u.id;
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           widget.isKno
                               ? AppNavRouteName.homeKNO

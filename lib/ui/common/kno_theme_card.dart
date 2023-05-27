@@ -12,7 +12,7 @@ class KnoThemeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
-          color: AppColor.pinkColor, borderRadius: BorderRadius.circular(6)),
+          color: AppColor.pinkLight, borderRadius: BorderRadius.circular(6)),
       child: Row(
         children: [
           Expanded(

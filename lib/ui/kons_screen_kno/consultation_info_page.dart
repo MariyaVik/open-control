@@ -6,6 +6,7 @@ import '../../services/business_api.dart';
 import '../common/kno_theme_card.dart';
 import '../common/utils.dart';
 import '../common/week_day_date_time_widget.dart';
+import '../navigation/route_name.dart';
 import '../theme/app_color.dart';
 
 class ConsultationInfoPage extends StatelessWidget {
@@ -43,26 +44,38 @@ class ConsultationInfoPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: [
+                    TextSpan(
+                      text: 'Вопрос пользователя: ',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                    TextSpan(
+                      text: consultation.question,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                  ],
+                ),
+              ),
               if (!consultation.isConfirmed!)
                 ElevatedButton(
                     onPressed: () async {
-                      // await BusinessAPI.instance.editConsultationStatus(
-                      //     user.token!, consultation.id!, true);
+                      await BusinessAPI.instance.editConsultationStatus(
+                          user.token!, consultation.id!, true);
                     },
                     child: const Text('Подтвердить запись')),
               if (isTimeBegin(consultation.date!, consultation.time!))
                 Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                          color: AppColor.greyMedium,
-                          borderRadius: BorderRadius.circular(5)),
-                      height: 234,
-                    ),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                              AppNavRouteName.joinKonsKNO,
+                              arguments: consultation);
+                        },
                         child: const Text('Начать консультацию'))
                   ],
                 ),
@@ -92,23 +105,27 @@ class WarningWidget extends StatelessWidget {
           color: consultation.isConfirmed!
               ? isTimeStart
                   ? AppColor.mainColor
-                  : AppColor.greyLight
+                  : AppColor.access
               : AppColor.warning,
           borderRadius: BorderRadius.circular(6)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(consultation.isConfirmed!
-              ? isTimeStart
-                  ? Icons.crisis_alert
-                  : Icons.done
-              : Icons.access_time_outlined),
+          Icon(
+              consultation.isConfirmed!
+                  ? isTimeStart
+                      ? Icons.crisis_alert
+                      : Icons.done
+                  : Icons.access_time_outlined,
+              color: AppColor.whiteColor),
           const SizedBox(width: 8),
-          Text(consultation.isConfirmed!
-              ? isTimeStart
-                  ? 'Началось время консультации'
-                  : 'Запись подтверждена'
-              : 'Запись ожидает подтверждения'),
+          Text(
+              consultation.isConfirmed!
+                  ? isTimeStart
+                      ? 'Началось время консультации'
+                      : 'Запись подтверждена'
+                  : 'Запись ожидает подтверждения',
+              style: Theme.of(context).textTheme.labelLarge),
         ],
       ),
     );

@@ -13,19 +13,10 @@ DateTime getDateTime(String date, String time) {
   return DateTime(d[0], d[1], d[2], t[0], t[1]);
 }
 
-String timeBeforeConsultation(DateTime konsTime) {
-  final difference = konsTime.difference(DateTime.now());
-  if (difference.inDays > 0) {
-    return 'Консультация через ${difference.inDays} дня(-ей)';
-  } else {
-    return 'Консультация начнется через ${difference.inHours} часа, ${difference.inMinutes} минут';
-  }
-}
-
 bool isTimeBegin(String date, String time) {
   final minutesBeforeCons =
       getDateTime(date, time).difference(DateTime.now()).inMinutes;
-  return minutesBeforeCons < 14000; // ДЛЯ ТЕСТА
+  return minutesBeforeCons < 7000; // ДЛЯ ТЕСТА
 }
 
 String getWeekDay(int num) {

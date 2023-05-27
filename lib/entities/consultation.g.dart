@@ -18,6 +18,7 @@ Consultation _$ConsultationFromJson(Map<String, dynamic> json) => Consultation(
       isConfirmed: json['is_confirmed'] as bool?,
       slotId: json['slot_id'] as int?,
       id: json['id'] as int?,
+      vksLink: json['vks_link'] as String?,
     );
 
 Map<String, dynamic> _$ConsultationToJson(Consultation instance) {
@@ -40,5 +41,6 @@ Map<String, dynamic> _$ConsultationToJson(Consultation instance) {
   writeNotNull('question', instance.question);
   writeNotNull('is_need_letter', instance.isNeedLetter);
   writeNotNull('is_confirmed', instance.isConfirmed);
+  writeNotNull('vks_link', instance.vksLink);
   return val;
 }

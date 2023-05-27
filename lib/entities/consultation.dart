@@ -31,6 +31,9 @@ class Consultation {
   @JsonKey(name: 'is_confirmed')
   bool? isConfirmed;
 
+  @JsonKey(name: 'vks_link')
+  String? vksLink;
+
   Consultation({
     this.consultTopicId,
     this.controlTypeId,
@@ -43,6 +46,7 @@ class Consultation {
     this.isConfirmed,
     this.slotId,
     this.id,
+    this.vksLink,
   });
 
   factory Consultation.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +55,6 @@ class Consultation {
 
   @override
   String toString() {
-    return 'id: $id\nknoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter/nisConfirmed: $isConfirmed\nslotId: $slotId';
+    return 'id: $id\nknoId: $knoId\nuserId: $userId\ncontrolTypeId: $controlTypeId\nconsultTopicId: $consultTopicId\ntime: $time\ndate: $date\nquestion: $question\nisNeedLetter: $isNeedLetter\nisConfirmed: $isConfirmed\nslotId: $slotId\nvskLink: $vksLink';
   }
 }

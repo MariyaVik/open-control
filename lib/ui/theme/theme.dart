@@ -39,9 +39,10 @@ TextTheme _textLight(TextTheme base) {
       height: 1.6,
       fontFamily: 'Inter',
     ),
-    headlineLarge: base.headlineMedium!.copyWith(
+    headlineLarge: base.headlineLarge!.copyWith(
       fontSize: 24,
       height: 1.17,
+      color: AppColor.textMain,
       fontFamily: 'PTSerif',
     ),
     bodyMedium: base.bodyMedium!.copyWith(
@@ -49,18 +50,18 @@ TextTheme _textLight(TextTheme base) {
       height: 1.5,
       fontFamily: 'Inter',
     ),
-    bodyLarge: base.bodyMedium!.copyWith(
+    bodyLarge: base.bodyLarge!.copyWith(
       fontSize: 16,
       height: 1.5,
       fontWeight: FontWeight.w500,
       fontFamily: 'Inter',
     ),
-    bodySmall: base.bodyMedium!.copyWith(
+    bodySmall: base.bodySmall!.copyWith(
       fontSize: 14,
       height: 1.43,
       fontFamily: 'Inter',
     ),
-    labelLarge: base.labelMedium!.copyWith(
+    labelLarge: base.labelLarge!.copyWith(
       // button
       fontSize: 14,
       height: 1.43,
@@ -74,23 +75,24 @@ TextTheme _textLight(TextTheme base) {
       fontWeight: FontWeight.w700,
       fontFamily: 'Inter',
     ),
-    labelSmall: base.labelMedium!.copyWith(
+    labelSmall: base.bodyMedium!.copyWith(
       fontSize: 12,
       height: 1.7,
       fontWeight: FontWeight.w500,
+      color: AppColor.textLow,
       fontFamily: 'Inter',
     ),
   );
 }
 
 ButtonStyle _elevButtonLight = ElevatedButton.styleFrom(
-  // shape: const StadiumBorder(),
-  backgroundColor: AppColor.mainColor,
-  foregroundColor: AppColor.whiteColor,
-  disabledBackgroundColor: AppColor.greyMegaLight,
-  disabledForegroundColor: AppColor.greyMedium,
-  padding: const EdgeInsets.all(16),
-);
+    // shape: const StadiumBorder(),
+    backgroundColor: AppColor.mainColor,
+    foregroundColor: AppColor.whiteColor,
+    disabledBackgroundColor: AppColor.greyMegaLight,
+    disabledForegroundColor: AppColor.greyMedium,
+    padding: const EdgeInsets.all(16),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)));
 
 ButtonStyle _textButtonLight = TextButton.styleFrom(
   foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
@@ -197,7 +199,7 @@ AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
     backgroundColor: AppColor.whiteColor,
     foregroundColor: AppColor.textMain,
-    elevation: 1.0,
+    elevation: 0.0,
     centerTitle: true,
   );
 }

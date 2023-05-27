@@ -23,7 +23,7 @@ class DayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Slot> slotForShow = isBusiness
         ? slotToday.where((element) => element.consultation == null).toList()
-        : slotToday.where((element) => element.consultation != null).toList();
+        : slotToday;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,7 +85,9 @@ class TimeView extends StatelessWidget {
                       isTimeBegin(
                           slot.consultation!.date!, slot.consultation!.time!)
                   ? AppColor.mainColor
-                  : AppColor.greyLight,
+                  : slot.consultation != null && slot.consultation!.isConfirmed!
+                      ? AppColor.access
+                      : AppColor.greyLight,
         ),
         child: Text(slot.time),
       ),

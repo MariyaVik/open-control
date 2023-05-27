@@ -23,9 +23,9 @@ class WeekDayDateTimeWidget extends StatelessWidget {
                 style: DefaultTextStyle.of(context).style,
                 children: [
                   TextSpan(
-                      text:
-                          getDateFromString(consultation.date!).day.toString(),
-                      style: TextStyle(fontSize: 24)),
+                    text: getDateFromString(consultation.date!).day.toString(),
+                    // style: TextStyle(fontSize: 24),
+                  ),
                   TextSpan(
                       text:
                           ' ${getMonthName(getDateFromString(consultation.date!).month)}'),

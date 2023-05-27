@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/consultation.dart';
+import '../common/conference_page.dart';
+import '../kons_screen_business/join_kons_page.dart';
 import '../kons_screen_kno/consultation_info_page.dart';
 import '../kons_screen_kno/kons_shedule_page.dart';
 import 'route_name.dart';
@@ -16,13 +18,16 @@ class KonsNavigationKNO {
         final arg = settings.arguments as Consultation;
         return MaterialPageRoute(
             builder: (context) => ConsultationInfoPage(consultation: arg));
+      case AppNavRouteName.joinKonsKNO:
+        final arg = settings.arguments as Consultation;
+        return MaterialPageRoute(
+            builder: (context) => JoinKonsPage(consultation: arg));
 
-      // case AppNavRouteName.selectDateTimeBusiness:
-      //   final arg = settings.arguments as NadzorOrgans;
-      //   return MaterialPageRoute(
-      //       builder: (context) => SelectDateTimeView(kno: arg));
-      // case AppNavRouteName.selectThemeBusiness:
-      //   return MaterialPageRoute(builder: (context) => SelectThemeView());
+      case AppNavRouteName.videoKNO:
+        final arg = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (context) => VideoConferencePage(conferenceID: arg));
+
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

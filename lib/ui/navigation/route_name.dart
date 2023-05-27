@@ -8,10 +8,15 @@ abstract class AppNavRouteName {
 
   static const chat = 'homeBus/chat';
   static const konsMainBusiness = 'konsBus';
-  static const knoDetailsBusiness = 'konsBus/kno';
-  static const selectDateTimeBusiness = 'konsBus/kno/date';
-  static const selectThemeBusiness = 'konsBus/kno/date/theme';
+  static const joinKonsBusiness = 'konsBus/join';
+  static const videoBusiness = 'konsBus/join/call';
+  static const listKnoBusiness = 'konsBus/list';
+  static const knoDetailsBusiness = 'konsBus/list/kno';
+  static const selectDateTimeBusiness = 'konsBus/list/kno/date';
+  static const selectThemeBusiness = 'konsBus/list/kno/date/theme';
 
   static const konsMainKNO = 'konsKNO';
   static const konsDetailsKNO = 'konsKNO/delails';
+  static const joinKonsKNO = 'konsKNO/delails/join';
+  static const videoKNO = 'konsKNO/delails/join/call';
 }
