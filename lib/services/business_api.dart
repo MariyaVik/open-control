@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:open_control/entities/hint_button.dart';
 import 'package:open_control/entities/user_info.dart';
 
 import '../entities/all_consultations.dart';
 import '../entities/consultation.dart';
 import '../entities/info.dart';
+import '../entities/message.dart';
 import 'api_ulrs.dart';
 
 class BusinessAPI {
@@ -134,12 +136,79 @@ class BusinessAPI {
     String url = ApiUrls.baseUrl + ApiUrls.userUrl;
     Map<String, String> headers = {
       'Accept': 'application/json',
-      'content-type': 'aapplication/x-www-form-urlencoded',
+      'content-type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer $token',
     };
     Options options = Options(headers: headers);
     var response = await _dio.get(url, options: options);
     return UserInfo.fromJson(response.data);
+  }
+
+  Future<List<Message>> getMessages(String token) async {
+    String url = ApiUrls.baseUrl + ApiUrls.chatUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    List<Message> result = [];
+    try {
+      Response<Map<String, dynamic>> response =
+          await _dio.get(url, options: options);
+
+      for (final value in response.data!.values) {
+        for (var mes in value) {
+          Message message = Message.fromJson(mes);
+          result.add(message);
+        }
+      }
+
+      return result;
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<Message> postMessage(String token, String text) async {
+    String url = ApiUrls.baseUrl + ApiUrls.chatUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    var body = {'text': text};
+    try {
+      var response = await _dio.post(url, options: options, data: body);
+      return Message.fromJson(response.data);
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<List<HintButton>> getButtons(String token) async {
+    String url = ApiUrls.baseUrl + ApiUrls.buttonUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    List<HintButton> result = [];
+    try {
+      Response<List<dynamic>> response = await _dio.get(url, options: options);
+      print(response.data);
+
+      for (final value in response.data!) {
+        HintButton button = HintButton.fromJson(value);
+        result.add(button);
+      }
+
+      return result;
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
   }
 }
 

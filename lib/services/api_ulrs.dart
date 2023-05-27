@@ -5,4 +5,6 @@ class ApiUrls {
   static const String userUrl = '/user';
   static const String typelistUrl = '/typelist';
   static const String slotUrl = '/slot';
+  static const String chatUrl = '/chat';
+  static const String buttonUrl = '/button';
 }
