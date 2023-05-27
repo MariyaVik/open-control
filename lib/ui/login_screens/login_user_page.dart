@@ -4,7 +4,7 @@ import '../common/response_widgets.dart';
 import '../theme/app_color.dart';
 import 'widgets/back_button.dart';
 import 'widgets/login_form.dart';
-import 'widgets/logo_full.dart';
+import '../common/logo_full.dart';
 
 class LoginUserPage extends StatelessWidget {
   const LoginUserPage({super.key});
