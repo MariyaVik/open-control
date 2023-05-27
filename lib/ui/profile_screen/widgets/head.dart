@@ -29,7 +29,7 @@ class ProfileHead extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
-                      color: AppColor.pink, shape: BoxShape.circle),
+                      color: AppColor.pinkColor, shape: BoxShape.circle),
                   child: Image.asset('assets/icons/search.png'),
                 ),
                 Text('Мои данные')
@@ -40,7 +40,7 @@ class ProfileHead extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
-                      color: AppColor.pink, shape: BoxShape.circle),
+                      color: AppColor.pinkColor, shape: BoxShape.circle),
                   child: Image.asset('assets/icons/doc.png'),
                 ),
                 Text('Мои консультации')

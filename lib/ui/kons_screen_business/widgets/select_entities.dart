@@ -50,13 +50,10 @@ class _SelectEntityWidgetState extends State<SelectEntityWidget> {
                         },
                         // selected: commonState.entity == item.filterName,
                         label: Text(item.name),
-                        avatar: ImageIcon(AssetImage(item.iconName),
-                            color: MaterialStateColor.resolveWith(
-                              (Set<MaterialState> states) =>
-                                  states.contains(MaterialState.selected)
-                                      ? AppColor.greyDark
-                                      : AppColor.backColor,
-                            )),
+                        avatar: ImageIcon(
+                          AssetImage(item.iconName),
+                          color: AppColor.whiteColor,
+                        ),
                       ),
                     ))
                 .toList(),

@@ -38,11 +38,6 @@ class LoginPage extends StatelessWidget {
             const Spacer(flex: 4),
             TextButton(
                 onPressed: () {},
-                style: Theme.of(context).textButtonTheme.style!.copyWith(
-                    textStyle: MaterialStateProperty.all<TextStyle>(
-                        Theme.of(context).textTheme.bodySmall!),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(AppColor.greyDark)),
                 child: const Text('Инструкция для входа в личный кабинет')),
           ],
         ),

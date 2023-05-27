@@ -12,11 +12,11 @@ ThemeData themeLight = _themeLight.copyWith(
   outlinedButtonTheme: OutlinedButtonThemeData(style: _outButtonLight),
   primaryColorDark: AppColor.mainColor,
   textTheme: _textLight(_themeLight.textTheme),
-  scaffoldBackgroundColor: AppColor.backColor,
+  scaffoldBackgroundColor: AppColor.whiteColor,
   floatingActionButtonTheme:
       _floatButtonLight(_themeLight.floatingActionButtonTheme),
   inputDecorationTheme: _inputDecorLight(_themeLight.inputDecorationTheme),
-  progressIndicatorTheme: _progressLight(_themeLight.progressIndicatorTheme),
+  // progressIndicatorTheme: _progressLight(_themeLight.progressIndicatorTheme),
   bottomNavigationBarTheme:
       _botNavBarLight(_themeLight.bottomNavigationBarTheme),
   chipTheme: _chipLight(_themeLight.chipTheme),
@@ -25,49 +25,187 @@ ThemeData themeLight = _themeLight.copyWith(
 
 ColorScheme _schemeLight(ColorScheme base) {
   return base.copyWith(
-    error: AppColor.greyDark,
+    error: AppColor.error,
     primary: AppColor.mainColor,
     // onPrimary: AppColor.mainColor,
     // primaryContainer: AppColor.mainColor,
   );
 }
 
+TextTheme _textLight(TextTheme base) {
+  return base.copyWith(
+    headlineMedium: base.headlineMedium!.copyWith(
+      fontSize: 20,
+      height: 1.6,
+      fontFamily: 'Inter',
+    ),
+    headlineLarge: base.headlineMedium!.copyWith(
+      fontSize: 24,
+      height: 1.17,
+      fontFamily: 'PTSerif',
+    ),
+    bodyMedium: base.bodyMedium!.copyWith(
+      fontSize: 16,
+      height: 1.5,
+      fontFamily: 'Inter',
+    ),
+    bodyLarge: base.bodyMedium!.copyWith(
+      fontSize: 16,
+      height: 1.5,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Inter',
+    ),
+    bodySmall: base.bodyMedium!.copyWith(
+      fontSize: 14,
+      height: 1.43,
+      fontFamily: 'Inter',
+    ),
+    labelLarge: base.labelMedium!.copyWith(
+      // button
+      fontSize: 14,
+      height: 1.43,
+      color: AppColor.whiteColor,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Inter',
+    ),
+    labelMedium: base.labelMedium!.copyWith(
+      fontSize: 12,
+      height: 1.7,
+      fontWeight: FontWeight.w700,
+      fontFamily: 'Inter',
+    ),
+    labelSmall: base.labelMedium!.copyWith(
+      fontSize: 12,
+      height: 1.7,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Inter',
+    ),
+  );
+}
+
+ButtonStyle _elevButtonLight = ElevatedButton.styleFrom(
+  // shape: const StadiumBorder(),
+  backgroundColor: AppColor.mainColor,
+  foregroundColor: AppColor.whiteColor,
+  disabledBackgroundColor: AppColor.greyMegaLight,
+  disabledForegroundColor: AppColor.greyMedium,
+  padding: const EdgeInsets.all(16),
+);
+
+ButtonStyle _textButtonLight = TextButton.styleFrom(
+  foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+      states.contains(MaterialState.pressed)
+          ? AppColor.mainDark
+          : AppColor.mainLight),
+  disabledForegroundColor: AppColor.greyMedium,
+  iconColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+      states.contains(MaterialState.pressed)
+          ? AppColor.mainDark
+          : AppColor.mainLight),
+  disabledIconColor: AppColor.greyMedium,
+);
+
+ButtonStyle _outButtonLight = OutlinedButton.styleFrom(
+  foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+      states.contains(MaterialState.pressed)
+          ? AppColor.mainColor
+          : AppColor.textMain),
+  backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+      states.contains(MaterialState.pressed)
+          ? AppColor.pinkLight
+          : AppColor.whiteColor),
+  side: BorderSide(
+      color: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+          states.contains(MaterialState.pressed)
+              ? AppColor.mainLight
+              : AppColor.greyLight)),
+  disabledBackgroundColor: AppColor.greyMegaLight,
+  disabledForegroundColor: AppColor.greyMedium,
+);
+
+InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
+  return base.copyWith(
+    errorStyle: TextStyle(fontSize: 0, height: 0),
+    isDense: true,
+    filled: true,
+    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+        states.contains(MaterialState.disabled)
+            ? AppColor.greyMegaLight
+            : Colors.white),
+    labelStyle: const TextStyle(color: AppColor.textLow),
+    enabledBorder: const OutlineInputBorder(
+        // borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColor.greyLight)),
+    focusedBorder: const OutlineInputBorder(
+        // borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColor.pinkDark)),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: const BorderSide(color: AppColor.error),
+    ),
+    border: const OutlineInputBorder(),
+  );
+}
+
+CheckboxThemeData _checkLight(CheckboxThemeData base) {
+  return base.copyWith(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+        states.contains(MaterialState.disabled)
+            ? AppColor.greyMegaLight
+            : AppColor.mainColor),
+    checkColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
+        states.contains(MaterialState.disabled)
+            ? AppColor.greyLight
+            : AppColor.whiteColor),
+  );
+}
+
+ChipThemeData _chipLight(ChipThemeData base) {
+  return base.copyWith(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    showCheckmark: false,
+    padding: const EdgeInsets.all(8),
+    backgroundColor: AppColor.pinkDark,
+    selectedColor: AppColor.mainColor,
+    labelStyle: TextStyle(color: AppColor.whiteColor),
+    // iconTheme: IconThemeData(
+    //   color: MaterialStateColor.resolveWith(
+    //     (Set<MaterialState> states) => states.contains(MaterialState.selected)
+    //         ? AppColor.greyDark
+    //         : AppColor.backColor,
+    //   ),
+  );
+}
+
+FloatingActionButtonThemeData _floatButtonLight(
+    FloatingActionButtonThemeData base) {
+  return base.copyWith(
+    backgroundColor: MaterialStateColor.resolveWith(
+        (Set<MaterialState> states) => states.contains(MaterialState.disabled)
+            ? AppColor.greyMegaLight
+            : AppColor.mainColor),
+    foregroundColor: MaterialStateColor.resolveWith(
+        (Set<MaterialState> states) => states.contains(MaterialState.disabled)
+            ? AppColor.greyLight
+            : AppColor.whiteColor),
+    elevation: 0,
+  );
+}
+
 AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
-    backgroundColor: AppColor.backColor,
-    foregroundColor: AppColor.greyDark,
+    backgroundColor: AppColor.whiteColor,
+    foregroundColor: AppColor.textMain,
     elevation: 1.0,
     centerTitle: true,
   );
 }
 
-TextTheme _textLight(TextTheme base) {
-  return base.copyWith(
-    headlineMedium: base.headlineMedium!.copyWith(
-      fontSize: 24,
-      fontWeight: FontWeight.w500,
-      color: AppColor.backColor,
-    ),
-    headlineLarge: base.headlineMedium!.copyWith(
-      fontSize: 36,
-      fontWeight: FontWeight.w700,
-      color: AppColor.backColor,
-    ),
-    bodyMedium: base.bodyMedium!.copyWith(
-      fontSize: 14,
-    ),
-    labelMedium: base.labelMedium!.copyWith(
-      fontSize: 15,
-      fontWeight: FontWeight.w600,
-      color: AppColor.mainColor,
-    ),
-  );
-}
-
-ProgressIndicatorThemeData _progressLight(ProgressIndicatorThemeData base) {
-  return base.copyWith(
-      linearTrackColor: AppColor.greyDark, color: AppColor.mainColor);
-}
+// ProgressIndicatorThemeData _progressLight(ProgressIndicatorThemeData base) {
+//   return base.copyWith(
+//       linearTrackColor: AppColor.greyDark, color: AppColor.mainColor);
+// }
 
 BottomNavigationBarThemeData _botNavBarLight(
     BottomNavigationBarThemeData base) {
@@ -78,86 +216,5 @@ BottomNavigationBarThemeData _botNavBarLight(
     selectedIconTheme: const IconThemeData(color: AppColor.mainColor),
     type: BottomNavigationBarType.fixed,
     selectedLabelStyle: const TextStyle(fontSize: 12),
-  );
-}
-
-FloatingActionButtonThemeData _floatButtonLight(
-    FloatingActionButtonThemeData base) {
-  return base.copyWith(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    backgroundColor: AppColor.mainColorMegaLight,
-    foregroundColor: AppColor.mainColor,
-  );
-}
-
-ButtonStyle _elevButtonLight = ElevatedButton.styleFrom(
-    // shape: const StadiumBorder(),
-    backgroundColor: AppColor.mainColor,
-    foregroundColor: Colors.white,
-    padding: const EdgeInsets.all(16));
-
-ButtonStyle _textButtonLight = ElevatedButton.styleFrom(
-  foregroundColor: AppColor.mainColor,
-);
-
-ButtonStyle _outButtonLight = OutlinedButton.styleFrom(
-    foregroundColor: AppColor.greyDark,
-    textStyle: const TextStyle(fontWeight: FontWeight.w400));
-
-InputDecorationTheme _inputDecorLight(InputDecorationTheme base) {
-  return base.copyWith(
-    errorStyle: TextStyle(fontSize: 0, height: 0),
-    filled: true,
-    isDense: true,
-    fillColor: MaterialStateColor.resolveWith(
-        (Set<MaterialState> states) => states.contains(MaterialState.focused)
-            ? AppColor.mainColorHyperLight
-            : states.contains(MaterialState.error)
-                ? AppColor.mainColor.withOpacity(0.42)
-                : Colors.white),
-    labelStyle: const TextStyle(color: AppColor.greyLight),
-    enabledBorder: const OutlineInputBorder(
-        // borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColor.greyLight)),
-    focusedBorder: const OutlineInputBorder(
-        // borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColor.greyLight)),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: AppColor.greyLight),
-    ),
-    border: const OutlineInputBorder(),
-  );
-}
-
-ChipThemeData _chipLight(ChipThemeData base) {
-  return base.copyWith(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    showCheckmark: false,
-    padding: const EdgeInsets.all(8),
-    backgroundColor: AppColor.mainColor,
-    selectedColor: AppColor.mainColor,
-    labelStyle: TextStyle(
-        color: MaterialStateColor.resolveWith(
-      (Set<MaterialState> states) => states.contains(MaterialState.selected)
-          ? AppColor.greyDark
-          : AppColor.backColor,
-    )),
-    // iconTheme: IconThemeData(
-    //   color: MaterialStateColor.resolveWith(
-    //     (Set<MaterialState> states) => states.contains(MaterialState.selected)
-    //         ? AppColor.greyDark
-    //         : AppColor.backColor,
-    //   ),
-  );
-}
-
-CheckboxThemeData _checkLight(CheckboxThemeData base) {
-  return base.copyWith(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-    fillColor: MaterialStateColor.resolveWith((Set<MaterialState> states) =>
-        states.contains(MaterialState.disabled)
-            ? AppColor.greyMedium
-            : AppColor.mainColor),
   );
 }

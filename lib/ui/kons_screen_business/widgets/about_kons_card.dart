@@ -12,12 +12,12 @@ class AboutKonsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: consultation.isConfirmed == true
-              ? AppColor.greyDark
+              ? AppColor.access
               : AppColor.warning),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -29,7 +29,7 @@ class AboutKonsCard extends StatelessWidget {
                   consultation.isConfirmed == true
                       ? 'Вы записаны'
                       : 'Ожидает подтверждения id ${consultation.id} вопрос ${consultation.question} КНО ID ${consultation.knoId}',
-                  style: TextStyle(color: Colors.white),
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
                 if (consultation.isConfirmed == true)
                   Text('${consultation.date} в ${consultation.time}')
