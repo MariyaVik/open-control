@@ -18,6 +18,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   zego_uikit_prebuilt_video_conference: ^2.2.8
   speech_to_text: ^6.1.1
+  firebase_core: ^2.13.0
+  firebase_messaging: ^14.6.1
 
 dev_dependencies:
   flutter_test:

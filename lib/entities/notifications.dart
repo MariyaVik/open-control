@@ -8,7 +8,7 @@ class Notifications {
   final DateTime date;
   final String text;
   @JsonKey(name: 'user_id')
-  final String userId;
+  final int userId;
   Notifications({
     required this.id,
     required this.date,

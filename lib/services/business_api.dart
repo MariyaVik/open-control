@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:open_control/entities/hint_button.dart';
 import 'package:open_control/entities/user_info.dart';
 
@@ -177,7 +176,7 @@ class BusinessAPI {
     }
   }
 
-  Future<Message> postMessage(String token, String text) async {
+  Future<List<Message>> postMessage(String token, String text) async {
     String url = ApiUrls.baseUrl + ApiUrls.chatUrl;
     Map<String, String> headers = {
       'Accept': 'application/json',
@@ -187,8 +186,14 @@ class BusinessAPI {
     Options options = Options(headers: headers);
     var body = {'text': text};
     try {
+      List<Message> result = [];
       var response = await _dio.post(url, options: options, data: body);
-      return Message.fromJson(response.data);
+      for (final value in response.data!) {
+        Message mes = Message.fromJson(value);
+        result.add(mes);
+      }
+
+      return result;
     } on DioError catch (e) {
       throw 'Something went wrong :(\n ${e.message}';
     }
@@ -280,6 +285,23 @@ class BusinessAPI {
       }
 
       return result;
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<void> postTokenDevice(String tokenUser, String tokenDevice) async {
+    String url = ApiUrls.baseUrl + ApiUrls.userUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $tokenUser',
+    };
+    Options options = Options(headers: headers);
+    var body = {'token': tokenDevice};
+    try {
+      var r = await _dio.post(url, options: options, data: body);
+      print(r.data);
     } on DioError catch (e) {
       throw 'Something went wrong :(\n ${e.message}';
     }

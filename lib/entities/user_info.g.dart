@@ -11,12 +11,14 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       email: json['email'] as String?,
       id: json['id'] as int?,
       name: json['name'] as String?,
-    )
-      ..isKno = json['is_kno'] as bool?
-      ..knoId = json['nadzor_organ_id'] as int?;
+      tokenDevice: json['tokenDevice'] as String?,
+      isKno: json['is_kno'] as bool?,
+      knoId: json['nadzor_organ_id'] as int?,
+    );
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'token': instance.token,
+      'tokenDevice': instance.tokenDevice,
       'id': instance.id,
       'name': instance.name,
       'email': instance.email,

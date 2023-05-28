@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/theme/app_color.dart';
 
 import '../../../dummy/current_user.dart';
 import '../../../services/business_api.dart';
@@ -17,6 +19,7 @@ class _LoginFormState extends State<LoginForm> {
   late TextEditingController loginController;
   late TextEditingController passwordController;
   late GlobalKey<FormState> formKey;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -72,7 +75,13 @@ class _LoginFormState extends State<LoginForm> {
               ratio: 70,
               child: ElevatedButton(
                   onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
                     if (formKey.currentState!.validate()) {
+                      final fcmToken =
+                          await FirebaseMessaging.instance.getToken();
+                      print('ТОКЕН ${fcmToken}');
                       user.token = await BusinessAPI.instance.authApiRequest(
                           loginController.text, passwordController.text);
                       var u =
@@ -80,7 +89,12 @@ class _LoginFormState extends State<LoginForm> {
                       user
                         ..name = u.name
                         ..email = u.email
-                        ..id = u.id;
+                        ..id = u.id
+                        ..tokenDevice = fcmToken;
+
+                      await BusinessAPI.instance
+                          .postTokenDevice(user.token!, fcmToken!);
+
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           widget.isKno
                               ? AppNavRouteName.homeKNO
@@ -88,7 +102,10 @@ class _LoginFormState extends State<LoginForm> {
                           (route) => false);
                     }
                   },
-                  child: const Text('Войти'))),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: AppColor.whiteColor)
+                      : const Text('Войти'))),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../common/app_bar_logo.dart';
 import '../navigation/kons_navigation_kno.dart';
+import '../navigation/route_name.dart';
 
 class ConsultationPageKNO extends StatelessWidget {
   const ConsultationPageKNO({super.key});
@@ -11,7 +12,11 @@ class ConsultationPageKNO extends StatelessWidget {
       appBar: appBarLogo(
         context,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppNavRouteName.notification);
+              },
+              icon: Icon(Icons.notifications))
         ],
       ),
       body: const Navigator(

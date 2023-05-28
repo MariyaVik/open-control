@@ -30,7 +30,7 @@ class JoinKonsPage extends StatelessWidget {
                             user.isKno == null
                                 ? AppNavRouteName.videoBusiness
                                 : AppNavRouteName.videoKNO,
-                            arguments: consultation.vksLink);
+                            arguments: consultation.id.toString());
                       },
                       child: Text('Подключиться'))),
             ),

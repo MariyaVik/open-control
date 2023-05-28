@@ -8,9 +8,17 @@ class SelectWeek extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios_sharp)),
         IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_sharp)),
+        Text('1 июня - 7 июня',
+            style: Theme.of(context).textTheme.headlineLarge),
+        IconButton(onPressed: () {}, icon: Icon(Icons.arrow_drop_down))
+        // DatePickerDialog(
+        //     initialDate: DateTime.now(),
+        //     firstDate: DateTime.now(),
+        //     lastDate: DateTime.parse('2023-08-31'))
       ],
     );
   }

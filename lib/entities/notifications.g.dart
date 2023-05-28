@@ -11,7 +11,7 @@ Notifications _$NotificationsFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       date: DateTime.parse(json['date'] as String),
       text: json['text'] as String,
-      userId: json['user_id'] as String,
+      userId: json['user_id'] as int,
     );
 
 Map<String, dynamic> _$NotificationsToJson(Notifications instance) =>

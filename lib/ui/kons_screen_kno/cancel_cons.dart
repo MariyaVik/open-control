@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_control/entities/consultation.dart';
+import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../../dummy/current_user.dart';
 import '../../services/business_api.dart';
@@ -58,7 +59,8 @@ class _CancelConsultationState extends State<CancelConsultation> {
     await BusinessAPI.instance.editConsultationStatus(
         user.token!, widget.consultation.id!, false, answerController.text);
     if (context.mounted) {
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(AppNavRouteName.homeKNO, (route) => false);
     }
   }
 }

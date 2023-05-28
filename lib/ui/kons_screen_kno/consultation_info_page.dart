@@ -71,7 +71,8 @@ class ConsultationInfoPage extends StatelessWidget {
                       },
                       child: const Text('Подтвердить запись')),
                 ),
-              if (isTimeBegin(consultation.date!, consultation.time!))
+              if (consultation.isConfirmed! &&
+                  isTimeBegin(consultation.date!, consultation.time!))
                 Center(
                     child: ElevatedButton(
                         onPressed: () {

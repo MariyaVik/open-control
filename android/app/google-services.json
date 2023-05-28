@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "352395501319",
+    "project_id": "open-control-hack",
+    "storage_bucket": "open-control-hack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352395501319:android:e4ad4d098f25556aedafa2",
+        "android_client_info": {
+          "package_name": "com.example.open_control"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSanjrCPK67SNlE6CB3nFkJMIHLEbKmM4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,7 @@ import '../../common/kno_theme_card.dart';
 import '../../common/utils.dart';
 import '../../common/week_day_date_time_widget.dart';
 import '../../theme/app_color.dart';
+import 'delete_cons.dart';
 
 class AboutKonsCard extends StatelessWidget {
   final Consultation consultation;
@@ -55,10 +56,14 @@ class AboutKonsCard extends StatelessWidget {
           WeekDayDateTimeWidget(consultation: consultation),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: () async {
-                await BusinessAPI.instance
-                    .deleteConsultation(user.token!, consultation.id!);
-                print('тут обновляем страницу');
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DeleteConsultation(
+                        consultation: consultation,
+                      );
+                    });
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

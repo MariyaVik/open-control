@@ -15,7 +15,7 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  List<Notifications> nots = [];
+  List<Notifications>? nots;
   Future<void> getNot() async {
     nots = await BusinessAPI.instance.getNotifications(user.token!);
     setState(() {});
@@ -44,30 +44,37 @@ class _NotificationPageState extends State<NotificationPage> {
             },
           ),
         ),
-        body: nots.isEmpty
-            ? CircularProgressIndicator()
-            : ListView.builder(
-                itemCount: nots.length,
-                itemBuilder: (contex, index) {
-                  return Container(
-                    margin: EdgeInsets.all(16),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    height: 100,
-                    decoration: BoxDecoration(color: AppColor.greyLight),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                  '${DateTime.now().difference(nots[index].date).inDays}дней назад')
-                            ]),
-                        Text(nots[index].text),
-                      ],
-                    ),
-                  );
-                }),
+        body: nots == null
+            ? const Center(child: CircularProgressIndicator())
+            : nots!.isEmpty
+                ? const Center(
+                    child: Text('Уведомлений пока нет'),
+                  )
+                : ListView.builder(
+                    itemCount: nots!.length,
+                    itemBuilder: (contex, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.only(
+                            top: 12, right: 16, left: 16, bottom: 24),
+                        decoration: BoxDecoration(
+                            color: AppColor.greyLight,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                      '${DateTime.now().difference(nots![index].date).inDays} дней назад')
+                                ]),
+                            Text(nots![index].text),
+                          ],
+                        ),
+                      );
+                    }),
       ),
     );
   }

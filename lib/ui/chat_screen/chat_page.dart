@@ -12,6 +12,7 @@ import '../../services/business_api.dart';
 import '../common/size_config.dart';
 import '../common/utils.dart';
 import '../theme/app_color.dart';
+import 'feedback.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -29,6 +30,8 @@ class _ChatPageState extends State<ChatPage> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
+
+  bool isFeedback = false;
 
   Future<void> getMes() async {
     _elements = await BusinessAPI.instance.getMessages(user.token!);
@@ -181,6 +184,7 @@ class _ChatPageState extends State<ChatPage> {
                       },
                     ),
                   ),
+            if (isFeedback) FeedbackBot(),
             if (buttons.isNotEmpty)
               Container(
                 margin: const EdgeInsets.only(right: 20, left: 20, bottom: 8),
@@ -218,11 +222,12 @@ class _ChatPageState extends State<ChatPage> {
                                   text: controller.text,
                                   to: 0);
                               _elements.add(newQues);
-                              Message ans = await BusinessAPI.instance
+                              List<Message> ans = await BusinessAPI.instance
                                   .postMessage(user.token!, newQues.text);
-                              _elements.add(ans);
+                              _elements.addAll(ans);
                               controller.clear();
                               FocusManager.instance.primaryFocus?.unfocus();
+                              isFeedback = true;
                               setState(() {});
                             },
                             icon: Image.asset('assets/icons/send.png'))),

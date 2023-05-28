@@ -16,7 +16,7 @@ DateTime getDateTime(String date, String time) {
 bool isTimeBegin(String date, String time) {
   final minutesBeforeCons =
       getDateTime(date, time).difference(DateTime.now()).inMinutes;
-  return minutesBeforeCons < 7000; // ДЛЯ ТЕСТА
+  return minutesBeforeCons < 2000; // ДЛЯ ТЕСТА
 }
 
 String getWeekDay(int num) {
