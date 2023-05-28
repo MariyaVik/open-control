@@ -189,8 +189,10 @@ class BusinessAPI {
       List<Message> result = [];
       var response = await _dio.post(url, options: options, data: body);
       for (final value in response.data!) {
-        Message mes = Message.fromJson(value);
-        result.add(mes);
+        for (var mes in value) {
+          Message message = Message.fromJson(mes);
+          result.add(message);
+        }
       }
 
       return result;
