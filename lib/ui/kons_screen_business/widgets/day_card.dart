@@ -31,6 +31,7 @@ class DayCard extends StatelessWidget {
         Text(
             '${getDateFromString(date).day.toString()} ${getMonthName(getDateFromString(date).month)}'),
         ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.only(bottom: 8.0),

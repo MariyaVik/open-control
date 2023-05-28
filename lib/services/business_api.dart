@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:open_control/entities/hint_button.dart';
 import 'package:open_control/entities/user_info.dart';
 
 import '../entities/all_consultations.dart';
 import '../entities/consultation.dart';
+import '../entities/faq.dart';
 import '../entities/info.dart';
 import '../entities/message.dart';
+import '../entities/notifications.dart';
 import 'api_ulrs.dart';
 
 class BusinessAPI {
@@ -112,8 +115,8 @@ class BusinessAPI {
     }
   }
 
-  Future<void> editConsultationStatus(
-      String token, int consId, bool isApply) async {
+  Future<void> editConsultationStatus(String token, int consId, bool isApply,
+      [String answer = '']) async {
     String url = ApiUrls.baseUrl + ApiUrls.consultationUrl;
     Map<String, String> headers = {
       'Accept': 'application/json',
@@ -122,7 +125,11 @@ class BusinessAPI {
     };
     Options options = Options(headers: headers);
 
-    Map<String, dynamic> body = {'id': consId, 'apply': isApply};
+    Map<String, dynamic> body = {
+      'id': consId,
+      'apply': isApply,
+      'answer': answer
+    };
 
     try {
       await _dio.patch(url, options: options, data: body);
@@ -210,15 +217,71 @@ class BusinessAPI {
       throw 'Something went wrong :(\n ${e.message}';
     }
   }
+
+  Future<List<Notifications>> getNotifications(String token) async {
+    String url = ApiUrls.baseUrl + ApiUrls.notificationUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    List<Notifications> result = [];
+    try {
+      Response<Map<String, dynamic>> response =
+          await _dio.get(url, options: options);
+
+      for (final value in response.data!.values) {
+        for (var notif in value) {
+          Notifications notification = Notifications.fromJson(notif);
+          result.add(notification);
+        }
+      }
+
+      return result;
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<void> putAnswerCancelConsultation(
+      String token, int consId, String text) async {
+    String url = ApiUrls.baseUrl + ApiUrls.consultationUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    var body = {'id': consId, 'answer': text};
+    try {
+      await _dio.put(url, options: options, data: body);
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<List<Faq>> getFaq(String token) async {
+    String url = ApiUrls.baseUrl + ApiUrls.faqUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token',
+    };
+    Options options = Options(headers: headers);
+    List<Faq> result = [];
+    try {
+      Response<List<dynamic>> response = await _dio.get(url, options: options);
+      print(response.data);
+
+      for (final value in response.data!) {
+        Faq faqs = Faq.fromJson(value);
+        result.add(faqs);
+      }
+
+      return result;
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
 }
-
-
-
-
-
-
-
-// 'http://hack.torbeno.ru/api/v1/login',
-//                           options: Options(
-//                               contentType: 'application/x-www-form-urlencoded'),
-//                           data: {'login': 'user', 'password': '123321'});

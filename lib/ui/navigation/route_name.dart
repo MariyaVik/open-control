@@ -19,4 +19,9 @@ abstract class AppNavRouteName {
   static const konsDetailsKNO = 'konsKNO/delails';
   static const joinKonsKNO = 'konsKNO/delails/join';
   static const videoKNO = 'konsKNO/delails/join/call';
+
+  static const notification = 'notification';
+
+  static const faq = 'faq';
+  static const faqDetails = 'faqDetails';
 }

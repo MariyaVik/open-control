@@ -8,6 +8,7 @@ import '../common/utils.dart';
 import '../common/week_day_date_time_widget.dart';
 import '../navigation/route_name.dart';
 import '../theme/app_color.dart';
+import 'cancel_cons.dart';
 
 class ConsultationInfoPage extends StatelessWidget {
   final Consultation consultation;
@@ -29,15 +30,12 @@ class ConsultationInfoPage extends StatelessWidget {
               Text('Пользователь юридическое лицо ООО ″Архивариус″'),
               const SizedBox(height: 16),
               KnoThemeCard(
-                isTheme: true,
-                name:
-                    'Региональный государственный контроль (надзор) за применением цен на лекарственные препараты, включенные в перечень жизненно необходимых и важнейших лекарственных препаратов',
-              ),
+                  isTheme: true, name: consultation.consultTopicId.toString()),
               const SizedBox(height: 8),
               Row(
-                children: const [
-                  Checkbox(value: true, onChanged: null),
-                  Expanded(
+                children: [
+                  Checkbox(value: consultation.isNeedLetter, onChanged: null),
+                  const Expanded(
                     child: Text(
                         'Хочу получить письменное разъяснение по результатам консультирования'),
                   )
@@ -64,6 +62,7 @@ class ConsultationInfoPage extends StatelessWidget {
                     onPressed: () async {
                       await BusinessAPI.instance.editConsultationStatus(
                           user.token!, consultation.id!, true);
+                      print('ОБНОВИТЬ СТРАНИЦУ ИЛИ ВЫЙТИ');
                     },
                     child: const Text('Подтвердить запись')),
               if (isTimeBegin(consultation.date!, consultation.time!))
@@ -79,6 +78,17 @@ class ConsultationInfoPage extends StatelessWidget {
                         child: const Text('Начать консультацию'))
                   ],
                 ),
+              TextButton(
+                  onPressed: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CancelConsultation(
+                            consultation: consultation,
+                          );
+                        });
+                  },
+                  child: Text('Отменить запись'))
             ],
           ),
         ),
@@ -119,13 +129,15 @@ class WarningWidget extends StatelessWidget {
                   : Icons.access_time_outlined,
               color: AppColor.whiteColor),
           const SizedBox(width: 8),
-          Text(
-              consultation.isConfirmed!
-                  ? isTimeStart
-                      ? 'Началось время консультации'
-                      : 'Запись подтверждена'
-                  : 'Запись ожидает подтверждения',
-              style: Theme.of(context).textTheme.labelLarge),
+          Expanded(
+            child: Text(
+                consultation.isConfirmed!
+                    ? isTimeStart
+                        ? 'Началось время консультации'
+                        : 'Запись подтверждена'
+                    : 'Запись ожидает подтверждения',
+                style: Theme.of(context).textTheme.labelLarge),
+          ),
         ],
       ),
     );

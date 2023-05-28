@@ -1,5 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/hint_button.dart';
@@ -20,17 +24,46 @@ class _ChatPageState extends State<ChatPage> {
   List<Message> _elements = [];
   List<HintButton> buttons = [];
   TextEditingController controller = TextEditingController();
+  ScrollController scrollController = ScrollController();
+
+  SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _lastWords = '';
 
   Future<void> getMes() async {
     _elements = await BusinessAPI.instance.getMessages(user.token!);
     buttons = await BusinessAPI.instance.getButtons(user.token!);
+
     setState(() {});
+  }
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _lastWords = result.recognizedWords;
+      controller.text = _lastWords;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     getMes();
+    _initSpeech();
   }
 
   @override
@@ -39,85 +72,41 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
+  void scrollDown() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // final List<Message> _elements = [
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 150)),
-    //       from: 0,
-    //       id: 1,
-    //       text: 'первое',
-    //       to: 1),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 148)),
-    //       from: 0,
-    //       id: 1,
-    //       text: 'второе',
-    //       to: 1),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 102)),
-    //       from: 1,
-    //       id: 1,
-    //       text: 'вопрос',
-    //       to: 0),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 101)),
-    //       from: 0,
-    //       id: 1,
-    //       text: 'ответ',
-    //       to: 1),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 100)),
-    //       from: 0,
-    //       id: 1,
-    //       text: 'и ещё ответ',
-    //       to: 1),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 56)),
-    //       from: 1,
-    //       id: 1,
-    //       text: 'доп вопрос',
-    //       to: 0),
-    //   Message(
-    //       date: DateTime.now().subtract(Duration(hours: 56)),
-    //       from: 1,
-    //       id: 1,
-    //       text: 'уточнениееееееееееееееееееееееееееееееееееееееееееееееееее',
-    //       to: 0),
-    //   Message(
-    //     date: DateTime.now().subtract(Duration(hours: 55)),
-    //     from: 0,
-    //     id: 1,
-    //     text: 'супер ответ',
-    //     to: 1,
-    //   ),
-    // ];
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Чат-бот'),
+          title: const Text('Чат-бот'),
           actions: [
             IconButton(
-              icon: ImageIcon(AssetImage('assets/icons/messages.png')),
-              onPressed: () {},
+              icon: const ImageIcon(AssetImage('assets/icons/messages.png')),
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppNavRouteName.faq);
+              },
             )
           ],
         ),
         body: Column(
           children: [
             _elements.isEmpty
-                ? CircularProgressIndicator()
+                ? const Expanded(
+                    child: Center(child: CircularProgressIndicator()))
                 : Expanded(
                     child: GroupedListView<Message, DateTime>(
+                      controller: scrollController,
                       elements: _elements,
                       groupBy: (element) => DateTime(element.date.year,
                           element.date.month, element.date.day),
-                      // groupComparator: (value1, value2) => value2.compareTo(value1),
-                      // itemComparator: (item1, item2) =>
-                      //     item1['name'].compareTo(item2['name']),
-                      // order: GroupedListOrder.DESC,
-                      // useStickyGroupSeparators: true,
                       groupHeaderBuilder: (value) => Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -139,22 +128,50 @@ class _ChatPageState extends State<ChatPage> {
                                 constraints: BoxConstraints(
                                     minWidth: SizeConfig.screenWidth * 0.66,
                                     maxWidth: SizeConfig.screenWidth * 0.66),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 16),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(16),
-                                        topRight: Radius.circular(16),
+                                        topLeft: const Radius.circular(16),
+                                        topRight: const Radius.circular(16),
                                         bottomLeft: element.from == 0
                                             ? Radius.zero
-                                            : Radius.circular(16),
+                                            : const Radius.circular(16),
                                         bottomRight: element.from == 0
-                                            ? Radius.circular(16)
+                                            ? const Radius.circular(16)
                                             : Radius.zero),
                                     color: element.from == 0
                                         ? AppColor.greyMegaLight
                                         : AppColor.greyLight),
-                                child: Text(element.text),
+                                child: element.from == 0 &&
+                                        element.text.contains('Собрал ответы')
+                                    ? RichText(
+                                        text: TextSpan(children: [
+                                        TextSpan(
+                                            text: 'Собрал ответы',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                    color: AppColor.mainColor),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.of(context).pushNamed(
+                                                    AppNavRouteName.faq);
+                                              }),
+                                        TextSpan(
+                                            text: element.text.replaceAll(
+                                                'Собрал ответы', ''),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.of(context).pushNamed(
+                                                    AppNavRouteName.faq);
+                                              }),
+                                      ]))
+                                    : Text(element.text),
                               ),
                               Text(
                                   '${element.date.hour}:${element.date.minute}')
@@ -166,9 +183,9 @@ class _ChatPageState extends State<ChatPage> {
                   ),
             if (buttons.isNotEmpty)
               Container(
-                margin: EdgeInsets.only(right: 20, left: 20, bottom: 8),
+                margin: const EdgeInsets.only(right: 20, left: 20, bottom: 8),
                 width: double.infinity,
-                height: 32,
+                height: 40,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: buttons.length,
@@ -177,14 +194,14 @@ class _ChatPageState extends State<ChatPage> {
                         onPressed: () {}, child: Text(buttons[index].text));
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 8);
+                    return const SizedBox(width: 8);
                   },
                 ),
               ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border: Border(top: BorderSide(color: AppColor.greyLight))),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
                   Expanded(
@@ -195,7 +212,7 @@ class _ChatPageState extends State<ChatPage> {
                         suffixIcon: IconButton(
                             onPressed: () async {
                               Message newQues = Message(
-                                  date: DateTime.now(),
+                                  date: DateTime.now().toUtc(),
                                   from: user.id!,
                                   id: -1,
                                   text: controller.text,
@@ -211,8 +228,14 @@ class _ChatPageState extends State<ChatPage> {
                             icon: Image.asset('assets/icons/send.png'))),
                   )),
                   IconButton(
-                      onPressed: () {},
-                      icon: ImageIcon(AssetImage('assets/icons/mic.png')))
+                    onPressed: _speechToText.isNotListening
+                        ? _startListening
+                        : _stopListening,
+                    // icon: const ImageIcon(AssetImage('assets/icons/mic.png')),
+                    icon: Icon(_speechToText.isNotListening
+                        ? Icons.mic_off
+                        : Icons.mic),
+                  )
                 ],
               ),
             ),

@@ -200,7 +200,7 @@ AppBarTheme _appBarLight(AppBarTheme base) {
     backgroundColor: AppColor.whiteColor,
     foregroundColor: AppColor.textMain,
     elevation: 0.0,
-    centerTitle: true,
+    // centerTitle: true,
   );
 }
 

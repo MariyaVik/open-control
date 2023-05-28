@@ -7,4 +7,6 @@ class ApiUrls {
   static const String slotUrl = '/slot';
   static const String chatUrl = '/chat';
   static const String buttonUrl = '/button';
+  static const String notificationUrl = '/notification';
+  static const String faqUrl = '/faq';
 }

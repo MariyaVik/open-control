@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../theme/app_color.dart';
+import 'service_card.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -11,7 +13,11 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: Image.asset('assets/images/Logotype.png'),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppNavRouteName.notification);
+              },
+              icon: Icon(Icons.notifications))
         ],
       ),
       body: Padding(
@@ -28,6 +34,9 @@ class MainPage extends StatelessWidget {
               ),
             ),
             ServiceCard(
+              onTap: () {
+                Navigator.of(context).pushNamed(AppNavRouteName.faq);
+              },
               color: AppColor.greyMegaLight,
               child: Row(
                 children: const [
@@ -134,23 +143,6 @@ class MainPage extends StatelessWidget {
           ],
         )),
       ),
-    );
-  }
-}
-
-class ServiceCard extends StatelessWidget {
-  final Color color;
-  final Widget child;
-  const ServiceCard({super.key, required this.child, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
-      child: child,
     );
   }
 }
