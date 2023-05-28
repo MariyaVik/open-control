@@ -12,15 +12,15 @@ class SelectEntityWidget extends StatefulWidget {
 class _SelectEntityWidgetState extends State<SelectEntityWidget> {
   final List<EntityFilterItem> _chips = [
     EntityFilterItem(
-        name: 'Общежития',
+        name: 'Природа',
         iconName: 'assets/icons/nature.png',
         filterName: EntityFilter.nature),
     EntityFilterItem(
-        name: 'События',
+        name: 'Социум',
         iconName: 'assets/icons/social.png',
         filterName: EntityFilter.social),
     EntityFilterItem(
-        name: 'Лаборатории',
+        name: 'Культура',
         iconName: 'assets/icons/culture.png',
         filterName: EntityFilter.culture),
   ];

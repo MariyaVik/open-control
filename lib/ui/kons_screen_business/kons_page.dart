@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../common/app_bar_logo.dart';
 import '../navigation/kons_navigation_business.dart';
 
 class ConsultationPageBusiness extends StatelessWidget {
@@ -6,7 +7,7 @@ class ConsultationPageBusiness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(/*title: FittedBox(child: LogoFull())*/), // ПЕРЕДЕЛАТЬ
+      appBar: appBarLogo(context),
       body: const Navigator(
         initialRoute: KonsNavigationBusiness.initialRoute,
         onGenerateRoute: KonsNavigationBusiness.onGenerateRoute,

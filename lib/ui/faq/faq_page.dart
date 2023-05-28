@@ -4,6 +4,7 @@ import 'package:open_control/ui/navigation/route_name.dart';
 import '../../dummy/current_user.dart';
 import '../../entities/faq.dart';
 import '../../services/business_api.dart';
+import '../common/app_bar_back.dart';
 import '../common/circular_icon_button.dart';
 import '../theme/app_color.dart';
 import 'like_count.dart';
@@ -33,18 +34,7 @@ class _FaqPageState extends State<FaqPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 1,
-          leading: CircularIconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.whiteColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
+        appBar: appBarBack(context),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

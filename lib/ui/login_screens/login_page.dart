@@ -16,8 +16,8 @@ class LoginPage extends StatelessWidget {
             title: Image.asset(
           'assets/images/Logotype.png',
         )),
-        body: SingleChildScrollView(
-          child: Center(
+        body: Center(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 20),
               child: ResponseHorizontalWidget(

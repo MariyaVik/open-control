@@ -8,7 +8,7 @@ import '../kons_screen_business/kno_details_page.dart';
 import '../kons_screen_business/kons_main_view.dart';
 import '../kons_screen_business/select_date_time_view.dart';
 import '../kons_screen_business/select_theme_view.dart';
-import '../kons_screen_business/widgets/list_kno_page.dart';
+import '../kons_screen_business/list_kno_page.dart';
 import 'route_name.dart';
 
 class KonsNavigationBusiness {

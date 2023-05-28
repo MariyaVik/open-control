@@ -4,6 +4,7 @@ import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
 import '../../services/business_api.dart';
 import '../kons_screen_business/widgets/day_card.dart';
+import '../kons_screen_business/widgets/select_week.dart';
 
 class KonsShedulePage extends StatefulWidget {
   const KonsShedulePage({super.key});
@@ -246,14 +247,7 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            IconButton(
-                onPressed: () {}, icon: Icon(Icons.arrow_back_ios_sharp)),
-            IconButton(
-                onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_sharp)),
-          ],
-        ),
+        SelectWeek(),
         dates.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : Expanded(

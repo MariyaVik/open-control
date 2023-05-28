@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/common/app_bar_back.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/consultation.dart';
@@ -17,17 +18,19 @@ class ConsultationInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: appBarBack(context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WarningWidget(consultation: consultation),
               const SizedBox(height: 22),
               WeekDayDateTimeWidget(consultation: consultation),
               const SizedBox(height: 32),
               Text('Пользователь юридическое лицо ООО ″Архивариус″'),
+              TextButton(onPressed: () {}, child: Text('Подробнее')),
               const SizedBox(height: 16),
               KnoThemeCard(
                   isTheme: true, name: consultation.consultTopicId.toString()),
@@ -57,38 +60,39 @@ class ConsultationInfoPage extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
               if (!consultation.isConfirmed!)
-                ElevatedButton(
-                    onPressed: () async {
-                      await BusinessAPI.instance.editConsultationStatus(
-                          user.token!, consultation.id!, true);
-                      print('ОБНОВИТЬ СТРАНИЦУ ИЛИ ВЫЙТИ');
-                    },
-                    child: const Text('Подтвердить запись')),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await BusinessAPI.instance.editConsultationStatus(
+                            user.token!, consultation.id!, true);
+                        print('ОБНОВИТЬ СТРАНИЦУ ИЛИ ВЫЙТИ');
+                      },
+                      child: const Text('Подтвердить запись')),
+                ),
               if (isTimeBegin(consultation.date!, consultation.time!))
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    ElevatedButton(
+                Center(
+                    child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                               AppNavRouteName.joinKonsKNO,
                               arguments: consultation);
                         },
-                        child: const Text('Начать консультацию'))
-                  ],
-                ),
-              TextButton(
-                  onPressed: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CancelConsultation(
-                            consultation: consultation,
-                          );
-                        });
-                  },
-                  child: Text('Отменить запись'))
+                        child: const Text('Начать консультацию'))),
+              Center(
+                child: TextButton(
+                    onPressed: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CancelConsultation(
+                              consultation: consultation,
+                            );
+                          });
+                    },
+                    child: Text('Отменить запись')),
+              )
             ],
           ),
         ),

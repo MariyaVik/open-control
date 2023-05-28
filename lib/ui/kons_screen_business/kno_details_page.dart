@@ -30,7 +30,7 @@ class _KNODetailsState extends State<KNODetails> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColor.greyLight,
+      color: AppColor.greyMegaLight,
       child: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -40,15 +40,30 @@ class _KNODetailsState extends State<KNODetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.topRight,
                 child: CloseButtonMy(),
               ),
-              Text(widget.kno.name.toUpperCase()),
+              Text(
+                widget.kno.name.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+              ),
+              const SizedBox(height: 16),
               Text(
                 'Главное архивное управление города Москвы (Главархив) реализует государственную политику в сфере архивного дела, а также охраны и использования историко-документального наследия.',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              const Text('Вид контроля'),
+              const SizedBox(height: 16),
+              Text(
+                'Вид контроля',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+              ),
 //-----------------------------------------------------------------------------------------------------------------------------------------
               // SelectWidget(
               //     hint: 'Выберите вид контроля',
@@ -154,11 +169,46 @@ class _KNODetailsState extends State<KNODetails> {
                         arguments: widget.kno);
                   },
                   child: Text('Перейти к выбору даты')),
-              Text('Обзор'),
-              CircleAvatar(),
-              Text('Онопенко Ярослав Аксентьевич'),
-              Text('Начальник Главного архивного управления города Москвы'),
-              Text('Контакты'),
+              const SizedBox(height: 16),
+              Text(
+                'Обзор',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+              ),
+              const SizedBox(height: 16),
+              Column(
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: AppColor.mainColor, shape: BoxShape.circle),
+                    child: Image.asset('assets/images/bust.png'),
+                  ),
+                  Text(
+                    'Онопенко Ярослав Аксентьевич',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Начальник Главного архивного управления города Москвы',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text('Контакты',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 20)),
+              const SizedBox(height: 16),
               Text('https://www.mos.ru/mosarchiv/'),
               Text('mosarch@mos.ru'),
               Text('Факс  +7 (495) 334-44-89'),

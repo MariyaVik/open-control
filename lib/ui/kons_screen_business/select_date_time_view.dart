@@ -6,8 +6,10 @@ import 'package:open_control/entities/kno.dart';
 import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
 import '../../services/business_api.dart';
+import '../common/app_bar_back.dart';
 import '../common/close_button.dart';
 import 'widgets/day_card.dart';
+import 'widgets/select_week.dart';
 
 class SelectDateTimeView extends StatefulWidget {
   final NadzorOrgans kno;
@@ -64,40 +66,35 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
     allSlots = await BusinessAPI.instance.getSlots(user.token!);
 
     dates = allSlots.keys.toList();
-
-    // print(dates);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(22.0),
-      child: Column(
-        children: [
-          const Align(alignment: Alignment.topRight, child: CloseButtonMy()),
-          Row(
-            children: [],
-          ),
-          dates.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : Expanded(
-                  child: ListView.builder(
-                      itemCount: allSlots.length,
-                      itemBuilder: (contex, index) {
-                        List<Slot> slotToday = [];
-                        var today = allSlots[dates[index]]!;
-                        for (var e in today) {
-                          Slot slot = Slot.fromJson(e);
-                          slotToday.add(slot);
-                        }
-
-                        // print(slotToday[0]);
-
-                        return DayCard(
-                            slotToday: slotToday, date: dates[index]);
-                      }),
-                )
-        ],
+    return Scaffold(
+      appBar: appBarBack(context),
+      body: Padding(
+        padding: const EdgeInsets.all(22.0),
+        child: Column(
+          children: [
+            SelectWeek(),
+            dates.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : Expanded(
+                    child: ListView.builder(
+                        itemCount: allSlots.length,
+                        itemBuilder: (contex, index) {
+                          List<Slot> slotToday = [];
+                          var today = allSlots[dates[index]]!;
+                          for (var e in today) {
+                            Slot slot = Slot.fromJson(e);
+                            slotToday.add(slot);
+                          }
+                          return DayCard(
+                              slotToday: slotToday, date: dates[index]);
+                        }),
+                  )
+          ],
+        ),
       ),
     );
   }

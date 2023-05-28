@@ -31,12 +31,13 @@ class DayCard extends StatelessWidget {
         Text(
             '${getDateFromString(date).day.toString()} ${getMonthName(getDateFromString(date).month)}'),
         ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TimeView(slot: slotForShow[index * 2]),
                 const SizedBox(width: 20),
@@ -79,6 +80,7 @@ class TimeView extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyMegaLight),
           borderRadius: BorderRadius.circular(5),
           color: slot.consultation != null && !slot.consultation!.isConfirmed!
               ? AppColor.warning
@@ -88,7 +90,7 @@ class TimeView extends StatelessWidget {
                   ? AppColor.mainColor
                   : slot.consultation != null && slot.consultation!.isConfirmed!
                       ? AppColor.access
-                      : AppColor.greyLight,
+                      : AppColor.whiteColor,
         ),
         child: Text(slot.time),
       ),

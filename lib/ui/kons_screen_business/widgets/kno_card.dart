@@ -21,7 +21,8 @@ class KNOCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            color: AppColor.greyMegaLight,
+            borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
           Text(kno.name.toUpperCase()),
           const SizedBox(height: 16),
@@ -40,7 +41,8 @@ class KNOCard extends StatelessWidget {
                         children: [
                           TextSpan(
                               text: kno.controlTypes.length.toString(),
-                              style: TextStyle(color: AppColor.mainColor)),
+                              style:
+                                  const TextStyle(color: AppColor.mainColor)),
                           TextSpan(text: ' вид контроля')
                         ],
                       ),

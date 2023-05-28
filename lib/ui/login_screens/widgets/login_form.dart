@@ -62,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          const Flexible(child: ResponseVerticalWidget(ratio: 2)),
+          const Flexible(child: ResponseVerticalWidget(ratio: 1)),
           Align(
               alignment: Alignment.centerLeft,
               child: TextButton(

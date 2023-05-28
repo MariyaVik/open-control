@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../common/circular_icon_button.dart';
 import '../../theme/app_color.dart';
 
 class BackButtonWidget extends StatelessWidget {
@@ -9,10 +10,11 @@ class BackButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.arrow_back, color: AppColor.mainColor));
+    return CircularIconButton(
+      icon: const Icon(Icons.arrow_back, color: AppColor.whiteColor),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
   }
 }

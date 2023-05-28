@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../common/app_bar_logo.dart';
 import '../common/response_widgets.dart';
 import '../theme/app_color.dart';
 import 'widgets/back_button.dart';
@@ -20,37 +21,46 @@ class LoginUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: appBarLogo(context),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(children: const [BackButtonWidget()]),
-                    const Flexible(child: ResponseVerticalWidget(ratio: 1)),
-                    ResponseVerticalWidget(
-                        ratio: 4,
-                        child: Image.asset('assets/images/text_cloud.png')),
-                    const ResponseHorizontalWidget(
-                        ratio: 70,
-                        child: Text(
-                          'Доступ к информационным ресурсам города Москвы',
-                          textAlign: TextAlign.center,
-                        )),
-                    const Flexible(child: ResponseVerticalWidget(ratio: 5)),
-                    const ResponseVerticalWidget(ratio: 6.5, child: LogoFull()),
-                    const Flexible(child: ResponseVerticalWidget(ratio: 5)),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 3)),
+                    Row(
+                      children: [
+                        ResponseVerticalWidget(
+                            ratio: 6,
+                            child: Image.asset('assets/images/text_cloud.png')),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Text(
+                            'Доступ к информационным ресурсам города Москвы',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 3)),
+                    const Text(
+                      'Вход в Цифровая платформа Открытый контроль',
+                      style: TextStyle(fontSize: 28),
+                      textAlign: TextAlign.center,
+                    ),
+                    const Flexible(child: ResponseVerticalWidget(ratio: 3)),
                     TextButton(
                         onPressed: () {},
                         child: const Text('Зарегистрироваться')),
                     const Flexible(child: ResponseVerticalWidget(ratio: 2)),
                     const ResponseHorizontalWidget(
-                        ratio: 70, child: LoginForm(isKno: false)),
+                        ratio: 80, child: LoginForm(isKno: false)),
                     const Flexible(child: ResponseVerticalWidget(ratio: 1)),
                     ResponseHorizontalWidget(
-                      ratio: 70,
+                      ratio: 80,
                       child: Column(
                         children: [
                           Padding(
@@ -105,7 +115,7 @@ class LoginUserPage extends StatelessWidget {
                             ),
                           ),
                           ResponseHorizontalWidget(
-                              ratio: 70,
+                              ratio: 80,
                               child: OutlinedButton(
                                   onPressed: () {},
                                   child: const Text('Электронная подпись'))),

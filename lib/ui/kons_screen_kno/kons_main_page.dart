@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../common/app_bar_logo.dart';
 import '../navigation/kons_navigation_kno.dart';
 
 class ConsultationPageKNO extends StatelessWidget {
@@ -7,9 +8,12 @@ class ConsultationPageKNO extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(/*title: FittedBox(child: LogoFull())*/ actions: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
-      ]), // ПЕРЕДЕЛАТЬ
+      appBar: appBarLogo(
+        context,
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+        ],
+      ),
       body: const Navigator(
         initialRoute: KonsNavigationKNO.initialRoute,
         onGenerateRoute: KonsNavigationKNO.onGenerateRoute,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/faq.dart';
+import '../common/app_bar_back.dart';
 import '../common/circular_icon_button.dart';
 import '../theme/app_color.dart';
 import 'like_count.dart';
@@ -13,17 +14,7 @@ class FaqDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: CircularIconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.whiteColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
+        appBar: appBarBack(context),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
