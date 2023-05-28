@@ -90,6 +90,7 @@ class _LoginFormState extends State<LoginForm> {
                         ..name = u.name
                         ..email = u.email
                         ..id = u.id
+                        ..isKno = widget.isKno
                         ..tokenDevice = fcmToken;
 
                       await BusinessAPI.instance

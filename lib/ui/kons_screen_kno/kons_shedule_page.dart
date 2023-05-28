@@ -40,10 +40,10 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
         SelectWeek(),
         dates.isEmpty
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                child: Expanded(
+            : Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   child: ListView.builder(
                       itemCount: allSlots.length,
                       itemBuilder: (contex, index) {

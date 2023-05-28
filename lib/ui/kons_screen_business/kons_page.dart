@@ -35,7 +35,13 @@ class _ConsultationPageBusinessState extends State<ConsultationPageBusiness> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarLogo(context),
+      appBar: appBarLogo(context, actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppNavRouteName.notification);
+            },
+            icon: Icon(Icons.notifications))
+      ]),
       body: Navigator(
         key: konsKey,
         initialRoute: KonsNavigationBusiness.initialRoute,

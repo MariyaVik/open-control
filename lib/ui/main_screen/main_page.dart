@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
+import '../common/app_bar_logo.dart';
 import '../theme/app_color.dart';
 import 'service_card.dart';
 
@@ -18,16 +19,13 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/Logotype.png'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppNavRouteName.notification);
-              },
-              icon: Icon(Icons.notifications))
-        ],
-      ),
+      appBar: appBarLogo(context, actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppNavRouteName.notification);
+            },
+            icon: Icon(Icons.notifications))
+      ]),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

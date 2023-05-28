@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../dummy/current_user.dart';
 import '../../../entities/slot.dart';
 import '../../common/utils.dart';
 import '../../navigation/route_name.dart';
@@ -71,12 +72,14 @@ class TimeView extends StatelessWidget {
     }
 
     void actionForKNO() {
-      Navigator.of(context).pushNamed(AppNavRouteName.konsDetailsKNO,
-          arguments: slot.consultation);
+      if (slot.consultation != null) {
+        Navigator.of(context).pushNamed(AppNavRouteName.konsDetailsKNO,
+            arguments: slot.consultation);
+      }
     }
 
     return GestureDetector(
-      onTap: slot.consultation != null ? actionForKNO : actionForBusiness,
+      onTap: user.isKno == true ? actionForKNO : actionForBusiness,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
