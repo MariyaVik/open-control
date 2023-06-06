@@ -22,7 +22,12 @@ class AboutKonsCard extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          border: Border.all(color: AppColor.greyLight),
+          border: Border.all(
+              color: consultation.isConfirmed == true
+                  ? isTimeStart
+                      ? AppColor.mainColor
+                      : AppColor.access
+                  : AppColor.warning),
           borderRadius: BorderRadius.circular(6)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,10 +78,9 @@ class AboutKonsCard extends StatelessWidget {
           Text('Консультирование пройдет по ВКС в этом окне',
               style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(height: 8),
-          KnoThemeCard(isTheme: false, name: consultation.knoId.toString()),
+          KnoThemeCard(isTheme: false, name: consultation.kno!.name),
           const SizedBox(height: 16),
-          KnoThemeCard(
-              isTheme: true, name: consultation.consultTopicId.toString()),
+          KnoThemeCard(isTheme: true, name: consultation.consultTopic!.name),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -90,6 +94,7 @@ class AboutKonsCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
             text: TextSpan(
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
@@ -99,7 +104,10 @@ class AboutKonsCard extends StatelessWidget {
                 ),
                 TextSpan(
                   text: consultation.question,
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall!
+                      .copyWith(color: Colors.black),
                 ),
               ],
             ),
@@ -117,6 +125,94 @@ class AboutKonsCard extends StatelessWidget {
                     child: const Text('Перейти к конференции'))
               ],
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class AboutFinishedKonsCard extends StatelessWidget {
+  final Consultation consultation;
+  const AboutFinishedKonsCard({super.key, required this.consultation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyLight),
+          borderRadius: BorderRadius.circular(6)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WeekDayDateTimeWidget(consultation: consultation),
+          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text('Консультирование по ВКС в приложении',
+              style: Theme.of(context).textTheme.labelSmall),
+          const SizedBox(height: 8),
+          KnoThemeCard(
+              isTheme: false, name: consultation.kno!.name, isActive: false),
+          const SizedBox(height: 16),
+          KnoThemeCard(
+              isTheme: true,
+              name: consultation.consultTopic!.name,
+              isActive: false),
+          const SizedBox(height: 8),
+          TextButton(
+              onPressed: () {},
+              child: Text('Видеозапись ${consultation.date}')),
+          Row(
+            children: [
+              Checkbox(value: consultation.isNeedLetter, onChanged: null),
+              Expanded(
+                child: Text(
+                    'Хочу получить письменное разъяснение по результатам консультирования',
+                    style: Theme.of(context).textTheme.labelSmall),
+              )
+            ],
+          ),
+          const SizedBox(height: 8),
+          RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: [
+                TextSpan(
+                  text: 'Ваш вопрос: ',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                TextSpan(
+                  text: consultation.question,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall!
+                      .copyWith(color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium,
+              children: [
+                TextSpan(
+                  text: 'Ответ КНО: ',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                TextSpan(
+                  text: consultation.answer,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall!
+                      .copyWith(color: Colors.black),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

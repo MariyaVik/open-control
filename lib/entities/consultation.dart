@@ -1,22 +1,38 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:open_control/entities/user_info.dart';
+
+import 'consult_topics.dart';
+import 'control_types.dart';
+import 'kno.dart';
 
 part 'consultation.g.dart';
 
-@JsonSerializable(includeIfNull: false)
+@JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Consultation {
   int? id;
 
   @JsonKey(name: 'nadzor_organ_id')
   int? knoId;
 
+  @JsonKey(name: 'nadzor_organ')
+  NadzorOrgans? kno;
+
   @JsonKey(name: 'user_id')
   int? userId;
+
+  UserInfo? user;
 
   @JsonKey(name: 'control_type_id')
   int? controlTypeId;
 
+  @JsonKey(name: 'control_type')
+  ControlTypes? controlType;
+
   @JsonKey(name: 'consult_topic_id')
   int? consultTopicId;
+
+  @JsonKey(name: 'consult_topic')
+  ConsultTopics? consultTopic;
 
   @JsonKey(name: 'slot_id')
   int? slotId;
@@ -24,6 +40,7 @@ class Consultation {
   String? time;
   String? date;
   String? question;
+  String? answer;
 
   @JsonKey(name: 'is_need_letter')
   bool? isNeedLetter;
@@ -33,6 +50,9 @@ class Consultation {
 
   @JsonKey(name: 'vks_link')
   String? vksLink;
+
+  @JsonKey(name: 'video_link')
+  String? videoLink;
 
   Consultation({
     this.consultTopicId,
@@ -47,6 +67,11 @@ class Consultation {
     this.slotId,
     this.id,
     this.vksLink,
+    this.answer,
+    this.videoLink,
+    this.consultTopic,
+    this.controlType,
+    this.kno,
   });
 
   factory Consultation.fromJson(Map<String, dynamic> json) =>

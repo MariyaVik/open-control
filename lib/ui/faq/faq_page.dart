@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../../dummy/current_user.dart';
@@ -19,7 +20,7 @@ class FaqPage extends StatefulWidget {
 class _FaqPageState extends State<FaqPage> {
   List<Faq> faqs = [];
 
-  Future<void> getNot() async {
+  Future<void> getFaq() async {
     faqs = await BusinessAPI.instance.getFaq(user.token!);
     setState(() {});
   }
@@ -27,7 +28,7 @@ class _FaqPageState extends State<FaqPage> {
   @override
   void initState() {
     super.initState();
-    getNot();
+    getFaq();
   }
 
   @override
@@ -54,9 +55,11 @@ class _FaqPageState extends State<FaqPage> {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 16),
-                  const TextField(
-                    decoration:
-                        InputDecoration(hintText: 'Поиск по ключевым словам'),
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Поиск по ключевым словам',
+                        prefix: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.search))),
                   ),
                 ],
               ),
@@ -103,14 +106,15 @@ class FaqContent extends StatelessWidget {
         children: [
           Text(faq.question),
           const SizedBox(height: 12),
-          const Text('Отвечает'),
+          Text('Отвечает', style: Theme.of(context).textTheme.labelSmall),
           Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
           const SizedBox(height: 20),
           Row(
             children: [
               LikeCount(faq: faq),
               const SizedBox(width: 20),
-              Text(faq.date.toString())
+              Text(DateFormat('dd.MM.yyyy').format(faq.date),
+                  style: Theme.of(context).textTheme.labelSmall)
             ],
           )
         ],

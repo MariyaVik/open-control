@@ -29,23 +29,50 @@ class ConsultationInfoPage extends StatelessWidget {
               const SizedBox(height: 22),
               WeekDayDateTimeWidget(consultation: consultation),
               const SizedBox(height: 32),
-              Text('Пользователь юридическое лицо ООО ″Архивариус″'),
-              TextButton(onPressed: () {}, child: Text('Подробнее')),
+              Text(
+                'Пользователь ${consultation.user!.name} (юридическое лицо ООО ″Архивариус″)',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+              GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'Подробнее',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w500, color: AppColor.mainColor),
+                  )),
               const SizedBox(height: 16),
               KnoThemeCard(
                   isTheme: true, name: consultation.consultTopicId.toString()),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Checkbox(value: consultation.isNeedLetter, onChanged: null),
-                  const Expanded(
-                    child: Text(
-                        'Хочу получить письменное разъяснение по результатам консультирования'),
-                  )
-                ],
-              ),
+              if (consultation.isNeedLetter == true)
+                Row(
+                  children: [
+                    Container(
+                      height: 24,
+                      width: 24,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: AppColor.textLow),
+                      child: const ImageIcon(
+                        AssetImage('assets/icons/tick.png'),
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Checkbox(value: consultation.isNeedLetter, onChanged: (v) {}),
+                    Expanded(
+                      child: Text(
+                          'Хочу получить письменное разъяснение по результатам консультирования',
+                          style: Theme.of(context).textTheme.labelSmall),
+                    )
+                  ],
+                ),
               const SizedBox(height: 16),
               RichText(
+                textScaleFactor: MediaQuery.of(context).textScaleFactor,
                 text: TextSpan(
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: [
@@ -55,7 +82,10 @@ class ConsultationInfoPage extends StatelessWidget {
                     ),
                     TextSpan(
                       text: consultation.question,
-                      style: Theme.of(context).textTheme.labelSmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -67,7 +97,8 @@ class ConsultationInfoPage extends StatelessWidget {
                       onPressed: () async {
                         await BusinessAPI.instance.editConsultationStatus(
                             user.token!, consultation.id!, true);
-                        print('ОБНОВИТЬ СТРАНИЦУ ИЛИ ВЫЙТИ');
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            AppNavRouteName.konsMainKNO, (route) => false);
                       },
                       child: const Text('Подтвердить запись')),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../entities/conference_settings.dart';
 import '../../entities/consultation.dart';
 import '../common/conference_page.dart';
 import '../kons_screen_business/join_kons_page.dart';
@@ -24,9 +25,9 @@ class KonsNavigationKNO {
             builder: (context) => JoinKonsPage(consultation: arg));
 
       case AppNavRouteName.videoKNO:
-        final arg = settings.arguments as String;
+        final arg = settings.arguments as ConferenceSettings;
         return MaterialPageRoute(
-            builder: (context) => VideoConferencePage(conferenceID: arg));
+            builder: (context) => VideoConferencePage(settings: arg));
 
       default:
         return MaterialPageRoute(

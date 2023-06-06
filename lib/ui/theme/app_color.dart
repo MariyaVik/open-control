@@ -17,7 +17,7 @@ class AppColor {
   static const Color greyLight = Color(0xFFD2D7D6);
   static const Color greyMegaLight = Color(0xFFE7EAE9);
 
-  static const Color warning = Color(0xFFFFBB33);
+  static const Color warning = Color(0xFFE07613);
   static const Color access = Color(0xFF198F7E);
   static const Color error = Color(0xFFE62E4D);
 

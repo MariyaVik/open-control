@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../entities/conference_settings.dart';
 import '../../entities/consultation.dart';
 import '../../entities/kno.dart';
 import '../common/conference_page.dart';
@@ -22,10 +23,12 @@ class KonsNavigationBusiness {
         final arg = settings.arguments as Consultation;
         return MaterialPageRoute(
             builder: (context) => JoinKonsPage(consultation: arg));
+
       case AppNavRouteName.videoBusiness:
-        final arg = settings.arguments as String;
+        final arg = settings.arguments as ConferenceSettings;
         return MaterialPageRoute(
-            builder: (context) => VideoConferencePage(conferenceID: arg));
+            builder: (context) => VideoConferencePage(settings: arg));
+
       case AppNavRouteName.listKnoBusiness:
         return MaterialPageRoute(builder: (context) => const ListKnoPage());
       case AppNavRouteName.knoDetailsBusiness:

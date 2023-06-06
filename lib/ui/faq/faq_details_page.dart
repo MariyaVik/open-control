@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../entities/faq.dart';
 import '../common/app_bar_back.dart';
@@ -26,14 +27,17 @@ class FaqDetailsPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 const SizedBox(height: 16),
-                Text(faq.date.toString()),
+                Text(DateFormat('dd.MM.yyyy').format(faq.date),
+                    style: Theme.of(context).textTheme.labelSmall),
                 const SizedBox(height: 24),
                 Text(faq.question),
                 const SizedBox(height: 24),
-                Text('Контрольно-надзорный орган'),
+                Text('Контрольно-надзорный орган',
+                    style: Theme.of(context).textTheme.labelSmall),
                 Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
                 const SizedBox(height: 16),
-                Text('Вид контроля'),
+                Text('Вид контроля',
+                    style: Theme.of(context).textTheme.labelSmall),
                 Text('Вид с id ${faq.controlTypeId}'),
                 Text(faq.controlTypeId.toString()),
                 const SizedBox(height: 24),
@@ -48,7 +52,8 @@ class FaqDetailsPage extends StatelessWidget {
                   ),
                   child: Text(faq.answer),
                 ),
-                Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
+                Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase(),
+                    style: Theme.of(context).textTheme.labelSmall),
                 Row(
                   children: [
                     Checkbox(

@@ -2,37 +2,120 @@ import 'package:flutter/material.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../../dummy/current_user.dart';
+import '../../entities/conference_settings.dart';
 import '../../entities/consultation.dart';
+import '../common/app_bar_back.dart';
 import '../theme/app_color.dart';
 
-class JoinKonsPage extends StatelessWidget {
+class JoinKonsPage extends StatefulWidget {
   final Consultation consultation;
   const JoinKonsPage({super.key, required this.consultation});
 
   @override
+  State<JoinKonsPage> createState() => _JoinKonsPageState();
+}
+
+class _JoinKonsPageState extends State<JoinKonsPage> {
+  late ConferenceSettings settings;
+
+  @override
+  void initState() {
+    super.initState();
+    settings =
+        ConferenceSettings(conferenceID: widget.consultation.id.toString());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: appBarBack(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
                   color: AppColor.greyMedium,
                   borderRadius: BorderRadius.circular(5)),
-              height: 234,
-              child: Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        print(user.name);
-                        Navigator.of(context).pushNamed(
-                            user.isKno == null
-                                ? AppNavRouteName.videoBusiness
-                                : AppNavRouteName.videoKNO,
-                            arguments: consultation.id.toString());
-                      },
-                      child: Text('Подключиться'))),
+              height: MediaQuery.of(context).size.height / 3,
+              child: Stack(
+                children: [
+                  Center(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            print(user.name);
+                            Navigator.of(context).pushNamed(
+                                user.isKno == null
+                                    ? AppNavRouteName.videoBusiness
+                                    : AppNavRouteName.videoKNO,
+                                arguments: settings);
+                          },
+                          child: Text('Подключиться'))),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColor.greyLight),
+                            child: IconButton(
+                              onPressed: () {
+                                settings.turnOnCamera = !settings.turnOnCamera;
+                                setState(() {});
+                              },
+                              icon: Icon(
+                                  settings.turnOnCamera
+                                      ? Icons.videocam
+                                      : Icons.videocam_off_outlined,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Text(
+                            'Камера',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColor.greyLight),
+                            child: IconButton(
+                              onPressed: () {
+                                settings.turnOnMic = !settings.turnOnMic;
+
+                                setState(() {});
+                              },
+                              icon: Icon(
+                                  settings.turnOnMic
+                                      ? Icons.mic
+                                      : Icons.mic_off_outlined,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Text(
+                            'Звук',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

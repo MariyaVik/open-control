@@ -63,6 +63,7 @@ class _FeedbackBotState extends State<FeedbackBot> {
                   border: Border.all(color: AppColor.greyMegaLight),
                   borderRadius: BorderRadius.circular(6)),
               child: RichText(
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor,
                   textAlign: TextAlign.center,
                   text: TextSpan(children: [
                     TextSpan(

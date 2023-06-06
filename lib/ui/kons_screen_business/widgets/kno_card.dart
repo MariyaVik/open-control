@@ -35,6 +35,7 @@ class KNOCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     RichText(
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       text: TextSpan(
                         // text: kno.controlTypes.length.toString(),
                         style: DefaultTextStyle.of(context).style,
@@ -49,6 +50,7 @@ class KNOCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     RichText(
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       text: TextSpan(
                         style: DefaultTextStyle.of(context).style,
                         children: const [
@@ -61,6 +63,7 @@ class KNOCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     RichText(
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       text: TextSpan(
                         style: DefaultTextStyle.of(context).style,
                         children: const [

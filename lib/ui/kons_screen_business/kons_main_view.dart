@@ -4,8 +4,9 @@ import '../../dummy/current_user.dart';
 import '../../entities/all_consultations.dart';
 import '../../services/business_api.dart';
 import '../theme/app_color.dart';
+import 'widgets/finished_kons.dart';
 import 'widgets/no_consultation.dart';
-import 'widgets/user_kons.dart';
+import 'widgets/current_kons.dart';
 
 class KonsMainView extends StatelessWidget {
   const KonsMainView({super.key});
@@ -77,7 +78,7 @@ class KonsMainView extends StatelessWidget {
                       case ConnectionState.done:
                         return snapshot.data!.finishedKons.isEmpty
                             ? const NoConsultation()
-                            : CurrentKons(kons: snapshot.data!.finishedKons);
+                            : FinishedKons(kons: snapshot.data!.finishedKons);
                       default:
                         return const Center(
                           child: Text('Default'),

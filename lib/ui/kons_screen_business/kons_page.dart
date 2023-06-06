@@ -18,10 +18,11 @@ class _ConsultationPageBusinessState extends State<ConsultationPageBusiness> {
   @override
   void initState() {
     super.initState();
-    getInitMessage();
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      log('Открыли из уведомления');
-    });
+    // getInitMessage();
+    // FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    //   log('Открыли из уведомления');
+    //   // setState(() {});
+    // });
   }
 
   void getInitMessage() async {

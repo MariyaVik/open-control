@@ -9,9 +9,10 @@ part of 'kno.dart';
 NadzorOrgans _$NadzorOrgansFromJson(Map<String, dynamic> json) => NadzorOrgans(
       id: json['id'] as int,
       name: json['name'] as String,
-      controlTypes: (json['control_types'] as List<dynamic>)
-          .map((e) => ControlTypes.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      controlTypes: (json['control_types'] as List<dynamic>?)
+              ?.map((e) => ControlTypes.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$NadzorOrgansToJson(NadzorOrgans instance) =>

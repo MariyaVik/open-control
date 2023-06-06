@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -27,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController controller = TextEditingController();
   ScrollController scrollController = ScrollController();
 
-  SpeechToText _speechToText = SpeechToText();
+  final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
 
@@ -149,35 +150,41 @@ class _ChatPageState extends State<ChatPage> {
                                 child: element.from == 0 &&
                                         element.text.contains('Собрал ответы')
                                     ? RichText(
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
                                         text: TextSpan(children: [
-                                        TextSpan(
-                                            text: 'Собрал ответы',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                    color: AppColor.mainColor),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                Navigator.of(context).pushNamed(
-                                                    AppNavRouteName.faq);
-                                              }),
-                                        TextSpan(
-                                            text: element.text.replaceAll(
-                                                'Собрал ответы', ''),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium,
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                Navigator.of(context).pushNamed(
-                                                    AppNavRouteName.faq);
-                                              }),
-                                      ]))
+                                          TextSpan(
+                                              text: 'Собрал ответы',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      color:
+                                                          AppColor.mainColor),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                          AppNavRouteName.faq);
+                                                }),
+                                          TextSpan(
+                                              text: element.text.replaceAll(
+                                                  'Собрал ответы', ''),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                          AppNavRouteName.faq);
+                                                }),
+                                        ]))
                                     : Text(element.text),
                               ),
-                              Text(
-                                  '${element.date.hour}:${element.date.minute}')
+                              Text(DateFormat('HH:mm').format(element.date),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                             ],
                           ),
                         );

@@ -35,17 +35,21 @@ class ProfileHead extends StatelessWidget {
                 Text('Мои данные')
               ],
             ),
-            Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                      color: AppColor.pinkColor, shape: BoxShape.circle),
-                  child: Image.asset('assets/icons/doc.png'),
+            if (user.isKno == true)
+              GestureDetector(
+                onTap: () {},
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          color: AppColor.pinkColor, shape: BoxShape.circle),
+                      child: Image.asset('assets/icons/doc.png'),
+                    ),
+                    Text('Мои консультации')
+                  ],
                 ),
-                Text('Мои консультации')
-              ],
-            )
+              )
           ],
         )
       ],

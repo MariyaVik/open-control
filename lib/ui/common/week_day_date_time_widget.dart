@@ -18,20 +18,22 @@ class WeekDayDateTimeWidget extends StatelessWidget {
           children: [
             Text(
                 '${getWeekDay(getDateFromString(consultation.date!).weekday)},'),
-            RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: [
-                  TextSpan(
-                    text: getDateFromString(consultation.date!).day.toString(),
-                    // style: TextStyle(fontSize: 24),
-                  ),
-                  TextSpan(
-                      text:
-                          ' ${getMonthName(getDateFromString(consultation.date!).month)}'),
-                ],
-              ),
-            ),
+            Text(
+                '${getDateFromString(consultation.date!).day} ${getMonthName(getDateFromString(consultation.date!).month)}')
+// ,            RichText(
+//               text: TextSpan(
+//                 style: DefaultTextStyle.of(context).style,
+//                 children: [
+//                   TextSpan(
+//                     text: getDateFromString(consultation.date!).day.toString(),
+//                     // style: TextStyle(fontSize: 24),
+//                   ),
+//                   TextSpan(
+//                       text:
+//                           ' ${getMonthName(getDateFromString(consultation.date!).month)}'),
+//                 ],
+//               ),
+//             ),
           ],
         ),
         const SizedBox(width: 16),

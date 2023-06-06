@@ -11,7 +11,7 @@ class NadzorOrgans {
   List<ControlTypes> controlTypes;
 
   NadzorOrgans(
-      {required this.id, required this.name, required this.controlTypes});
+      {required this.id, required this.name, this.controlTypes = const []});
 
   factory NadzorOrgans.fromJson(Map<String, dynamic> json) =>
       _$NadzorOrgansFromJson(json);

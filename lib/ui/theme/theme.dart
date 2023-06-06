@@ -75,12 +75,13 @@ TextTheme _textLight(TextTheme base) {
       fontWeight: FontWeight.w700,
       fontFamily: 'Inter',
     ),
-    labelSmall: base.bodyMedium!.copyWith(
+    labelSmall: base.labelSmall!.copyWith(
       fontSize: 12,
       height: 1.7,
       fontWeight: FontWeight.w500,
       color: AppColor.textLow,
       fontFamily: 'Inter',
+      // letterSpacing: 1,
     ),
   );
 }
