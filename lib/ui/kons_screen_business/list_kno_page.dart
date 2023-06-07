@@ -16,12 +16,15 @@ class ListKnoPage extends StatefulWidget {
 }
 
 class _ListKnoPageState extends State<ListKnoPage> {
+  final controller = TextEditingController();
   @override
   void initState() {
     super.initState();
-    if (knos.isEmpty) {
+    if (knos == null) {
       print('пусто');
       getData();
+    } else {
+      knosFilter = knos;
     }
   }
 
@@ -29,6 +32,7 @@ class _ListKnoPageState extends State<ListKnoPage> {
     final Info info = await BusinessAPI.instance.getKnoInfo(user.token!);
     print(info);
     knos = info.nadzorOrgans;
+    knosFilter = knos;
     setState(() {});
   }
 
@@ -36,16 +40,26 @@ class _ListKnoPageState extends State<ListKnoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBack(context),
-      body: knos.isEmpty
+      body: knosFilter == null
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 const SelectEntityWidget(),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   child: TextField(
-                    decoration:
-                        InputDecoration(hintText: 'Поиск по ключевым словам'),
+                    controller: controller,
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: (value) async {
+                      print(value);
+                      knosFilter = await BusinessAPI.instance
+                          .postKno(user.token!, value);
+                      setState(() {});
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Поиск по ключевым словам',
+                      prefixIcon: Icon(Icons.search),
+                    ),
                   ),
                 ),
                 Padding(
@@ -54,11 +68,12 @@ class _ListKnoPageState extends State<ListKnoPage> {
                   child: Row(children: [
                     Image.asset('assets/images/gerb.png'),
                     const SizedBox(width: 16),
-                    Text('${knos.length} органов контроля')
+                    Text('${knosFilter!.length} органов контроля')
                   ]),
                 ),
                 const Expanded(
-                  child: KNOListWidget(),
+                  child:
+                      KNOListWidget(), //не обновляется :( СДЕЛАЙ STATE MANAGMENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 )
               ],
             ),

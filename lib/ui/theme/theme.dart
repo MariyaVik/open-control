@@ -198,6 +198,7 @@ FloatingActionButtonThemeData _floatButtonLight(
 
 AppBarTheme _appBarLight(AppBarTheme base) {
   return base.copyWith(
+    toolbarHeight: 64,
     backgroundColor: AppColor.whiteColor,
     foregroundColor: AppColor.textMain,
     elevation: 0.0,

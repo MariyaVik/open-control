@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:open_control/entities/hint_button.dart';
+import 'package:open_control/entities/kno.dart';
 import 'package:open_control/entities/user_info.dart';
 
 import '../entities/all_consultations.dart';
@@ -302,6 +303,58 @@ class BusinessAPI {
     try {
       var r = await _dio.post(url, options: options, data: body);
       print(r.data);
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<List<Faq>> postFaq(String tokenUser, String text) async {
+    String url = ApiUrls.baseUrl + ApiUrls.faqUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $tokenUser',
+    };
+    Options options = Options(headers: headers);
+    var body = {'text': text};
+    List<Faq> result = [];
+    try {
+      var r = await _dio.post(url, options: options, data: body);
+      print(r.data);
+      if (r.data != null) {
+        for (final value in r.data!) {
+          Faq faqs = Faq.fromJson(value);
+          result.add(faqs);
+        }
+        return result;
+      }
+      return [];
+    } on DioError catch (e) {
+      throw 'Something went wrong :(\n ${e.message}';
+    }
+  }
+
+  Future<List<NadzorOrgans>> postKno(String tokenUser, String text) async {
+    String url = ApiUrls.baseUrl + ApiUrls.typelistUrl;
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $tokenUser',
+    };
+    Options options = Options(headers: headers);
+    var body = {'text': text};
+    List<NadzorOrgans> result = [];
+    try {
+      var r = await _dio.post(url, options: options, data: body);
+      print('ДАННЫЕ ${r.data}');
+      if (r.data['nadzor_organs'] != null) {
+        for (final value in r.data['nadzor_organs']) {
+          NadzorOrgans kno = NadzorOrgans.fromJson(value);
+          result.add(kno);
+        }
+        return result;
+      }
+      return [];
     } on DioError catch (e) {
       throw 'Something went wrong :(\n ${e.message}';
     }

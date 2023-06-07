@@ -8,6 +8,7 @@ import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
 import '../common/circular_icon_button.dart';
 import '../theme/app_color.dart';
+import 'faq_card.dart';
 import 'like_count.dart';
 
 class FaqPage extends StatefulWidget {
@@ -18,7 +19,8 @@ class FaqPage extends StatefulWidget {
 }
 
 class _FaqPageState extends State<FaqPage> {
-  List<Faq> faqs = [];
+  List<Faq>? faqs;
+  final controller = TextEditingController();
 
   Future<void> getFaq() async {
     faqs = await BusinessAPI.instance.getFaq(user.token!);
@@ -56,68 +58,43 @@ class _FaqPageState extends State<FaqPage> {
                   ),
                   const SizedBox(height: 16),
                   TextField(
+                    controller: controller,
                     decoration: InputDecoration(
                         hintText: 'Поиск по ключевым словам',
                         prefix: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.search))),
+                            onPressed: () async {
+                              setState(() {
+                                faqs = null;
+                              });
+                              faqs = await BusinessAPI.instance
+                                  .postFaq(user.token!, controller.text);
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.search))),
                   ),
                 ],
               ),
             ),
-            faqs.isEmpty
+            faqs == null
                 ? const Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: ListView.builder(
-                        itemCount: faqs.length,
-                        itemBuilder: (contex, index) {
-                          return Container(
-                            margin: const EdgeInsets.all(20),
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: AppColor.greyLight),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: FaqContent(faq: faqs[index]),
-                          );
-                        }))
+                : faqs!.isEmpty
+                    ? Center(child: Text('Ничего не найдено'))
+                    : Expanded(
+                        child: ListView.builder(
+                            itemCount: faqs!.length,
+                            itemBuilder: (contex, index) {
+                              return Container(
+                                margin: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: AppColor.greyLight),
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: FaqContent(faq: faqs![index]),
+                              );
+                            }))
           ],
         ),
-      ),
-    );
-  }
-}
-
-class FaqContent extends StatelessWidget {
-  const FaqContent({
-    super.key,
-    required this.faq,
-  });
-
-  final Faq faq;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed(AppNavRouteName.faqDetails, arguments: faq);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(faq.question),
-          const SizedBox(height: 12),
-          Text('Отвечает', style: Theme.of(context).textTheme.labelSmall),
-          Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              LikeCount(faq: faq),
-              const SizedBox(width: 20),
-              Text(DateFormat('dd.MM.yyyy').format(faq.date),
-                  style: Theme.of(context).textTheme.labelSmall)
-            ],
-          )
-        ],
       ),
     );
   }

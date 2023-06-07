@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../dummy/current_user.dart';
 import '../../../entities/slot.dart';
+import '../../common/size_config.dart';
 import '../../common/utils.dart';
 import '../../navigation/route_name.dart';
 import '../../theme/app_color.dart';
@@ -25,6 +26,7 @@ class DayCard extends StatelessWidget {
     List<Slot> slotForShow = isBusiness
         ? slotToday.where((element) => element.consultation == null).toList()
         : slotToday;
+    SizeConfig().init(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,10 +42,17 @@ class DayCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TimeView(slot: slotForShow[index * 2]),
-                const SizedBox(width: 20),
+                SizedBox(
+                    width: SizeConfig.screenWidth * 1.8 / 5,
+                    child: TimeView(slot: slotForShow[index * 2])),
                 if (index * 2 + 1 < slotForShow.length)
-                  TimeView(slot: slotForShow[index * 2 + 1]),
+                  const SizedBox(width: 20),
+                if (index * 2 + 1 < slotForShow.length)
+                  SizedBox(
+                      width: SizeConfig.screenWidth * 1.8 / 5,
+                      child: TimeView(slot: slotForShow[index * 2 + 1]))
+                // else
+                //   const Expanded(child: SizedBox()),
               ],
             ),
           ),

@@ -1,24 +1,23 @@
+import 'dart:math';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:open_control/ui/faq/faq_page.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
 import '../../dummy/current_user.dart';
 import '../../dummy/kno_info.dart';
 import '../../entities/consult_topics.dart';
-import '../../entities/control_types.dart';
 import '../../entities/faq.dart';
 import '../../entities/kno.dart';
 import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
-import '../common/utils.dart';
 import '../common/week_day_date_time_widget.dart';
+import '../faq/faq_card.dart';
 import '../theme/app_color.dart';
-import 'widgets/drop_down_button.dart';
 import '../../../dummy/current_kons.dart';
 
 class SelectThemeView extends StatefulWidget {
-  SelectThemeView({super.key});
+  const SelectThemeView({super.key});
 
   @override
   State<SelectThemeView> createState() => _SelectThemeViewState();
@@ -30,25 +29,18 @@ class _SelectThemeViewState extends State<SelectThemeView> {
   final TextEditingController quesController = TextEditingController();
   bool isNeedLetter = false;
 
-  List<Faq> sameQuestions = [
-    // Faq(
-    //     id: 2,
-    //     question: 'bbn nm ,',
-    //     answer: 'answer',
-    //     nadzorOrganId: 5,
-    //     controlTypeId: 7,
-    //     likes: 13,
-    //     date: DateTime.now())
-  ];
+  List<Faq> sameQuestions = [];
+  bool isExpandSame = false;
 
   @override
   void dispose() {
     textEditingController.dispose();
+    quesController.dispose();
     super.dispose();
   }
 
   NadzorOrgans getKNOById(int id) {
-    return knos.where((element) => element.id == id).first;
+    return knos!.where((element) => element.id == id).first;
   }
 
   @override
@@ -173,60 +165,88 @@ class _SelectThemeViewState extends State<SelectThemeView> {
               const SizedBox(height: 20),
               const Text('Вопрос'),
               TextField(
+                textInputAction: TextInputAction.done,
                 controller: quesController,
                 maxLines: 3,
+                onEditingComplete: () async {
+                  print(quesController.text);
+                  sameQuestions = await BusinessAPI.instance
+                      .postFaq(user.token!, quesController.text);
+                  print(sameQuestions);
+
+                  setState(() {});
+                },
                 onChanged: (value) {},
               ),
               const SizedBox(height: 16),
 
-              //------------------------------------------------------------------------------------------------------------
               if (sameQuestions.isNotEmpty)
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2<Faq>(
-                    isExpanded: true,
-                    hint: Text(
-                      'Похожие вопросы',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
+                Container(
+                  decoration: isExpandSame
+                      ? BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: AppColor.pinkDark),
+                          boxShadow: const [
+                              BoxShadow(color: AppColor.pinkDark, blurRadius: 5)
+                            ])
+                      : BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: AppColor.greyLight)),
+                  height: 48,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                            child: Text(
+                          'Похожие вопросы',
+                          style: TextStyle(color: AppColor.textLow),
+                        )),
+                        IconButton(
+                            onPressed: () {
+                              isExpandSame = !isExpandSame;
+                              setState(() {});
+                            },
+                            icon: isExpandSame
+                                ? Transform.rotate(
+                                    angle: 180 * pi / 180,
+                                    child: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: AppColor.mainColor,
+                                    ))
+                                : const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: AppColor.textMain,
+                                  ))
+                      ],
                     ),
-                    items: sameQuestions
-                        .map((item) => DropdownMenuItem(
-                              value: item,
-                              child: FaqContent(faq: item),
-                            ))
-                        .toList(),
-                    // value: sameQuestions.first,
-                    // onChanged: (value) {
-                    //   setState(() {
-                    //     selectedValue = value as ConsultTopics;
-                    //   });
-                    // },
-                    buttonStyleData: ButtonStyleData(
-                        // height: 40,
-                        // width: 200,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColor.greyLight))),
-                    dropdownStyleData: DropdownStyleData(
-                        maxHeight: 200,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColor.greyLight))),
-                    menuItemStyleData: const MenuItemStyleData(
-                      height: 40,
-                    ),
-
-                    //This to clear the search value when you close the menu
-                    onMenuStateChange: (isOpen) {
-                      if (!isOpen) {
-                        textEditingController.clear();
-                      }
-                    },
                   ),
                 ),
-              //---------------------------------------------------------------------------------
+
+              if (isExpandSame)
+                Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: const [
+                        BoxShadow(color: AppColor.greyLight, blurRadius: 5)
+                      ]),
+                  height: 220,
+                  child: ListView.separated(
+                    itemCount: sameQuestions.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 16),
+                        child: FaqContent(faq: sameQuestions[index]),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(color: AppColor.greyLight),
+                  ),
+                ),
               Row(
                 children: [
                   Checkbox(

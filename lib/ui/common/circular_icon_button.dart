@@ -17,7 +17,7 @@ class CircularIconButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         child: icon,
       ),

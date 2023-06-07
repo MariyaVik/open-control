@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../common/app_bar_logo.dart';
 import '../common/response_widgets.dart';
 import '../navigation/route_name.dart';
 import '../theme/app_color.dart';
@@ -12,10 +13,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            title: Image.asset(
-          'assets/images/Logotype.png',
-        )),
+        appBar: appBarLogo(context),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(

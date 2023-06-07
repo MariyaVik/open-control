@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/common/size_config.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
@@ -53,8 +54,6 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
                           Slot slot = Slot.fromJson(e);
                           slotToday.add(slot);
                         }
-
-                        // print(slotToday[0]);
 
                         return DayCard(
                             slotToday: slotToday,

@@ -8,12 +8,14 @@ class KNOListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: knos.length,
-        itemBuilder: (context, index) {
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: KNOCard(kno: knos[index]));
-        });
+    return knosFilter!.isEmpty
+        ? Center(child: Text('Ничего не найдено'))
+        : ListView.builder(
+            itemCount: knosFilter!.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: KNOCard(kno: knosFilter![index]));
+            });
   }
 }
