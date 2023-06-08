@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
-import '../../../dummy/current_user.dart';
 import '../../../entities/consultation.dart';
-import '../../../services/business_api.dart';
 import '../../common/kno_theme_card.dart';
 import '../../common/utils.dart';
 import '../../common/week_day_date_time_widget.dart';
@@ -60,20 +58,28 @@ class AboutKonsCard extends StatelessWidget {
           ),
           WeekDayDateTimeWidget(consultation: consultation),
           const SizedBox(height: 16),
-          ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DeleteConsultation(
-                        consultation: consultation,
-                      );
-                    });
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [Text('Редактировать (удалить)')],
-              )),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+                style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(AppColor.greyLight),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black)),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeleteConsultation(
+                          consultation: consultation,
+                        );
+                      });
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [Text('Редактировать (удалить)')],
+                )),
+          ),
           const SizedBox(height: 8),
           Text('Консультирование пройдет по ВКС в этом окне',
               style: Theme.of(context).textTheme.labelSmall),
@@ -218,16 +224,3 @@ class AboutFinishedKonsCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-// Container(
-//             margin: const EdgeInsets.symmetric(horizontal: 20),
-//             decoration: BoxDecoration(
-//                 color: AppColor.greyMedium,
-//                 borderRadius: BorderRadius.circular(5)),
-//             height: 234,
-//           ),

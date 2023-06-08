@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:open_control/services/business_api.dart';
+import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/notifications.dart';
+import '../../mobX/common/common_state.dart';
 import '../common/circular_icon_button.dart';
 import '../theme/app_color.dart';
 
@@ -17,7 +18,8 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   List<Notifications>? nots;
   Future<void> getNot() async {
-    nots = await BusinessAPI.instance.getNotifications(user.token!);
+    nots = await BusinessAPI.instance.getNotifications(
+        Provider.of<CommonState>(context, listen: false).user.token!);
     setState(() {});
   }
 
@@ -32,10 +34,10 @@ class _NotificationPageState extends State<NotificationPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Уведомления'),
+          title: const Text('Уведомления'),
           centerTitle: true,
           leading: CircularIconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: AppColor.whiteColor,
             ),

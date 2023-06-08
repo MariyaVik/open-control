@@ -24,4 +24,6 @@ abstract class AppNavRouteName {
 
   static const faq = 'faq';
   static const faqDetails = 'faqDetails';
+
+  static const videoCall = 'call';
 }

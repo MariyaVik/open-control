@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:open_control/entities/kno.dart';
+import 'package:provider/provider.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
 import '../common/close_button.dart';
@@ -21,7 +24,7 @@ class SelectDateTimeView extends StatefulWidget {
 
 //List<Map<String, dynamic>>
 class _SelectDateTimeViewState extends State<SelectDateTimeView> {
-  List<String> dates = [];
+  // List<String> dates = [];
   // Map<String, dynamic> allSlots = {
   //   "2023-06-07": [
   //     {"id": 36, "time": "8:00-9:00", "date": "2023-06-07"},
@@ -52,20 +55,19 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
   //     {"id": 59, "time": "19:00-20:00", "date": "2023-06-08"}
   //   ],
   // };
-  Map<String, dynamic> allSlots = {};
+  // Map<String, dynamic> allSlots = {};
+  late CommonState state;
 
   @override
   void initState() {
     super.initState();
-    getSlots().then((value) {
-      setState(() {});
-    });
   }
 
-  Future<void> getSlots() async {
-    allSlots = await BusinessAPI.instance.getSlots(user.token!);
-
-    dates = allSlots.keys.toList();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    state = Provider.of<CommonState>(context);
+    state.getSlots();
   }
 
   @override
@@ -74,27 +76,29 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
       appBar: appBarBack(context),
       body: Padding(
         padding: const EdgeInsets.all(22.0),
-        child: Column(
-          children: [
-            SelectWeek(),
-            dates.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: ListView.builder(
-                        itemCount: allSlots.length,
-                        itemBuilder: (contex, index) {
-                          List<Slot> slotToday = [];
-                          var today = allSlots[dates[index]]!;
-                          for (var e in today) {
-                            Slot slot = Slot.fromJson(e);
-                            slotToday.add(slot);
-                          }
-                          return DayCard(
-                              slotToday: slotToday, date: dates[index]);
-                        }),
-                  )
-          ],
-        ),
+        child: Observer(builder: (context) {
+          return Column(
+            children: [
+              SelectWeek(),
+              state.dates.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: state.allSlots.length,
+                          itemBuilder: (contex, index) {
+                            List<Slot> slotToday = [];
+                            var today = state.allSlots[state.dates[index]]!;
+                            for (var e in today) {
+                              Slot slot = Slot.fromJson(e);
+                              slotToday.add(slot);
+                            }
+                            return DayCard(
+                                slotToday: slotToday, date: state.dates[index]);
+                          }),
+                    )
+            ],
+          );
+        }),
       ),
     );
   }

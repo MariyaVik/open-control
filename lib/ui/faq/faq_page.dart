@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:provider/provider.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/faq.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
 import '../common/circular_icon_button.dart';
@@ -23,7 +25,8 @@ class _FaqPageState extends State<FaqPage> {
   final controller = TextEditingController();
 
   Future<void> getFaq() async {
-    faqs = await BusinessAPI.instance.getFaq(user.token!);
+    faqs = await BusinessAPI.instance
+        .getFaq(Provider.of<CommonState>(context, listen: false).user.token!);
     setState(() {});
   }
 
@@ -66,8 +69,12 @@ class _FaqPageState extends State<FaqPage> {
                               setState(() {
                                 faqs = null;
                               });
-                              faqs = await BusinessAPI.instance
-                                  .postFaq(user.token!, controller.text);
+                              faqs = await BusinessAPI.instance.postFaq(
+                                  Provider.of<CommonState>(context,
+                                          listen: false)
+                                      .user
+                                      .token!,
+                                  controller.text);
                               setState(() {});
                             },
                             icon: Icon(Icons.search))),

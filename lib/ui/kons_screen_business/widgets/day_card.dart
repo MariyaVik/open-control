@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../dummy/current_user.dart';
 import '../../../entities/slot.dart';
+import '../../../mobX/common/common_state.dart';
 import '../../common/size_config.dart';
 import '../../common/utils.dart';
 import '../../navigation/route_name.dart';
@@ -88,7 +90,9 @@ class TimeView extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: user.isKno == true ? actionForKNO : actionForBusiness,
+      onTap: Provider.of<CommonState>(context).user.isKno == true
+          ? actionForKNO
+          : actionForBusiness,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(

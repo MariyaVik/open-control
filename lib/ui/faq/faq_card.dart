@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../entities/faq.dart';
+import '../app.dart';
 import '../navigation/route_name.dart';
 import 'like_count.dart';
 
@@ -16,8 +17,9 @@ class FaqContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
-        Navigator.of(context).pushNamed(AppNavRouteName.faqDetails,
+        mainNavigatorKey.currentState!.pushNamed(AppNavRouteName.faqDetails,
             arguments: faq); // ПЕРЕХОД ИСПРАВИТЬ !!!
       },
       child: Column(

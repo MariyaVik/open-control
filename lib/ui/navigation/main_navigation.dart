@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../entities/conference_settings.dart';
 import '../../entities/faq.dart';
 import '../chat_screen/chat_page.dart';
+import '../common/conference_page.dart';
 import '../faq/faq_details_page.dart';
 import '../faq/faq_page.dart';
 import '../home_page_business.dart';
@@ -24,16 +26,21 @@ class AppNavigation {
       case AppNavRouteName.loginBusiness:
         return MaterialPageRoute(builder: (context) => const LoginUserPage());
       case AppNavRouteName.homeBusiness:
-        return MaterialPageRoute(builder: (context) => const HomePage());
+        return MaterialPageRoute(builder: (context) => HomePage());
       case AppNavRouteName.chat:
         return MaterialPageRoute(builder: (context) => const ChatPage());
 
       case AppNavRouteName.homeKNO:
-        return MaterialPageRoute(builder: (context) => const HomePageKNO());
+        return MaterialPageRoute(builder: (context) => HomePageKNO());
 
       case AppNavRouteName.notification:
         return MaterialPageRoute(
             builder: (context) => const NotificationPage());
+
+      case AppNavRouteName.videoCall:
+        final arg = settings.arguments as ConferenceSettings;
+        return MaterialPageRoute(
+            builder: (context) => VideoConferencePage(settings: arg));
 
       case AppNavRouteName.faq:
         return MaterialPageRoute(builder: (context) => const FaqPage());

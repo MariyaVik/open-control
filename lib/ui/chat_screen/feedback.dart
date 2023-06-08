@@ -1,8 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:open_control/entities/app_tab.dart';
 import 'package:open_control/ui/common/circular_icon_button.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:provider/provider.dart';
 
+import '../../mobX/common/common_state.dart';
 import '../kons_screen_business/kons_page.dart';
 import '../theme/app_color.dart';
 
@@ -78,6 +81,8 @@ class _FeedbackBotState extends State<FeedbackBot> {
                             .copyWith(color: AppColor.mainColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
+                            Provider.of<CommonState>(context, listen: false)
+                                .updateTab(AppTabBussiness.consultation.index);
                             Navigator.of(context).pop();
                           }),
                     TextSpan(

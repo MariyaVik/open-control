@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/all_consultations.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../theme/app_color.dart';
 import 'widgets/finished_kons.dart';
@@ -46,7 +48,8 @@ class KonsMainView extends StatelessWidget {
               child: TabBarView(
             children: [
               FutureBuilder<AllConsultations>(
-                  future: BusinessAPI.instance.getConsultations(user.token!),
+                  future: BusinessAPI.instance.getConsultations(
+                      Provider.of<CommonState>(context).user.token!),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -66,7 +69,8 @@ class KonsMainView extends StatelessWidget {
                     }
                   }),
               FutureBuilder<AllConsultations>(
-                  future: BusinessAPI.instance.getConsultations(user.token!),
+                  future: BusinessAPI.instance.getConsultations(
+                      Provider.of<CommonState>(context).user.token!),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:

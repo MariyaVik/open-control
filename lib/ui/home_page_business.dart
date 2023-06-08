@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'chat_screen/chat_page.dart';
+import '../entities/app_tab.dart';
+import '../mobX/common/common_state.dart';
 import 'kons_screen_business/kons_page.dart';
 import 'main_screen/main_page.dart';
-import 'navigation/route_name.dart';
 import 'profile_screen/profile_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late TabController _tabController;
-  int _currentTabIndex = 0;
+class HomePage extends StatelessWidget {
+  HomePage({Key? key}) : super(key: key);
   final _bottomItems = [
     const BottomNavigationBarItem(
         icon: ImageIcon(AssetImage('assets/icons/home.png')), label: 'главная'),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
         icon: ImageIcon(AssetImage('assets/icons/chat.png')), label: 'чат-бот'),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
         icon: ImageIcon(AssetImage('assets/icons/kons.png')),
         label: 'консультация'),
     const BottomNavigationBarItem(
@@ -30,38 +24,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final state = Provider.of<CommonState>(context);
     return SafeArea(
       child: Scaffold(
-        body: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: [
-              MainPage(),
-              ChatPage(),
-              ConsultationPageBusiness(),
-              ProfilePage(),
-            ]),
-        bottomNavigationBar: BottomNavigationBar(
-            onTap: (currentIndex) {
-              if (currentIndex == 1) {
-                Navigator.of(context).pushNamed(AppNavRouteName.chat);
-              } else {
-                _tabController.index = currentIndex;
-                setState(() {
-                  _currentTabIndex = currentIndex;
-                  _tabController.animateTo(_currentTabIndex);
-                });
-              }
-            },
-            currentIndex: _currentTabIndex,
-            items: _bottomItems),
+        body: Observer(
+          builder: (context) =>
+              state.activeTabIndex == AppTabBussiness.main.index
+                  ? const MainPage()
+                  // : state.activeTabIndex == AppTabBussiness.chat.index
+                  //     ? const ChatPage()
+                  : state.activeTabIndex == AppTabBussiness.consultation.index
+                      ? const ConsultationPageBusiness()
+                      : const ProfilePage(),
+        ),
+        bottomNavigationBar: Observer(
+            builder: (context) => BottomNavigationBar(
+                  currentIndex: state.activeTabIndex,
+                  onTap: state.updateTab,
+                  items: _bottomItems,
+                )),
       ),
     );
   }

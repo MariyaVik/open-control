@@ -16,7 +16,7 @@ DateTime getDateTime(String date, String time) {
 bool isTimeBegin(String date, String time) {
   final minutesBeforeCons =
       getDateTime(date, time).difference(DateTime.now()).inMinutes;
-  return minutesBeforeCons < 10;
+  return minutesBeforeCons < 3000;
   // && minutesBeforeCons > -15; // ДЛЯ ТЕСТА
 }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:open_control/ui/app.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:provider/provider.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/conference_settings.dart';
 import '../../entities/consultation.dart';
+import '../../mobX/common/common_state.dart';
 import '../common/app_bar_back.dart';
 import '../theme/app_color.dart';
 
@@ -43,11 +46,8 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                   Center(
                       child: ElevatedButton(
                           onPressed: () {
-                            print(user.name);
-                            Navigator.of(context).pushNamed(
-                                user.isKno == null
-                                    ? AppNavRouteName.videoBusiness
-                                    : AppNavRouteName.videoKNO,
+                            mainNavigatorKey.currentState!.pushNamed(
+                                AppNavRouteName.videoCall,
                                 arguments: settings);
                           },
                           child: Text('Подключиться'))),

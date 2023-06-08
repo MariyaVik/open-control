@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/common/app_bar_back.dart';
+import 'package:provider/provider.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/consultation.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/kno_theme_card.dart';
 import '../common/utils.dart';
@@ -96,7 +98,11 @@ class ConsultationInfoPage extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () async {
                         await BusinessAPI.instance.editConsultationStatus(
-                            user.token!, consultation.id!, true);
+                            Provider.of<CommonState>(context, listen: false)
+                                .user
+                                .token!,
+                            consultation.id!,
+                            true);
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             AppNavRouteName.konsMainKNO, (route) => false);
                       },

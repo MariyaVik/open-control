@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
-import '../../dummy/kno_info.dart';
 import '../../entities/consult_topics.dart';
 import '../../entities/faq.dart';
 import '../../entities/kno.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
 import '../common/week_day_date_time_widget.dart';
@@ -40,7 +40,10 @@ class _SelectThemeViewState extends State<SelectThemeView> {
   }
 
   NadzorOrgans getKNOById(int id) {
-    return knos!.where((element) => element.id == id).first;
+    return Provider.of<CommonState>(context, listen: false)
+        .knos!
+        .where((element) => element.id == id)
+        .first;
   }
 
   @override
@@ -170,9 +173,14 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                 maxLines: 3,
                 onEditingComplete: () async {
                   print(quesController.text);
-                  sameQuestions = await BusinessAPI.instance
-                      .postFaq(user.token!, quesController.text);
+                  sameQuestions = await BusinessAPI.instance.postFaq(
+                      Provider.of<CommonState>(context, listen: false)
+                          .user
+                          .token!,
+                      quesController.text);
                   print(sameQuestions);
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (sameQuestions.isNotEmpty) isExpandSame = true;
 
                   setState(() {});
                 },
@@ -282,8 +290,11 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                         // print(currentKons);
                         var json = currentKons.toJson();
                         print(json);
-                        await BusinessAPI.instance
-                            .postConsultation(user.token!, currentKons);
+                        await BusinessAPI.instance.postConsultation(
+                            Provider.of<CommonState>(context, listen: false)
+                                .user
+                                .token!,
+                            currentKons);
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             AppNavRouteName.konsMainBusiness, (route) => false);
                       },

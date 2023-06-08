@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../dummy/current_user.dart';
 import '../../entities/hint_button.dart';
 import '../../entities/message.dart';
+import '../../entities/user_info.dart';
+import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/size_config.dart';
 import '../common/utils.dart';
@@ -23,6 +26,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  late UserInfo user;
   List<Message> _elements = [];
   List<HintButton> buttons = [];
   TextEditingController controller = TextEditingController();
@@ -66,6 +70,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    user = Provider.of<CommonState>(context, listen: false).user;
     getMes();
     _initSpeech();
   }
@@ -106,89 +111,97 @@ class _ChatPageState extends State<ChatPage> {
                 ? const Expanded(
                     child: Center(child: CircularProgressIndicator()))
                 : Expanded(
-                    child: GroupedListView<Message, DateTime>(
-                      controller: scrollController,
-                      elements: _elements,
-                      groupBy: (element) => DateTime(element.date.year,
-                          element.date.month, element.date.day),
-                      groupHeaderBuilder: (value) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${value.date.day} ${getMonthName(value.date.month)}',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      itemBuilder: (c, element) {
-                        return Align(
-                          alignment: element.from == 0
-                              ? Alignment.centerLeft
-                              : Alignment.centerRight,
-                          child: Column(
-                            crossAxisAlignment: element.from == 0
-                                ? CrossAxisAlignment.start
-                                : CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                constraints: BoxConstraints(
-                                    minWidth: SizeConfig.screenWidth * 0.66,
-                                    maxWidth: SizeConfig.screenWidth * 0.66),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 16),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: const Radius.circular(16),
-                                        topRight: const Radius.circular(16),
-                                        bottomLeft: element.from == 0
-                                            ? Radius.zero
-                                            : const Radius.circular(16),
-                                        bottomRight: element.from == 0
-                                            ? const Radius.circular(16)
-                                            : Radius.zero),
-                                    color: element.from == 0
-                                        ? AppColor.greyMegaLight
-                                        : AppColor.greyLight),
-                                child: element.from == 0 &&
-                                        element.text.contains('Собрал ответы')
-                                    ? RichText(
-                                        textScaleFactor: MediaQuery.of(context)
-                                            .textScaleFactor,
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Собрал ответы',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      color:
-                                                          AppColor.mainColor),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                          AppNavRouteName.faq);
-                                                }),
-                                          TextSpan(
-                                              text: element.text.replaceAll(
-                                                  'Собрал ответы', ''),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                          AppNavRouteName.faq);
-                                                }),
-                                        ]))
-                                    : Text(element.text),
-                              ),
-                              Text(DateFormat('HH:mm').format(element.date),
-                                  style:
-                                      Theme.of(context).textTheme.labelSmall),
-                            ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GroupedListView<Message, DateTime>(
+                        controller: scrollController,
+                        elements: _elements,
+                        groupBy: (element) => DateTime(element.date.year,
+                            element.date.month, element.date.day),
+                        groupHeaderBuilder: (value) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '${value.date.day} ${getMonthName(value.date.month)}',
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      },
+                        ),
+                        itemBuilder: (c, element) {
+                          return Align(
+                            alignment: element.from == 0
+                                ? Alignment.centerLeft
+                                : Alignment.centerRight,
+                            child: Column(
+                              crossAxisAlignment: element.from == 0
+                                  ? CrossAxisAlignment.start
+                                  : CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  constraints: BoxConstraints(
+                                      minWidth: SizeConfig.screenWidth * 0.66,
+                                      maxWidth: SizeConfig.screenWidth * 0.66),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: const Radius.circular(16),
+                                          topRight: const Radius.circular(16),
+                                          bottomLeft: element.from == 0
+                                              ? Radius.zero
+                                              : const Radius.circular(16),
+                                          bottomRight: element.from == 0
+                                              ? const Radius.circular(16)
+                                              : Radius.zero),
+                                      color: element.from == 0
+                                          ? AppColor.greyMegaLight
+                                          : AppColor.greyLight),
+                                  child: element.from == 0 &&
+                                          element.text.contains('Собрал ответы')
+                                      ? RichText(
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                  .textScaleFactor,
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: 'Собрал ответы',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        color:
+                                                            AppColor.mainColor),
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                AppNavRouteName
+                                                                    .faq);
+                                                      }),
+                                            TextSpan(
+                                                text: element.text.replaceAll(
+                                                    'Собрал ответы', ''),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                AppNavRouteName
+                                                                    .faq);
+                                                      }),
+                                          ]))
+                                      : Text(element.text),
+                                ),
+                                Text(DateFormat('HH:mm').format(element.date),
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
             if (isFeedback) FeedbackBot(),
