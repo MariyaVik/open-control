@@ -38,8 +38,9 @@ class FaqDetailsPage extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text('Вид контроля',
                     style: Theme.of(context).textTheme.labelSmall),
-                Text('Вид с id ${faq.controlTypeId}'),
-                Text(faq.controlTypeId.toString()),
+                Text(getControlTypeById(
+                        context, faq.nadzorOrganId, faq.controlTypeId)
+                    .name),
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.all(20),

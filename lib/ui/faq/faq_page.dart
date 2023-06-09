@@ -22,6 +22,7 @@ class _FaqPageState extends State<FaqPage> {
   Future<void> getFaq() async {
     faqs = await BusinessAPI.instance
         .getFaq(Provider.of<CommonState>(context, listen: false).user.token!);
+    await Provider.of<CommonState>(context, listen: false).getKNOs();
     setState(() {});
   }
 
@@ -29,6 +30,11 @@ class _FaqPageState extends State<FaqPage> {
   void initState() {
     super.initState();
     getFaq();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
   }
 
   void search(String text) async {
