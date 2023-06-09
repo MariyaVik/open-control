@@ -8,6 +8,7 @@ import '../faq/faq_details_page.dart';
 import '../faq/faq_page.dart';
 import '../home_page_business.dart';
 import '../home_page_kno.dart';
+import '../kons_screen_business/kons_details_page.dart';
 import '../login_screens/login_kno_page.dart';
 import '../login_screens/login_page.dart';
 import '../login_screens/login_user_page.dart';
@@ -48,6 +49,11 @@ class AppNavigation {
         final arg = settings.arguments as Faq;
         return MaterialPageRoute(
             builder: (context) => FaqDetailsPage(faq: arg));
+
+      case AppNavRouteName.konsDateilsBusiness:
+        final arg = settings.arguments as int;
+        return MaterialPageRoute(
+            builder: (context) => KonsDetailsPage(konsId: arg));
 
       default:
         return MaterialPageRoute(

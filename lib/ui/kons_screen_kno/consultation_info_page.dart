@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:open_control/ui/common/app_bar_back.dart';
 import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/consultation.dart';
 import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';

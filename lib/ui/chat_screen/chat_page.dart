@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/hint_button.dart';
 import '../../entities/message.dart';
 import '../../entities/user_info.dart';
 import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
+import '../common/app_bar_back.dart';
 import '../common/size_config.dart';
 import '../common/utils.dart';
 import '../theme/app_color.dart';
@@ -94,8 +94,9 @@ class _ChatPageState extends State<ChatPage> {
     SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Чат-бот'),
+        appBar: appBarBack(
+          context,
+          title: 'Чат-бот',
           actions: [
             IconButton(
               icon: const ImageIcon(AssetImage('assets/icons/messages.png')),

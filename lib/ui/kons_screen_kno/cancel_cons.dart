@@ -3,7 +3,6 @@ import 'package:open_control/entities/consultation.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
 import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../theme/app_color.dart';

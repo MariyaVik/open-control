@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
-import '../../entities/all_consultations.dart';
 import '../../mobX/common/common_state.dart';
-import '../../services/business_api.dart';
 import '../theme/app_color.dart';
 import 'widgets/finished_kons.dart';
 import 'widgets/no_consultation.dart';
 import 'widgets/current_kons.dart';
 
-class KonsMainView extends StatelessWidget {
+class KonsMainView extends StatefulWidget {
   const KonsMainView({super.key});
+
+  @override
+  State<KonsMainView> createState() => _KonsMainViewState();
+}
+
+class _KonsMainViewState extends State<KonsMainView> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<CommonState>(context, listen: false).getAllCons();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,48 +56,32 @@ class KonsMainView extends StatelessWidget {
           Expanded(
               child: TabBarView(
             children: [
-              FutureBuilder<AllConsultations>(
-                  future: BusinessAPI.instance.getConsultations(
-                      Provider.of<CommonState>(context).user.token!),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return const Center(
-                          child: Text('NONE'),
-                        );
-                      case ConnectionState.waiting:
-                        return const Center(child: CircularProgressIndicator());
-                      case ConnectionState.done:
-                        return snapshot.data!.activeKons.isEmpty
-                            ? const NoConsultation()
-                            : CurrentKons(kons: snapshot.data!.activeKons);
-                      default:
-                        return const Center(
-                          child: Text('Default'),
-                        );
-                    }
-                  }),
-              FutureBuilder<AllConsultations>(
-                  future: BusinessAPI.instance.getConsultations(
-                      Provider.of<CommonState>(context).user.token!),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return const Center(
-                          child: Text('NONE'),
-                        );
-                      case ConnectionState.waiting:
-                        return const Center(child: CircularProgressIndicator());
-                      case ConnectionState.done:
-                        return snapshot.data!.finishedKons.isEmpty
-                            ? const NoConsultation()
-                            : FinishedKons(kons: snapshot.data!.finishedKons);
-                      default:
-                        return const Center(
-                          child: Text('Default'),
-                        );
-                    }
-                  }),
+              Observer(builder: (context) {
+                if (Provider.of<CommonState>(context).isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return Provider.of<CommonState>(context, listen: false)
+                          .activeKons
+                          .isEmpty
+                      ? const NoConsultation()
+                      : CurrentKons(
+                          kons: Provider.of<CommonState>(context, listen: false)
+                              .activeKons);
+                }
+              }),
+              Observer(builder: (context) {
+                if (Provider.of<CommonState>(context).isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return Provider.of<CommonState>(context, listen: false)
+                          .finishedKons
+                          .isEmpty
+                      ? const NoConsultation()
+                      : FinishedKons(
+                          kons: Provider.of<CommonState>(context, listen: false)
+                              .finishedKons);
+                }
+              }),
             ],
           ))
         ],

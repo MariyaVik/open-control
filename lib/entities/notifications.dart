@@ -9,11 +9,15 @@ class Notifications {
   final String text;
   @JsonKey(name: 'user_id')
   final int userId;
+
+  @JsonKey(name: 'consultation_id')
+  final int consultationId;
   Notifications({
     required this.id,
     required this.date,
     required this.text,
     required this.userId,
+    required this.consultationId,
   });
 
   factory Notifications.fromJson(Map<String, dynamic> json) =>

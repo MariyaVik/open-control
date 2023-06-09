@@ -18,7 +18,7 @@ class _ConsultationPageBusinessState extends State<ConsultationPageBusiness> {
   @override
   void initState() {
     super.initState();
-    // getInitMessage();
+    getInitMessage();
     // FirebaseMessaging.onMessageOpenedApp.listen((event) {
     //   log('Открыли из уведомления');
     //   // setState(() {});
@@ -26,11 +26,12 @@ class _ConsultationPageBusinessState extends State<ConsultationPageBusiness> {
   }
 
   void getInitMessage() async {
-    RemoteMessage? message =
-        await FirebaseMessaging.instance.getInitialMessage();
-    if (message != null) {
-      Navigator.pushNamed(context, AppNavRouteName.notification);
-    }
+    // RemoteMessage? message =
+    //     await FirebaseMessaging.instance.getInitialMessage();
+    // if (message != null) {
+    //   print(message.data['text']);
+    //   // Navigator.pushNamed(context, AppNavRouteName.notification);
+    // }
   }
 
   @override

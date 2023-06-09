@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:open_control/entities/kno.dart';
 import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/slot.dart';
 import '../../mobX/common/common_state.dart';
-import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
-import '../common/close_button.dart';
 import 'widgets/day_card.dart';
 import 'widgets/select_week.dart';
 
@@ -22,40 +17,7 @@ class SelectDateTimeView extends StatefulWidget {
   State<SelectDateTimeView> createState() => _SelectDateTimeViewState();
 }
 
-//List<Map<String, dynamic>>
 class _SelectDateTimeViewState extends State<SelectDateTimeView> {
-  // List<String> dates = [];
-  // Map<String, dynamic> allSlots = {
-  //   "2023-06-07": [
-  //     {"id": 36, "time": "8:00-9:00", "date": "2023-06-07"},
-  //     {"id": 37, "time": "9:00-10:00", "date": "2023-06-07"},
-  //     {"id": 38, "time": "10:00-11:00", "date": "2023-06-07"},
-  //     {"id": 39, "time": "11:00-12:00", "date": "2023-06-07"},
-  //     {"id": 40, "time": "12:00-13:00", "date": "2023-06-07"},
-  //     {"id": 41, "time": "13:00-14:00", "date": "2023-06-07"},
-  //     {"id": 42, "time": "14:00-15:00", "date": "2023-06-07"},
-  //     {"id": 43, "time": "15:00-16:00", "date": "2023-06-07"},
-  //     {"id": 44, "time": "16:00-17:00", "date": "2023-06-07"},
-  //     {"id": 45, "time": "17:00-18:00", "date": "2023-06-07"},
-  //     {"id": 46, "time": "18:00-19:00", "date": "2023-06-07"},
-  //     {"id": 47, "time": "19:00-20:00", "date": "2023-06-07"}
-  //   ],
-  //   "2023-06-08": [
-  //     {"id": 48, "time": "8:00-9:00", "date": "2023-06-08"},
-  //     {"id": 49, "time": "9:00-10:00", "date": "2023-06-08"},
-  //     {"id": 50, "time": "10:00-11:00", "date": "2023-06-08"},
-  //     {"id": 51, "time": "11:00-12:00", "date": "2023-06-08"},
-  //     {"id": 52, "time": "12:00-13:00", "date": "2023-06-08"},
-  //     {"id": 53, "time": "13:00-14:00", "date": "2023-06-08"},
-  //     {"id": 54, "time": "14:00-15:00", "date": "2023-06-08"},
-  //     {"id": 55, "time": "15:00-16:00", "date": "2023-06-08"},
-  //     {"id": 56, "time": "16:00-17:00", "date": "2023-06-08"},
-  //     {"id": 57, "time": "17:00-18:00", "date": "2023-06-08"},
-  //     {"id": 58, "time": "18:00-19:00", "date": "2023-06-08"},
-  //     {"id": 59, "time": "19:00-20:00", "date": "2023-06-08"}
-  //   ],
-  // };
-  // Map<String, dynamic> allSlots = {};
   late CommonState state;
 
   @override
@@ -74,15 +36,15 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBack(context),
-      body: Padding(
-        padding: const EdgeInsets.all(22.0),
-        child: Observer(builder: (context) {
-          return Column(
-            children: [
-              SelectWeek(),
-              state.dates.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
-                  : Expanded(
+      body: Observer(builder: (context) {
+        return Column(
+          children: [
+            const SelectWeek(),
+            state.dates.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: ListView.builder(
                           itemCount: state.allSlots.length,
                           itemBuilder: (contex, index) {
@@ -95,138 +57,11 @@ class _SelectDateTimeViewState extends State<SelectDateTimeView> {
                             return DayCard(
                                 slotToday: slotToday, date: state.dates[index]);
                           }),
-                    )
-            ],
-          );
-        }),
-      ),
+                    ),
+                  )
+          ],
+        );
+      }),
     );
   }
 }
-
-
-
-// "2023-06-07": [
-//         {
-//             "id": 36,
-//             "time": "8:00-9:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 37,
-//             "time": "9:00-10:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 38,
-//             "time": "10:00-11:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 39,
-//             "time": "11:00-12:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 40,
-//             "time": "12:00-13:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 41,
-//             "time": "13:00-14:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 42,
-//             "time": "14:00-15:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 43,
-//             "time": "15:00-16:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 44,
-//             "time": "16:00-17:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 45,
-//             "time": "17:00-18:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 46,
-//             "time": "18:00-19:00",
-//             "date": "2023-06-07"
-//         },
-//         {
-//             "id": 47,
-//             "time": "19:00-20:00",
-//             "date": "2023-06-07"
-//         }
-//     ],
-//     "2023-06-08": [
-//         {
-//             "id": 48,
-//             "time": "8:00-9:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 49,
-//             "time": "9:00-10:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 50,
-//             "time": "10:00-11:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 51,
-//             "time": "11:00-12:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 52,
-//             "time": "12:00-13:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 53,
-//             "time": "13:00-14:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 54,
-//             "time": "14:00-15:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 55,
-//             "time": "15:00-16:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 56,
-//             "time": "16:00-17:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 57,
-//             "time": "17:00-18:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 58,
-//             "time": "18:00-19:00",
-//             "date": "2023-06-08"
-//         },
-//         {
-//             "id": 59,
-//             "time": "19:00-20:00",
-//             "date": "2023-06-08"
-//         }
-//     ],

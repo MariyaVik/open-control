@@ -14,6 +14,7 @@ abstract class AppNavRouteName {
   static const knoDetailsBusiness = 'konsBus/list/kno';
   static const selectDateTimeBusiness = 'konsBus/list/kno/date';
   static const selectThemeBusiness = 'konsBus/list/kno/date/theme';
+  static const konsDateilsBusiness = 'konsDateilsBus';
 
   static const konsMainKNO = 'konsKNO';
   static const konsDetailsKNO = 'konsKNO/delails';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../dummy/current_user.dart';
 import '../../../entities/slot.dart';
 import '../../../mobX/common/common_state.dart';
 import '../../common/size_config.dart';

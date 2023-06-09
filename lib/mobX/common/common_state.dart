@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 
 import '../../entities/all_consultations.dart';
@@ -25,6 +27,14 @@ abstract class _CommonState with Store {
   @observable
   AllConsultations allConsultations = AllConsultations();
 
+  @computed
+  ObservableList<Consultation> get activeKons =>
+      ObservableList.of(allConsultations.activeKons);
+
+  @computed
+  ObservableList<Consultation> get finishedKons =>
+      ObservableList.of(allConsultations.finishedKons);
+
   @observable
   Consultation currentKons = Consultation(userId: 1);
 
@@ -45,6 +55,9 @@ abstract class _CommonState with Store {
   @observable
   bool isAuth = false;
 
+  @observable
+  bool isLoading = true;
+
   @action
   void updateTab(int index) {
     if ((user.isKno == null || user.isKno == false) && index == 1) {
@@ -64,6 +77,7 @@ abstract class _CommonState with Store {
   @action
   Future<void> getKNOs() async {
     final Info info = await BusinessAPI.instance.getKnoInfo(user.token!);
+    log('инфа получена');
     knos = info.nadzorOrgans;
     knosFilter = knos;
   }
@@ -75,5 +89,12 @@ abstract class _CommonState with Store {
     } else {
       knosFilter = await BusinessAPI.instance.postKno(user.token!, text);
     }
+  }
+
+  @action
+  Future<void> getAllCons() async {
+    isLoading = true;
+    allConsultations = await BusinessAPI.instance.getConsultations(user.token!);
+    isLoading = false;
   }
 }

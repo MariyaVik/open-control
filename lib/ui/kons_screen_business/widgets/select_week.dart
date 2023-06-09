@@ -12,7 +12,7 @@ class SelectWeek extends StatelessWidget {
       children: [
         IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios_sharp)),
         IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios_sharp)),
-        Text('1 июня - 7 июня',
+        Text('9 июня - 15 июня',
             style: Theme.of(context).textTheme.headlineLarge),
         IconButton(onPressed: () {}, icon: Icon(Icons.arrow_drop_down))
         // DatePickerDialog(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_control/entities/consultation.dart';
-import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:provider/provider.dart';
 
-import '../../../dummy/current_user.dart';
 import '../../../mobX/common/common_state.dart';
 import '../../../services/business_api.dart';
 import '../../theme/app_color.dart';
@@ -35,20 +33,20 @@ class _DeleteConsultationState extends State<DeleteConsultation> {
         decoration: const BoxDecoration(),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          Text("Подтверждение"),
+          const Text("Подтверждение"),
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
                     color: AppColor.warning, shape: BoxShape.circle),
-                child: Icon(
+                child: const Icon(
                   Icons.question_mark,
                   color: AppColor.whiteColor,
                 ),
               ),
-              SizedBox(width: 30),
-              Expanded(
+              const SizedBox(width: 30),
+              const Expanded(
                 child: Text(
                     "Вы уверены, что хотите отменить запись на консультацию?"),
               ),
@@ -72,10 +70,14 @@ class _DeleteConsultationState extends State<DeleteConsultation> {
 
   void addPurchase() async {
     await BusinessAPI.instance.deleteConsultation(
-        Provider.of<CommonState>(context).user.token!, widget.consultation.id!);
+        Provider.of<CommonState>(context, listen: false).user.token!,
+        widget.consultation.id!);
+    await Provider.of<CommonState>(context, listen: false).getAllCons();
+
     if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          AppNavRouteName.homeBusiness, (route) => false);
+      Navigator.of(context).pop();
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     AppNavRouteName.homeBusiness, (route) => false);
     }
   }
 }

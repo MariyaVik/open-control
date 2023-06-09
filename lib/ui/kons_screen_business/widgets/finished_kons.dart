@@ -43,7 +43,6 @@ class FinishedKons extends StatelessWidget {
             separatorBuilder: (BuildContext context, int index) {
               return const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
-                // child: Divider(),
               );
             },
           ),

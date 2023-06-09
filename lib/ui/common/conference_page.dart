@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/conference_settings.dart';
 import '../../mobX/common/common_state.dart';
 

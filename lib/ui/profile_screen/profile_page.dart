@@ -7,7 +7,6 @@ import 'package:open_control/services/business_api.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:provider/provider.dart';
 
-import '../../dummy/current_user.dart';
 import '../../entities/user_info.dart';
 import '../../mobX/common/common_state.dart';
 import 'widgets/footer.dart';
@@ -48,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<CommonState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Личный кабинет'),
@@ -56,9 +56,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   user = UserInfo();
                   currentKons = Consultation();
-                  allConsultations = AllConsultations();
-                  Provider.of<CommonState>(context, listen: false).knos = [];
-                  Provider.of<CommonState>(context, listen: false).updateTab(0);
+                  state.allConsultations = AllConsultations();
+                  state.knos = null;
+                  state.dates = [];
+                  state.allSlots = {};
+                  state.updateTab(0);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       AppNavRouteName.login, (route) => false);
                 },

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:open_control/entities/consultation.dart';
 import 'package:open_control/ui/theme/app_color.dart';
+import 'package:provider/provider.dart';
 
+import '../../../mobX/common/common_state.dart';
 import '../../common/size_config.dart';
 import '../../navigation/route_name.dart';
 import 'about_kons_card.dart';
@@ -45,18 +47,23 @@ class CurrentKons extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Expanded(
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: kons!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return AboutKonsCard(consultation: kons![index]);
+          child: RefreshIndicator(
+            onRefresh: () {
+              return Provider.of<CommonState>(context, listen: false)
+                  .getAllCons();
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                // child: Divider(),
-              );
-            },
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: kons!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return AboutKonsCard(consultation: kons![index]);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                );
+              },
+            ),
           ),
         ),
       ],

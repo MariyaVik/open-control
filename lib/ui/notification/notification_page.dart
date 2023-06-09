@@ -5,7 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../../entities/notifications.dart';
 import '../../mobX/common/common_state.dart';
+import '../app.dart';
+import '../common/app_bar_back.dart';
 import '../common/circular_icon_button.dart';
+import '../navigation/route_name.dart';
 import '../theme/app_color.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -20,6 +23,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Future<void> getNot() async {
     nots = await BusinessAPI.instance.getNotifications(
         Provider.of<CommonState>(context, listen: false).user.token!);
+    // nots = nots!.reversed.toList();
     setState(() {});
   }
 
@@ -33,19 +37,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Уведомления'),
-          centerTitle: true,
-          leading: CircularIconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.whiteColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
+        appBar: appBarBack(context, title: 'Уведомления'),
         body: nots == null
             ? const Center(child: CircularProgressIndicator())
             : nots!.isEmpty
@@ -53,27 +45,36 @@ class _NotificationPageState extends State<NotificationPage> {
                     child: Text('Уведомлений пока нет'),
                   )
                 : ListView.builder(
+                    // reverse: true,
                     itemCount: nots!.length,
                     itemBuilder: (contex, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
-                        padding: const EdgeInsets.only(
-                            top: 12, right: 16, left: 16, bottom: 24),
-                        decoration: BoxDecoration(
-                            color: AppColor.greyLight,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                      '${DateTime.now().difference(nots![index].date).inDays} дней назад')
-                                ]),
-                            Text(nots![index].text),
-                          ],
+                      return GestureDetector(
+                        onTap: () {
+                          mainNavigatorKey.currentState!.pushNamed(
+                              AppNavRouteName.konsDateilsBusiness,
+                              arguments: nots![index].consultationId);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          padding: const EdgeInsets.only(
+                              top: 12, right: 16, left: 16, bottom: 24),
+                          decoration: BoxDecoration(
+                              color: AppColor.greyLight,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                        '${DateTime.now().difference(nots![index].date).inMinutes} минут назад')
+                                  ]),
+                              Text(
+                                  '${nots![index].text} id ${nots![index].consultationId}'),
+                            ],
+                          ),
                         ),
                       );
                     }),

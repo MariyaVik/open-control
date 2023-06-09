@@ -4,7 +4,6 @@ import 'package:open_control/entities/user_info.dart';
 import 'package:open_control/ui/theme/app_color.dart';
 import 'package:provider/provider.dart';
 
-import '../../../dummy/current_user.dart';
 import '../../../mobX/common/common_state.dart';
 import '../../../services/business_api.dart';
 import '../../common/response_widgets.dart';

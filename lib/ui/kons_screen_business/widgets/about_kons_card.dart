@@ -28,6 +28,7 @@ class AboutKonsCard extends StatelessWidget {
                   : AppColor.warning),
           borderRadius: BorderRadius.circular(6)),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
