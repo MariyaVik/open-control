@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../entities/faq.dart';
 import '../common/app_bar_back.dart';
-import '../common/circular_icon_button.dart';
+import '../common/utils.dart';
 import '../theme/app_color.dart';
 import 'like_count.dart';
 
@@ -34,7 +34,7 @@ class FaqDetailsPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text('Контрольно-надзорный орган',
                     style: Theme.of(context).textTheme.labelSmall),
-                Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
+                Text(getKNOById(context, faq.nadzorOrganId).name.toUpperCase()),
                 const SizedBox(height: 16),
                 Text('Вид контроля',
                     style: Theme.of(context).textTheme.labelSmall),
@@ -42,22 +42,22 @@ class FaqDetailsPage extends StatelessWidget {
                 Text(faq.controlTypeId.toString()),
                 const SizedBox(height: 24),
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColor.greyLight),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
                   ),
                   child: Text(faq.answer),
                 ),
-                Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase(),
+                Text(getKNOById(context, faq.nadzorOrganId).name.toUpperCase(),
                     style: Theme.of(context).textTheme.labelSmall),
                 Row(
                   children: [
                     Checkbox(
-                      value: true,
+                      value: false,
                       onChanged: (value) {},
                       fillColor:
                           MaterialStateProperty.all<Color>(AppColor.access),

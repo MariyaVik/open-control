@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../mobX/common/common_state.dart';
 import '../common/app_bar_back.dart';
+import '../common/utils.dart';
 import 'widgets/kno_list.dart';
 import 'widgets/select_entities.dart';
 
@@ -47,9 +48,21 @@ class _ListKnoPageState extends State<ListKnoPage> {
                   controller: controller,
                   textInputAction: TextInputAction.search,
                   onSubmitted: state.filteringKNO,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Поиск по ключевым словам',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: IconButton(
+                        onPressed: () {
+                          state.filteringKNO(controller.text);
+                        },
+                        icon: const Icon(Icons.search)),
+                    suffixIcon: controller.text == ''
+                        ? null
+                        : IconButton(
+                            onPressed: () {
+                              controller.clear();
+                              state.filteringKNO('');
+                            },
+                            icon: const Icon(Icons.close)),
                   ),
                 ),
               ),
@@ -59,7 +72,8 @@ class _ListKnoPageState extends State<ListKnoPage> {
                 child: Row(children: [
                   Image.asset('assets/images/gerb.png'),
                   const SizedBox(width: 16),
-                  Text('${state.knosFilter!.length} органов контроля')
+                  Text(
+                      '${state.knosFilter!.length} ${getWordOrg(state.knosFilter!.length, 'орган', 'органа', 'органов')} контроля')
                 ]),
               ),
               const Expanded(

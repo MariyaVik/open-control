@@ -31,6 +31,19 @@ class _FaqPageState extends State<FaqPage> {
     getFaq();
   }
 
+  void search(String text) async {
+    setState(() {
+      faqs = null;
+    });
+    if (text == '') {
+      getFaq();
+    } else {
+      faqs = await BusinessAPI.instance.postFaq(
+          Provider.of<CommonState>(context, listen: false).user.token!, text);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,23 +69,28 @@ class _FaqPageState extends State<FaqPage> {
                   ),
                   const SizedBox(height: 16),
                   TextField(
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: search,
                     controller: controller,
                     decoration: InputDecoration(
-                        hintText: 'Поиск по ключевым словам',
-                        prefix: IconButton(
-                            onPressed: () async {
-                              setState(() {
-                                faqs = null;
-                              });
-                              faqs = await BusinessAPI.instance.postFaq(
-                                  Provider.of<CommonState>(context,
-                                          listen: false)
-                                      .user
-                                      .token!,
-                                  controller.text);
-                              setState(() {});
-                            },
-                            icon: Icon(Icons.search))),
+                      hintText: 'Поиск по ключевым словам',
+                      prefixIcon: IconButton(
+                          onPressed: controller.text == ''
+                              ? null
+                              : () {
+                                  search(controller.text);
+                                },
+                          icon: const Icon(Icons.search)),
+                      suffixIcon: controller.text == ''
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                getFaq();
+                                controller.clear();
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.close)),
+                    ),
                   ),
                 ],
               ),
@@ -80,7 +98,7 @@ class _FaqPageState extends State<FaqPage> {
             faqs == null
                 ? const Center(child: CircularProgressIndicator())
                 : faqs!.isEmpty
-                    ? Center(child: Text('Ничего не найдено'))
+                    ? const Center(child: Text('Ничего не найдено'))
                     : Expanded(
                         child: ListView.builder(
                             itemCount: faqs!.length,

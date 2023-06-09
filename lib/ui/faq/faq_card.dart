@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../entities/faq.dart';
 import '../app.dart';
+import '../common/utils.dart';
 import '../navigation/route_name.dart';
 import 'like_count.dart';
 
@@ -19,8 +20,8 @@ class FaqContent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        mainNavigatorKey.currentState!.pushNamed(AppNavRouteName.faqDetails,
-            arguments: faq); // ПЕРЕХОД ИСПРАВИТЬ !!!
+        mainNavigatorKey.currentState!
+            .pushNamed(AppNavRouteName.faqDetails, arguments: faq);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +29,7 @@ class FaqContent extends StatelessWidget {
           Text(faq.question),
           const SizedBox(height: 12),
           Text('Отвечает', style: Theme.of(context).textTheme.labelSmall),
-          Text('Орган с id ${faq.nadzorOrganId}'.toUpperCase()),
+          Text(getKNOById(context, faq.nadzorOrganId).name.toUpperCase()),
           const SizedBox(height: 20),
           Row(
             children: [

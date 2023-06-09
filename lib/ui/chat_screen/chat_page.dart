@@ -73,6 +73,7 @@ class _ChatPageState extends State<ChatPage> {
     user = Provider.of<CommonState>(context, listen: false).user;
     getMes();
     _initSpeech();
+    // scrollDown();
   }
 
   @override
@@ -205,7 +206,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                   ),
-            if (isFeedback) FeedbackBot(),
+            if (isFeedback) const FeedbackBot(),
             if (buttons.isNotEmpty)
               Container(
                 margin: const EdgeInsets.only(right: 20, left: 20, bottom: 8),
@@ -231,11 +232,22 @@ class _ChatPageState extends State<ChatPage> {
                 children: [
                   Expanded(
                       child: TextField(
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    onTap: () {
+                      if (scrollController.hasClients) {
+                        scrollDown();
+                      }
+                    },
                     controller: controller,
                     decoration: InputDecoration(
                         hintText: 'Ваше сообщение',
                         suffixIcon: IconButton(
                             onPressed: () async {
+                              setState(() {
+                                isFeedback = false;
+                              });
                               Message newQues = Message(
                                   date: DateTime.now().toUtc(),
                                   from: user.id!,
@@ -249,6 +261,11 @@ class _ChatPageState extends State<ChatPage> {
                               controller.clear();
                               FocusManager.instance.primaryFocus?.unfocus();
                               isFeedback = true;
+
+                              if (scrollController.hasClients) {
+                                scrollDown();
+                              }
+
                               setState(() {});
                             },
                             icon: Image.asset('assets/icons/send.png'))),

@@ -2,11 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/entities/app_tab.dart';
 import 'package:open_control/ui/common/circular_icon_button.dart';
-import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:provider/provider.dart';
 
 import '../../mobX/common/common_state.dart';
-import '../kons_screen_business/kons_page.dart';
 import '../theme/app_color.dart';
 
 class FeedbackBot extends StatefulWidget {
@@ -18,6 +16,7 @@ class FeedbackBot extends StatefulWidget {
 
 class _FeedbackBotState extends State<FeedbackBot> {
   bool isNeedCons = false;
+  bool isGood = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,9 +24,9 @@ class _FeedbackBotState extends State<FeedbackBot> {
       child: Column(
         children: [
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                   border: Border.all(color: AppColor.greyMegaLight),
                   borderRadius: BorderRadius.circular(6)),
@@ -35,33 +34,51 @@ class _FeedbackBotState extends State<FeedbackBot> {
                 'Бот смог ответить на ваш вопрос?',
                 textAlign: TextAlign.center,
               )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (!isNeedCons)
-                CircularIconButton(
-                  icon: Image.asset('assets/icons/good.png'),
-                  onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        AppNavRouteName.homeBusiness, (route) => false);
-                  },
-                ),
-              SizedBox(width: 16),
-              CircularIconButton(
-                icon: Image.asset('assets/icons/bad.png'),
-                color: AppColor.greyMedium,
-                onPressed: () {
-                  isNeedCons = true;
-                  setState(() {});
-                },
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (!isNeedCons)
+                  CircularIconButton(
+                    icon: Image.asset('assets/icons/good.png'),
+                    onPressed: () {
+                      isGood = true;
+                      setState(() {});
+                      // Provider.of<CommonState>(context, listen: false)
+                      //     .activeTabIndex = 0;
+                      // mainNavigatorKey.currentState!.pushNamedAndRemoveUntil(
+                      //     AppNavRouteName.homeBusiness, (route) => false);
+                    },
+                  ),
+                const SizedBox(width: 16),
+                if (!isGood)
+                  CircularIconButton(
+                    icon: Image.asset('assets/icons/bad.png'),
+                    color: AppColor.greyMedium,
+                    onPressed: () {
+                      isNeedCons = true;
+                      setState(() {});
+                    },
+                  )
+              ],
+            ),
           ),
+          if (isGood)
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColor.greyMegaLight),
+                  borderRadius: BorderRadius.circular(6)),
+              child: const Center(child: Text('Спасибо за обращение!')),
+            ),
           if (isNeedCons)
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                   border: Border.all(color: AppColor.greyMegaLight),
                   borderRadius: BorderRadius.circular(6)),

@@ -11,6 +11,7 @@ import '../../entities/kno.dart';
 import '../../mobX/common/common_state.dart';
 import '../../services/business_api.dart';
 import '../common/app_bar_back.dart';
+import '../common/utils.dart';
 import '../common/week_day_date_time_widget.dart';
 import '../faq/faq_card.dart';
 import '../theme/app_color.dart';
@@ -39,21 +40,15 @@ class _SelectThemeViewState extends State<SelectThemeView> {
     super.dispose();
   }
 
-  NadzorOrgans getKNOById(int id) {
-    return Provider.of<CommonState>(context, listen: false)
-        .knos!
-        .where((element) => element.id == id)
-        .first;
-  }
-
   @override
   Widget build(BuildContext context) {
-    NadzorOrgans kno = getKNOById(currentKons.knoId!);
+    NadzorOrgans kno = getKNOById(context, currentKons.knoId!);
     return Scaffold(
       appBar: appBarBack(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
+          clipBehavior: Clip.none,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -108,19 +103,21 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                     });
                   },
                   buttonStyleData: ButtonStyleData(
-                      height: 40,
-                      // width: 200,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColor.greyLight))),
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: MaterialStateColor.resolveWith(
+                                (Set<MaterialState> states) => states.contains(
+                                        MaterialState.focused) // не работает :(
+                                    ? AppColor.mainColor
+                                    : AppColor.greyLight),
+                          ))),
                   dropdownStyleData: DropdownStyleData(
                       maxHeight: 200,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(6),
                           border: Border.all(color: AppColor.greyLight))),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                  ),
+                  menuItemStyleData: const MenuItemStyleData(),
                   dropdownSearchData: DropdownSearchData(
                     searchController: textEditingController,
                     searchInnerWidgetHeight: 50,
@@ -172,13 +169,11 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                 controller: quesController,
                 maxLines: 3,
                 onEditingComplete: () async {
-                  print(quesController.text);
                   sameQuestions = await BusinessAPI.instance.postFaq(
                       Provider.of<CommonState>(context, listen: false)
                           .user
                           .token!,
                       quesController.text);
-                  print(sameQuestions);
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (sameQuestions.isNotEmpty) isExpandSame = true;
 
@@ -189,45 +184,49 @@ class _SelectThemeViewState extends State<SelectThemeView> {
               const SizedBox(height: 16),
 
               if (sameQuestions.isNotEmpty)
-                Container(
-                  decoration: isExpandSame
-                      ? BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: AppColor.pinkDark),
-                          boxShadow: const [
-                              BoxShadow(color: AppColor.pinkDark, blurRadius: 5)
-                            ])
-                      : BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: AppColor.greyLight)),
-                  height: 48,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                            child: Text(
-                          'Похожие вопросы',
-                          style: TextStyle(color: AppColor.textLow),
-                        )),
-                        IconButton(
-                            onPressed: () {
-                              isExpandSame = !isExpandSame;
-                              setState(() {});
-                            },
-                            icon: isExpandSame
-                                ? Transform.rotate(
-                                    angle: 180 * pi / 180,
-                                    child: const Icon(
+                GestureDetector(
+                  onTap: () {
+                    isExpandSame = !isExpandSame;
+                    setState(() {});
+                  },
+                  child: Container(
+                    decoration: isExpandSame
+                        ? BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: AppColor.pinkDark),
+                            boxShadow: const [
+                                BoxShadow(
+                                    color: AppColor.pinkDark, blurRadius: 5)
+                              ])
+                        : BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: AppColor.greyLight)),
+                    height: 48,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                              child: Text(
+                            'Похожие вопросы',
+                            style: TextStyle(color: AppColor.textLow),
+                          )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: isExpandSame
+                                  ? Transform.rotate(
+                                      angle: 180 * pi / 180,
+                                      child: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: AppColor.mainColor,
+                                      ))
+                                  : const Icon(
                                       Icons.arrow_drop_down,
-                                      color: AppColor.mainColor,
+                                      color: AppColor.textMain,
                                     ))
-                                : const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: AppColor.textMain,
-                                  ))
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -255,20 +254,23 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                         const Divider(color: AppColor.greyLight),
                   ),
                 ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isNeedLetter,
-                    onChanged: ((value) {
-                      isNeedLetter = !isNeedLetter;
-                      setState(() {});
-                    }),
-                  ),
-                  const Expanded(
-                    child: Text(
-                        'Хочу получить письменное разъяснение по результатам консультирования'),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: isNeedLetter,
+                      onChanged: ((value) {
+                        isNeedLetter = !isNeedLetter;
+                        setState(() {});
+                      }),
+                    ),
+                    const Expanded(
+                      child: Text(
+                          'Хочу получить письменное разъяснение по результатам консультирования'),
+                    ),
+                  ],
+                ),
               ),
               const Divider(),
               Row(
@@ -289,7 +291,6 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                         currentKons.isNeedLetter = isNeedLetter;
                         // print(currentKons);
                         var json = currentKons.toJson();
-                        print(json);
                         await BusinessAPI.instance.postConsultation(
                             Provider.of<CommonState>(context, listen: false)
                                 .user
