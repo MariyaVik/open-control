@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../entities/consult_topics.dart';
 import '../../entities/control_types.dart';
 import '../../entities/kno.dart';
 import '../../mobX/common/common_state.dart';
@@ -37,6 +38,12 @@ NadzorOrgans getKNOById(BuildContext context, int id) {
 ControlTypes getControlTypeById(BuildContext context, int idKNO, int idType) {
   final NadzorOrgans kno = getKNOById(context, idKNO);
   return kno.controlTypes.where((element) => element.id == idType).first;
+}
+
+ConsultTopics getConsultTopicById(
+    BuildContext context, int idKNO, int idType, int idTopic) {
+  final ControlTypes t = getControlTypeById(context, idKNO, idType);
+  return t.consultTopics.where((element) => element.id == idTopic).first;
 }
 
 String getWeekDay(int num) {

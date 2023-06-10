@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 
@@ -24,7 +21,7 @@ class _MainPageState extends State<MainPage> {
             onPressed: () {
               Navigator.of(context).pushNamed(AppNavRouteName.notification);
             },
-            icon: Icon(Icons.notifications))
+            icon: const Icon(Icons.notifications))
       ]),
       body: Center(
         child: Padding(
@@ -34,8 +31,7 @@ class _MainPageState extends State<MainPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   'Информация',
                   style: Theme.of(context).textTheme.headlineLarge,
@@ -56,7 +52,12 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 12),
               ServiceCard(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppNavRouteName.webView,
+                      arguments: 'https://knd.mos.ru/requirements/public');
+                },
                 color: AppColor.mainColor,
                 child: Row(
                   children: [
@@ -74,8 +75,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   'Сервисы',
                   style: Theme.of(context).textTheme.headlineLarge,
@@ -84,8 +84,12 @@ class _MainPageState extends State<MainPage> {
               Row(
                 children: [
                   Expanded(
-                    flex: 14,
+                    flex: 15,
                     child: ServiceCard(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppNavRouteName.webView,
+                            arguments: 'https://www.mos.ru/oati/services/');
+                      },
                       color: AppColor.pinkDark,
                       child: Row(
                         children: [
@@ -100,9 +104,14 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 8),
                   Expanded(
                     flex: 17,
                     child: ServiceCard(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppNavRouteName.webView,
+                            arguments: 'https://quiz.knd.mos.ru/');
+                      },
                       color: AppColor.greyMegaLight,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,11 +127,17 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
-                    flex: 5,
+                    flex: 18,
                     child: ServiceCard(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppNavRouteName.webView,
+                            arguments:
+                                'https://knd.mos.ru/cabinet/pretrial-complaints-248fz/motions-for-postponements-page');
+                      },
                       color: AppColor.mainColor,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,9 +152,15 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 8),
                   Expanded(
-                    flex: 3,
+                    flex: 10,
                     child: ServiceCard(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppNavRouteName.webView,
+                            arguments:
+                                'https://knd.mos.ru/cabinet/pretrial-complaints-248fz/create');
+                      },
                       color: AppColor.pinkDark,
                       child: Column(
                         children: [

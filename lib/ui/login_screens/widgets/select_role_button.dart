@@ -15,27 +15,32 @@ class SelectRoleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(routeName);
-      },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: AppColor.pinkLighter,
-            border: Border.all(color: AppColor.greyLight)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircularIconButton(
-                icon: Image.asset(
-              'assets/icons/$iconName.png',
-            )),
-            const SizedBox(height: 28),
-            Text(text)
-          ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(routeName);
+          },
+          child: Ink(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: AppColor.pinkLighter,
+                border: Border.all(color: AppColor.greyLight)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircularIconButton(
+                    icon: Image.asset(
+                  'assets/icons/$iconName.png',
+                )),
+                const SizedBox(height: 28),
+                Text(text)
+              ],
+            ),
+          ),
         ),
       ),
     );

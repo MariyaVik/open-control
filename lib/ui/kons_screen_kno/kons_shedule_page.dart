@@ -23,10 +23,13 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     state = Provider.of<CommonState>(context);
     state.getSlots();
+    if (Provider.of<CommonState>(context, listen: false).knos == null) {
+      await Provider.of<CommonState>(context, listen: false).getKNOs();
+    }
   }
 
   @override

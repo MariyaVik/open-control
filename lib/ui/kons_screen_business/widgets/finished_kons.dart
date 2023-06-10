@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../entities/consultation.dart';
 import '../../common/size_config.dart';
+import '../../theme/app_color.dart';
 import 'about_kons_card.dart';
 
 class FinishedKons extends StatelessWidget {
@@ -25,6 +27,27 @@ class FinishedKons extends StatelessWidget {
             inputFormatters: [MaskTextInputFormatter(mask: "##/##/####")],
             decoration: InputDecoration(hintText: 'дд/мм/гггг'),
             keyboardType: TextInputType.number,
+            // onTap: () => showRoundedDatePicker(
+            //   context: context,
+            //   initialDate: DateTime.now(),
+            //   firstDate: DateTime(DateTime.now().year - 1),
+            //   lastDate: DateTime(DateTime.now().year + 1),
+            //   borderRadius: 16,
+            //   theme:
+            //       Theme.of(context).copyWith(primaryColor: AppColor.mainColor),
+            //   styleDatePicker: MaterialRoundedDatePickerStyle(
+            //     textStyleDayHeader: TextStyle(color: Colors.black),
+            //     textStyleDayOnCalendar: TextStyle(color: AppColor.textMain),
+            //     textStyleYearButton: TextStyle(color: Colors.white),
+            //     textStyleDayButton:
+            //         TextStyle(color: Colors.white, fontSize: 32),
+            //     decorationDateSelected: BoxDecoration(
+            //         color: AppColor.mainColor,
+            //         borderRadius: BorderRadius.circular(6)),
+            //     textStyleDayOnCalendarSelected: TextStyle(color: Colors.white),
+            //   ),
+            //   locale: const Locale("ru", "RU"),
+            // ),
           ),
         ),
         const SizedBox(height: 18),

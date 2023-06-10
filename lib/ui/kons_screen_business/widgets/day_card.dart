@@ -88,7 +88,7 @@ class TimeView extends StatelessWidget {
       }
     }
 
-    return GestureDetector(
+    return InkWell(
       onTap: Provider.of<CommonState>(context).user.isKno == true
           ? actionForKNO
           : actionForBusiness,
@@ -104,7 +104,7 @@ class TimeView extends StatelessWidget {
     );
   }
 
-  Widget timeToCons(Slot slot) => Container(
+  Widget timeToCons(Slot slot) => Ink(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.greyMegaLight),
@@ -117,7 +117,7 @@ class TimeView extends StatelessWidget {
         ),
       );
 
-  Widget waitingConfirm(Slot slot) => Container(
+  Widget waitingConfirm(Slot slot) => Ink(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.greyMegaLight),
@@ -137,7 +137,7 @@ class TimeView extends StatelessWidget {
         ),
       );
 
-  Widget confirmCons(Slot slot) => Container(
+  Widget confirmCons(Slot slot) => Ink(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.greyMegaLight),
@@ -160,7 +160,7 @@ class TimeView extends StatelessWidget {
         ),
       );
 
-  Widget freeSlot(Slot slot) => Container(
+  Widget freeSlot(Slot slot) => Ink(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.greyMegaLight),

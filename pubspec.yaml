@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   dio:
   sliding_up_panel: ^2.0.0+1
   dropdown_button2:
@@ -23,10 +25,15 @@ dependencies:
   mobx: 
   flutter_mobx:
   provider:
+  flutter_rounded_date_picker: ^3.0.4
+  vertical_tabs_flutter: ^1.0.0
+  webview_flutter:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
 
   flutter_lints: ^2.0.0
   build_runner:
