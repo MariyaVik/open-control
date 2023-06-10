@@ -50,6 +50,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Must have</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Must have</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Must have</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
