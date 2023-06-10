@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/app.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
@@ -29,6 +31,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
 
   @override
   Widget build(BuildContext context) {
+    log(Provider.of<CommonState>(context, listen: false).user.name!);
     return Scaffold(
       appBar: appBarBack(context),
       body: SingleChildScrollView(

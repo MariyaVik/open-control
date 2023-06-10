@@ -92,23 +92,96 @@ class TimeView extends StatelessWidget {
       onTap: Provider.of<CommonState>(context).user.isKno == true
           ? actionForKNO
           : actionForBusiness,
-      child: Container(
+      child: slot.consultation != null && !slot.consultation!.isConfirmed!
+          ? waitingConfirm(slot)
+          : slot.consultation != null &&
+                  isTimeBegin(
+                      slot.consultation!.date!, slot.consultation!.time!)
+              ? timeToCons(slot)
+              : slot.consultation != null && slot.consultation!.isConfirmed!
+                  ? confirmCons(slot)
+                  : freeSlot(slot),
+    );
+  }
+
+  Widget timeToCons(Slot slot) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: AppColor.greyMegaLight),
           borderRadius: BorderRadius.circular(5),
-          color: slot.consultation != null && !slot.consultation!.isConfirmed!
-              ? AppColor.warning
-              : slot.consultation != null &&
-                      isTimeBegin(
-                          slot.consultation!.date!, slot.consultation!.time!)
-                  ? AppColor.mainColor
-                  : slot.consultation != null && slot.consultation!.isConfirmed!
-                      ? AppColor.access
-                      : AppColor.whiteColor,
+          color: AppColor.mainColor,
         ),
-        child: Text(slot.time),
-      ),
-    );
-  }
+        child: Text(
+          slot.time,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
+
+  Widget waitingConfirm(Slot slot) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyMegaLight),
+          borderRadius: BorderRadius.circular(5),
+          color: AppColor.greyMegaLight,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                slot.time,
+              ),
+            ),
+            const Icon(Icons.access_time_filled_rounded,
+                color: AppColor.warning)
+          ],
+        ),
+      );
+
+  Widget confirmCons(Slot slot) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyMegaLight),
+          borderRadius: BorderRadius.circular(5),
+          color: AppColor.greyMegaLight,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                slot.time,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: AppColor.access),
+              child: const Icon(Icons.done, color: Colors.white),
+            )
+          ],
+        ),
+      );
+
+  Widget freeSlot(Slot slot) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.greyMegaLight),
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+        ),
+        child: Text(
+          slot.time,
+        ),
+      );
 }
+
+
+
+
+// slot.consultation != null && !slot.consultation!.isConfirmed!
+//           ? AppColor.warning
+//           : slot.consultation != null &&
+//                   isTimeBegin(
+//                       slot.consultation!.date!, slot.consultation!.time!)
+//               ? AppColor.mainColor
+//               : slot.consultation != null && slot.consultation!.isConfirmed!
+//                   ? AppColor.access
+//                   : AppColor.whiteColor

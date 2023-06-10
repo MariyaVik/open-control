@@ -36,8 +36,10 @@ class _KonsDetailsPageState extends State<KonsDetailsPage> {
       appBar: appBarBack(context),
       body: consultation == null
           ? const Center(child: CircularProgressIndicator())
-          : AboutKonsCard(
-              consultation: consultation!,
+          : SingleChildScrollView(
+              child: AboutKonsCard(
+                consultation: consultation!,
+              ),
             ),
     ));
   }
