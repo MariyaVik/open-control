@@ -46,7 +46,13 @@ class ConsultationInfoPage extends StatelessWidget {
                   )),
               const SizedBox(height: 16),
               KnoThemeCard(
-                  isTheme: true, name: consultation.consultTopicId.toString()),
+                  isTheme: true,
+                  name: getConsultTopicById(
+                          context,
+                          consultation.knoId!,
+                          consultation.controlTypeId!,
+                          consultation.consultTopicId!)
+                      .name),
               const SizedBox(height: 8),
               if (consultation.isNeedLetter == true)
                 Row(

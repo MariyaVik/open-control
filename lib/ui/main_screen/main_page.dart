@@ -52,10 +52,11 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 12),
               ServiceCard(
                 onTap: () {
                   Navigator.of(context).pushNamed(AppNavRouteName.webView,
-                      arguments: 'https://knd.mos.ru/infomaterials');
+                      arguments: 'https://knd.mos.ru/requirements/public');
                 },
                 color: AppColor.mainColor,
                 child: Row(
@@ -126,6 +127,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(

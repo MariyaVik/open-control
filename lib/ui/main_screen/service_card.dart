@@ -9,14 +9,19 @@ class ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-        decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(10)),
-        child: child,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Material(
+        child: InkWell(
+          onTap: onTap,
+          child: Ink(
+            // margin: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(10)),
+            child: child,
+          ),
+        ),
       ),
     );
   }
