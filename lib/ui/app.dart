@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
 import 'package:provider/provider.dart';
 import 'package:open_control/ui/navigation/main_navigation.dart';
@@ -51,6 +52,14 @@ class _MyAppState extends State<MyApp> {
         Provider(create: (context) => CommonState()),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', 'US'),
+          Locale("ru", "RU"),
+        ],
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: themeLight,

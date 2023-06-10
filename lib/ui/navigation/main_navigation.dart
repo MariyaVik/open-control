@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/conference_settings.dart';
+import '../../entities/consultation.dart';
 import '../../entities/faq.dart';
 import '../chat_screen/chat_page.dart';
 import '../common/conference_page.dart';
@@ -8,10 +9,12 @@ import '../faq/faq_details_page.dart';
 import '../faq/faq_page.dart';
 import '../home_page_business.dart';
 import '../home_page_kno.dart';
+import '../kons_screen_business/join_kons_page.dart';
 import '../kons_screen_business/kons_details_page.dart';
 import '../login_screens/login_kno_page.dart';
 import '../login_screens/login_page.dart';
 import '../login_screens/login_user_page.dart';
+import '../main_screen/web_view_page.dart';
 import '../notification/notification_page.dart';
 import 'route_name.dart';
 
@@ -38,6 +41,11 @@ class AppNavigation {
         return MaterialPageRoute(
             builder: (context) => const NotificationPage());
 
+      case AppNavRouteName.joinKonsBusiness:
+        final arg = settings.arguments as Consultation;
+        return MaterialPageRoute(
+            builder: (context) => JoinKonsPage(consultation: arg));
+
       case AppNavRouteName.videoCall:
         final arg = settings.arguments as ConferenceSettings;
         return MaterialPageRoute(
@@ -54,6 +62,10 @@ class AppNavigation {
         final arg = settings.arguments as int;
         return MaterialPageRoute(
             builder: (context) => KonsDetailsPage(konsId: arg));
+
+      case AppNavRouteName.webView:
+        final arg = settings.arguments as String;
+        return MaterialPageRoute(builder: (context) => WebViewPage(link: arg));
 
       default:
         return MaterialPageRoute(

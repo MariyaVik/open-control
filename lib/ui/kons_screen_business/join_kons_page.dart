@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:open_control/ui/app.dart';
 import 'package:open_control/ui/navigation/route_name.dart';
@@ -52,7 +53,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                                 AppNavRouteName.videoCall,
                                 arguments: settings);
                           },
-                          child: Text('Подключиться'))),
+                          child: const Text('Подключиться'))),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Align(
@@ -61,7 +62,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppColor.greyLight),
                             child: IconButton(
@@ -76,7 +77,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                                   color: Colors.white),
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Камера',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -92,7 +93,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppColor.greyLight),
                             child: IconButton(
@@ -108,7 +109,7 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                                   color: Colors.white),
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Звук',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -119,6 +120,27 @@ class _JoinKonsPageState extends State<JoinKonsPage> {
                 ],
               ),
             ),
+            // const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: RichText(
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                  text: TextSpan(children: [
+                    const TextSpan(
+                        text:
+                            'Если не удаётся войти в конференцию, то воспользуйтесь ссылкой  ',
+                        style: TextStyle(color: Colors.black)),
+                    TextSpan(
+                        style: const TextStyle(color: Colors.blue),
+                        text: widget.consultation.vksLink,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            mainNavigatorKey.currentState!.pushNamed(
+                                AppNavRouteName.webView,
+                                arguments: widget.consultation.vksLink);
+                          }),
+                  ])),
+            )
           ],
         ),
       ),
