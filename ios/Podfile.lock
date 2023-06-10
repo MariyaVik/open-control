@@ -79,7 +79,11 @@ PODS:
     - Flutter
     - FMDB (>= 2.7.5)
   - Try (2.1.1)
+  - url_launcher_ios (0.0.1):
+    - Flutter
   - wakelock (0.0.1):
+    - Flutter
+  - webview_flutter_wkwebview (0.0.1):
     - Flutter
   - zego_express_engine (3.2.1):
     - Flutter
@@ -102,7 +106,9 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
   - zego_express_engine (from `.symlinks/plugins/zego_express_engine/ios`)
   - zego_zpns (from `.symlinks/plugins/zego_zpns/ios`)
 
@@ -142,8 +148,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/speech_to_text/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
   zego_express_engine:
     :path: ".symlinks/plugins/zego_express_engine/ios"
   zego_zpns:
@@ -170,7 +180,9 @@ SPEC CHECKSUMS:
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
   zego_express_engine: c468ac6141317af1e0ed41c5f65893bd0b62e109
   zego_zpns: 749e132d6c6b836e83cb4b748101e489f99de4da
   ZegoExpressEngine: 882450f6f141e13847464b010cd7d200b3e4ffac
