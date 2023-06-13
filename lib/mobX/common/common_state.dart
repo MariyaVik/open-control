@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../entities/all_consultations.dart';
@@ -45,9 +46,18 @@ abstract class _CommonState with Store {
   List<NadzorOrgans>? knosFilter;
 
   @observable
-  List<String> dates = [];
+  ObservableList<String> dates = ObservableList.of([]);
   @observable
   Map<String, dynamic> allSlots = {};
+
+  @observable
+  bool isDateLoading = true;
+
+  @observable
+  bool hasPrevDates = false;
+
+  @observable
+  bool hasNextDates = true;
 
   @computed
   bool get hasSlots => dates.isNotEmpty;
@@ -68,10 +78,116 @@ abstract class _CommonState with Store {
   }
 
   @action
+  void checkPrevDates() {
+    var dayCurWeekString = dates.last;
+    var d = dayCurWeekString.split('-').map((e) => int.parse(e)).toList();
+    DateTime dayCurWeek = DateTime(d[0], d[1], d[2]);
+
+    var dayPrevWeek = dayCurWeek.add(const Duration(days: -7));
+
+    List<String> dd = [];
+
+    int weekDayNumber = dayPrevWeek.weekday;
+    for (int i = 0; i < 8 - weekDayNumber; i++) {
+      DateTime newDate = dayPrevWeek.add(Duration(days: i));
+      String newDateStr = DateFormat('yyyy-MM-dd').format(newDate);
+      print('проверяем эту дату ' + newDateStr);
+      if (allSlots.containsKey(newDateStr)) {
+        dd.add(newDateStr);
+      }
+    }
+
+    if (dd.isNotEmpty) {
+      hasPrevDates = true;
+    } else {
+      hasPrevDates = false;
+    }
+  }
+
+  @action
+  void checkNextDates() {
+    var dayCurWeekString = dates.last;
+    var d = dayCurWeekString.split('-').map((e) => int.parse(e)).toList();
+    DateTime dayCurWeek = DateTime(d[0], d[1], d[2]);
+
+    var dayPrevWeek = dayCurWeek.add(const Duration(days: 7));
+
+    List<String> dd = [];
+
+    int weekDayNumber = dayPrevWeek.weekday;
+    for (int i = weekDayNumber; i >= 0; i--) {
+      DateTime newDate = dayPrevWeek.add(Duration(days: -i));
+      String newDateStr = DateFormat('yyyy-MM-dd').format(newDate);
+      print('проверяем эту дату ' + newDateStr);
+      if (allSlots.containsKey(newDateStr)) {
+        dd.add(newDateStr);
+      }
+    }
+
+    if (dd.isNotEmpty) {
+      hasNextDates = true;
+    } else {
+      hasNextDates = false;
+    }
+  }
+
+  @action
   Future<void> getSlots() async {
+    isDateLoading = true;
     allSlots = await BusinessAPI.instance.getSlots(user.token!);
 
-    dates = allSlots.keys.toList();
+    // String nowDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // print(nowDate);
+    String firstDateString = allSlots.keys.first;
+    var d = firstDateString.split('-').map((e) => int.parse(e)).toList();
+    DateTime firstDate = DateTime(d[0], d[1], d[2]);
+    print(firstDate);
+    ObservableList<String> dd = ObservableList.of([]);
+
+    int weekDayNumber = firstDate.weekday;
+    for (int i = 0; i < 8 - weekDayNumber; i++) {
+      DateTime newDate = firstDate.add(Duration(days: i));
+      String newDateStr = DateFormat('yyyy-MM-dd').format(newDate);
+      print('проверяем эту дату ' + newDateStr);
+      print(allSlots.containsKey(newDateStr));
+      if (allSlots.containsKey(newDateStr)) {
+        dd.add(newDateStr);
+      }
+    }
+    dates = dd;
+    checkNextDates();
+    checkPrevDates();
+    isDateLoading = false;
+  }
+
+  @action
+  void getCurrentWeek(DateTime date) {
+    isDateLoading = true;
+    ObservableList<String> dd = ObservableList.of([]);
+    int weekDayNumber = date.weekday;
+
+    for (int i = weekDayNumber; i > 0; i--) {
+      DateTime newDate = date.add(Duration(days: -i));
+      String newDateStr = DateFormat('yyyy-MM-dd').format(newDate);
+      print('проверяем эту дату ' + newDateStr);
+      print(allSlots.containsKey(newDateStr));
+      if (allSlots.containsKey(newDateStr)) {
+        dd.add(newDateStr);
+      }
+    }
+
+    for (int i = 0; i < 8 - weekDayNumber; i++) {
+      DateTime newDate = date.add(Duration(days: i));
+      String newDateStr = DateFormat('yyyy-MM-dd').format(newDate);
+      print('проверяем эту дату ' + newDateStr);
+      print(allSlots.containsKey(newDateStr));
+      if (allSlots.containsKey(newDateStr)) {
+        dd.add(newDateStr);
+      }
+    }
+    dates = dd;
+    print(dates);
+    isDateLoading = false;
   }
 
   @action

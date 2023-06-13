@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:open_control/dummy/current_kons.dart';
 import 'package:open_control/entities/all_consultations.dart';
 import 'package:open_control/entities/consultation.dart';
@@ -58,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   currentKons = Consultation();
                   state.allConsultations = AllConsultations();
                   state.knos = null;
-                  state.dates = [];
+                  state.dates = ObservableList.of([]);
                   state.allSlots = {};
                   state.updateTab(0);
                   Navigator.of(context).pushNamedAndRemoveUntil(

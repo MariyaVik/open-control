@@ -127,13 +127,13 @@ mixin _$CommonState on _CommonState, Store {
   late final _$datesAtom = Atom(name: '_CommonState.dates', context: context);
 
   @override
-  List<String> get dates {
+  ObservableList<String> get dates {
     _$datesAtom.reportRead();
     return super.dates;
   }
 
   @override
-  set dates(List<String> value) {
+  set dates(ObservableList<String> value) {
     _$datesAtom.reportWrite(value, super.dates, () {
       super.dates = value;
     });
@@ -152,6 +152,22 @@ mixin _$CommonState on _CommonState, Store {
   set allSlots(Map<String, dynamic> value) {
     _$allSlotsAtom.reportWrite(value, super.allSlots, () {
       super.allSlots = value;
+    });
+  }
+
+  late final _$isDateLoadingAtom =
+      Atom(name: '_CommonState.isDateLoading', context: context);
+
+  @override
+  bool get isDateLoading {
+    _$isDateLoadingAtom.reportRead();
+    return super.isDateLoading;
+  }
+
+  @override
+  set isDateLoading(bool value) {
+    _$isDateLoadingAtom.reportWrite(value, super.isDateLoading, () {
+      super.isDateLoading = value;
     });
   }
 
@@ -233,6 +249,17 @@ mixin _$CommonState on _CommonState, Store {
   }
 
   @override
+  void getCurrentWeek(DateTime date) {
+    final _$actionInfo = _$_CommonStateActionController.startAction(
+        name: '_CommonState.getCurrentWeek');
+    try {
+      return super.getCurrentWeek(date);
+    } finally {
+      _$_CommonStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 activeTabIndex: ${activeTabIndex},
@@ -243,6 +270,7 @@ knos: ${knos},
 knosFilter: ${knosFilter},
 dates: ${dates},
 allSlots: ${allSlots},
+isDateLoading: ${isDateLoading},
 isAuth: ${isAuth},
 isLoading: ${isLoading},
 activeKons: ${activeKons},

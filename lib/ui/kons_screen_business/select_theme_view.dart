@@ -213,7 +213,10 @@ class _SelectThemeViewState extends State<SelectThemeView> {
                             style: TextStyle(color: AppColor.textLow),
                           )),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                isExpandSame = !isExpandSame;
+                                setState(() {});
+                              },
                               icon: isExpandSame
                                   ? Transform.rotate(
                                       angle: 180 * pi / 180,

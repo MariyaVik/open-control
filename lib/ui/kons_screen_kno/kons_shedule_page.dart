@@ -35,41 +35,105 @@ class _KonsShedulePageState extends State<KonsShedulePage> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SelectWeek(),
-          !state.hasSlots
-              ? const Center(child: CircularProgressIndicator())
-              : Expanded(
+      return !state.hasSlots
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SelectWeek(),
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 12),
-                    child: RefreshIndicator(
-                      onRefresh: () {
-                        return Provider.of<CommonState>(context, listen: false)
-                            .getSlots();
-                      },
-                      child: ListView.builder(
-                          itemCount: state.allSlots.length,
-                          itemBuilder: (contex, index) {
-                            List<Slot> slotToday = [];
-                            var today = state.allSlots[state.dates[index]]!;
-                            for (var e in today) {
-                              Slot slot = Slot.fromJson(e);
-                              slotToday.add(slot);
-                            }
-
-                            return DayCard(
-                                slotToday: slotToday,
-                                date: state.dates[index],
-                                isBusiness: false);
-                          }),
-                    ),
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return RefreshIndicator(
+                        onRefresh: () {
+                          return Provider.of<CommonState>(context,
+                                  listen: false)
+                              .getSlots();
+                        },
+                        child: constraints.maxWidth < 700
+                            ? const NarrowSlots()
+                            : WideSlots(width: constraints.maxWidth),
+                      );
+                    }),
                   ),
                 ),
-        ],
+              ],
+            );
+    });
+  }
+}
+
+class NarrowSlots extends StatelessWidget {
+  const NarrowSlots({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final CommonState state = Provider.of<CommonState>(context);
+    return Observer(builder: (context) {
+      return ListView.builder(
+          itemCount: state.dates.length,
+          itemBuilder: (contex, index) {
+            List<Slot> slotToday = [];
+            var today = state.allSlots[state.dates[index]]!;
+            for (var e in today) {
+              Slot slot = Slot.fromJson(e);
+              slotToday.add(slot);
+            }
+
+            return DayCard(
+                width: MediaQuery.of(context).size.width,
+                slotToday: slotToday,
+                date: state.dates[index],
+                isBusiness: false);
+          });
+    });
+  }
+}
+
+class WideSlots extends StatelessWidget {
+  final double width;
+  const WideSlots({super.key, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    final CommonState state = Provider.of<CommonState>(context);
+    return Observer(builder: (context) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          List<Slot> slotToday = [];
+          var today = state.allSlots[state.dates[index * 2]]!;
+          for (var e in today) {
+            Slot slot = Slot.fromJson(e);
+            slotToday.add(slot);
+          }
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DayCard(
+                      width: width,
+                      slotToday: slotToday,
+                      date: state.dates[index * 2],
+                      isBusiness: false),
+                  const SizedBox(width: 20),
+                  index * 2 + 1 < state.dates.length
+                      ? DayCard(
+                          width: width,
+                          slotToday: slotToday,
+                          date: state.dates[index * 2 + 1],
+                          isBusiness: false)
+                      : Expanded(child: SizedBox()),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount: state.dates.length ~/ 2 + 1 * state.dates.length % 2,
       );
     });
   }

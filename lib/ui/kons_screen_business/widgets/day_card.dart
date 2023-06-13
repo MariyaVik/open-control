@@ -13,11 +13,13 @@ class DayCard extends StatelessWidget {
   final bool isBusiness;
   final List<Slot> slotToday;
   final String date;
+  final double width;
   const DayCard(
       {super.key,
       required this.slotToday,
       required this.date,
-      this.isBusiness = true});
+      this.isBusiness = true,
+      required this.width});
 
   // final List<String> slotTodayDummy =
   //     List.generate(5, (index) => '1$index:00-1${index + 1}:00');
@@ -28,40 +30,47 @@ class DayCard extends StatelessWidget {
         ? slotToday.where((element) => element.consultation == null).toList()
         : slotToday;
     SizeConfig().init(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('${getWeekDay(getDateFromString(date).weekday)},'),
-        Text(
-            '${getDateFromString(date).day.toString()} ${getMonthName(getDateFromString(date).month)}'),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                    width: SizeConfig.screenWidth * 1.8 / 5,
-                    child: TimeView(slot: slotForShow[index * 2])),
-                if (index * 2 + 1 < slotForShow.length)
-                  const SizedBox(width: 20),
-                if (index * 2 + 1 < slotForShow.length)
+    print(width);
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${getWeekDay(getDateFromString(date).weekday)},'),
+          Text(
+              '${getDateFromString(date).day.toString()} ${getMonthName(getDateFromString(date).month)}'),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
                   SizedBox(
-                      width: SizeConfig.screenWidth * 1.8 / 5,
-                      child: TimeView(slot: slotForShow[index * 2 + 1]))
-                // else
-                //   const Expanded(child: SizedBox()),
-              ],
+                      width: width < 700
+                          ? SizeConfig.screenWidth * 1.8 / 5
+                          : width / 5,
+                      child: TimeView(slot: slotForShow[index * 2])),
+                  if (index * 2 + 1 < slotForShow.length)
+                    const SizedBox(width: 20),
+                  if (index * 2 + 1 < slotForShow.length)
+                    SizedBox(
+                        width: width < 700
+                            ? SizeConfig.screenWidth * 1.8 / 5
+                            : width / 5,
+                        child: TimeView(slot: slotForShow[index * 2 + 1]))
+                  // else
+                  //   const Expanded(child: SizedBox()),
+                ],
+              ),
             ),
+            itemCount: slotForShow.length % 2 == 0
+                ? slotForShow.length ~/ 2
+                : (slotForShow.length ~/ 2) + 1,
           ),
-          itemCount: slotForShow.length % 2 == 0
-              ? slotForShow.length ~/ 2
-              : (slotForShow.length ~/ 2) + 1,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

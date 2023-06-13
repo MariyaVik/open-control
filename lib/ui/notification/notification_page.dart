@@ -41,8 +41,14 @@ class _NotificationPageState extends State<NotificationPage> {
         body: nots == null
             ? const Center(child: CircularProgressIndicator())
             : nots!.isEmpty
-                ? const Center(
-                    child: Text('Уведомлений пока нет'),
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset('assets/images/no_notif.png'),
+                        const Text('Уведомлений пока нет'),
+                      ],
+                    ),
                   )
                 : ListView.builder(
                     // reverse: true,
