@@ -28,6 +28,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late UserInfo user;
   List<Message> _elements = [];
+  List<Message> _result = [];
   List<HintButton> buttons = [];
   TextEditingController controller = TextEditingController();
   ScrollController scrollController = ScrollController();
@@ -255,9 +256,9 @@ class _ChatPageState extends State<ChatPage> {
                                   text: controller.text,
                                   to: 0);
                               _elements.add(newQues);
-                              List<Message> ans = await BusinessAPI.instance
+                              _result = await BusinessAPI.instance
                                   .postMessage(user.token!, newQues.text);
-                              _elements.addAll(ans);
+                              _elements = [..._elements, ..._result];
                               controller.clear();
                               FocusManager.instance.primaryFocus?.unfocus();
                               isFeedback = true;
