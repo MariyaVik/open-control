@@ -1,16 +1,38 @@
-# open_control
+# Мобильное приложение для прохождения предпринимателями проверок контрольных органов
+Система предназначена для упрощения взаимодействия представителей бизнеса и КНО города Москвы при проведении контрольно-надзорных мероприятий.
 
-A new Flutter project.
+## Реализованный функционал
+* чат-бот:
+    + обработка информации в текстовом и голосовом форматах
+    + предоставление ответа по таким тематикам, как обязательные требования и нормативные правовые акты в части контрольно-надзорной деятельности
+    + обратная связь
+* консультирование:
+    + выбор КНО, темы, даты и времени со стороны бизнеса
+    + подтверждение/отмена записи со стороны КНО
+    + консультирование по средствам видеосвязи внутри приложения
+* поиск по часто задаваемым вопросам
 
-## Getting Started
+## Приложение
+[Ссылка на демонстрацию работы](https://disk.yandex.ru/i/jM8TP68ZSdfEjg)
+[Ссылка на APK](https://github.com/MariyaVik/open-control/releases/tag/v1)
 
-This project is a starting point for a Flutter application.
+##### Авторизация
+Представитель бизнеса: 
+* логин: user
+* пароль: 123321
 
-A few resources to get you started if this is your first Flutter project:
+Представитель КНО:
+* логин: kno
+* пароль: 123321
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## API
+Документация по всем методам API надохится в Swagger формате: http://hack.torbeno.ru/api/swagger/
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Макеты
+[Ссылка](https://www.figma.com/file/gP1lDgHu4iAUoRbKOmPeGF/%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D0%B9-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C?type=design&node-id=0-1&mode=design&t=Dxx6JkZPfbkvO8TO-0)
+
+## Разработчики
+
+Котов Максим | back-end | https://t.me/kotovmak
+Пелагейчева Мария | mobile | https://t.me/MariyaViktorovna
+Нагорянская Екатерина | designer | https://t.me/katyakadze
